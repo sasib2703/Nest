@@ -1,0 +1,900 @@
+/* ============================================================
+   NEST — Phase 5
+   product-detail.css
+   ============================================================
+
+   TABLE OF CONTENTS
+   01. Page Reveal
+   02. Breadcrumb
+   03. Product Hero — Split Layout
+   04. Hero — Image Panel
+   05. Hero — Info Panel
+   06. Quantity Controls
+   07. Add to Cart / CTA
+   08. Divider Section
+   09. Features Grid
+   10. Specifications
+   11. Reviews Grid
+   12. Related Products Grid
+   13. Not Found State
+   14. Responsive
+   15. Reduced Motion
+   ============================================================ */
+
+
+/* ============================================================
+   01. PAGE REVEAL
+   JS adds .pd-page--ready to reveal all sections
+   ============================================================ */
+
+.pd-page {
+  opacity:   0;
+  transform: translateY(12px);
+  transition:
+    opacity   500ms var(--ease-out),
+    transform 700ms var(--ease-expo-out);
+}
+
+.pd-page--ready {
+  opacity:   1;
+  transform: none;
+}
+
+
+/* ============================================================
+   02. BREADCRUMB
+   ============================================================ */
+
+.pd-breadcrumb {
+  padding:     var(--space-5) clamp(var(--space-6), 4vw, var(--space-16));
+  max-width:   1440px;
+  margin:      0 auto;
+  display:     flex;
+  align-items: center;
+  gap:         var(--space-2);
+  font-family:    var(--font-family-primary);
+  font-size:      var(--text-caption);
+  font-weight:    var(--font-weight-regular);
+  color:          var(--color-text-tertiary);
+  letter-spacing: var(--tracking-normal);
+  line-height:    1;
+}
+
+.pd-breadcrumb a {
+  color:          var(--color-text-tertiary);
+  text-decoration: none;
+  transition:     color var(--duration-fast) var(--ease-smooth);
+}
+
+.pd-breadcrumb a:hover {
+  color: var(--color-text-primary);
+}
+
+.pd-breadcrumb__sep {
+  opacity: 0.4;
+}
+
+.pd-breadcrumb__current {
+  color: var(--color-text-secondary);
+}
+
+
+/* ============================================================
+   03. PRODUCT HERO — Split Layout
+   ============================================================ */
+
+.pd-hero {
+  display:               grid;
+  grid-template-columns: 55fr 45fr;
+  min-height:            85vh;
+  max-width:             1440px;
+  margin:                0 auto;
+  padding:               0 clamp(var(--space-6), 4vw, var(--space-16));
+  gap:                   clamp(var(--space-12), 6vw, var(--space-24));
+  align-items:           center;
+}
+
+
+/* ============================================================
+   04. HERO — IMAGE PANEL
+   ============================================================ */
+
+.pd-hero__gallery {
+  position: relative;
+}
+
+.pd-hero__img-wrap {
+  position:      relative;
+  aspect-ratio:  4 / 3;
+  background:    var(--color-bg-subtle);
+  border-radius: var(--radius-xl);
+  overflow:      hidden;
+  display:       flex;
+  align-items:   center;
+  justify-content: center;
+}
+
+.pd-hero__img {
+  width:      100%;
+  height:     100%;
+  object-fit: cover;
+  display:    block;
+  transition: transform 600ms var(--ease-expo-out);
+}
+
+.pd-hero__img-wrap:hover .pd-hero__img {
+  transform: scale(1.02);
+}
+
+/* Badges on image */
+.pd-badges {
+  position:    absolute;
+  top:         var(--space-5);
+  left:        var(--space-5);
+  display:     flex;
+  flex-direction: column;
+  gap:         var(--space-2);
+  z-index:     2;
+}
+
+.pd-badge {
+  display:        inline-block;
+  padding:        6px 12px;
+  border-radius:  var(--radius-full);
+  font-family:    var(--font-family-primary);
+  font-size:      10px;
+  font-weight:    var(--font-weight-semibold);
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  line-height:    1;
+}
+
+.pd-badge--featured {
+  background: var(--color-text-primary);
+  color:      #FFFFFF;
+}
+
+.pd-badge--new {
+  background: #2D7A5A;
+  color:      #FFFFFF;
+}
+
+
+/* ============================================================
+   05. HERO — INFO PANEL
+   ============================================================ */
+
+.pd-hero__info {
+  display:        flex;
+  flex-direction: column;
+  gap:            var(--space-6);
+  padding-top:    var(--space-4);
+  padding-bottom: var(--space-4);
+}
+
+.pd-category {
+  font-family:    var(--font-family-primary);
+  font-size:      var(--text-caption);
+  font-weight:    var(--font-weight-medium);
+  letter-spacing: var(--tracking-widest);
+  text-transform: uppercase;
+  color:          var(--color-text-tertiary);
+  line-height:    1;
+}
+
+.pd-name {
+  font-family:    var(--font-family-primary);
+  font-size:      clamp(2rem, 4.5vw, 3.5rem);
+  font-weight:    var(--font-weight-light);
+  letter-spacing: var(--tracking-tight);
+  color:          var(--color-text-primary);
+  line-height:    var(--leading-tight);
+}
+
+.pd-rating-wrap {
+  display:     flex;
+  align-items: center;
+  gap:         var(--space-2);
+  line-height: 1;
+}
+
+.pd-stars {
+  display: flex;
+  gap:     1px;
+}
+
+.pd-rating-num {
+  font-family:    var(--font-family-primary);
+  font-size:      var(--text-body-sm);
+  font-weight:    var(--font-weight-semibold);
+  color:          var(--color-text-primary);
+  line-height:    1;
+}
+
+.pd-rating-count {
+  font-family:    var(--font-family-primary);
+  font-size:      var(--text-body-sm);
+  font-weight:    var(--font-weight-regular);
+  color:          var(--color-text-tertiary);
+  line-height:    1;
+}
+
+.pd-desc {
+  font-family:    var(--font-family-primary);
+  font-size:      var(--text-body-lg);
+  font-weight:    var(--font-weight-regular);
+  color:          var(--color-text-secondary);
+  line-height:    var(--leading-relaxed);
+  max-width:      480px;
+}
+
+/* Price */
+.pd-price-row {
+  display:     flex;
+  align-items: baseline;
+  gap:         var(--space-3);
+}
+
+.pd-price {
+  font-family:    var(--font-family-primary);
+  font-size:      clamp(1.75rem, 3vw, 2.5rem);
+  font-weight:    var(--font-weight-semibold);
+  letter-spacing: var(--tracking-tight);
+  color:          var(--color-text-primary);
+  line-height:    1;
+}
+
+.pd-tax-note {
+  font-family:    var(--font-family-primary);
+  font-size:      var(--text-caption);
+  font-weight:    var(--font-weight-regular);
+  color:          var(--color-text-tertiary);
+  line-height:    var(--leading-relaxed);
+}
+
+/* Divider */
+.pd-hero__divider {
+  width:  100%;
+  height: 1px;
+  background: var(--color-border-subtle);
+}
+
+
+/* ============================================================
+   06. QUANTITY CONTROLS
+   ============================================================ */
+
+.pd-actions {
+  display:        flex;
+  flex-direction: column;
+  gap:            var(--space-4);
+}
+
+.pd-qty {
+  display:     flex;
+  align-items: center;
+  gap:         0;
+  width:       fit-content;
+  border:      1px solid var(--color-border-default);
+  border-radius: var(--radius-full);
+  overflow:    hidden;
+}
+
+.pd-qty__btn {
+  display:         flex;
+  align-items:     center;
+  justify-content: center;
+  width:           44px;
+  height:          44px;
+  background:      transparent;
+  border:          none;
+  font-family:     var(--font-family-primary);
+  font-size:       20px;
+  font-weight:     var(--font-weight-light);
+  color:           var(--color-text-primary);
+  cursor:          pointer;
+  line-height:     1;
+  transition:      background var(--duration-fast) var(--ease-smooth);
+  -webkit-user-select: none;
+  user-select:     none;
+}
+
+.pd-qty__btn:hover {
+  background: var(--color-bg-subtle);
+}
+
+.pd-qty__btn:focus-visible {
+  outline:        2px solid var(--color-border-focus);
+  outline-offset: -2px;
+}
+
+.pd-qty__btn:active {
+  transform: scale(0.92);
+}
+
+.pd-qty__val {
+  display:         inline-flex;
+  align-items:     center;
+  justify-content: center;
+  width:           52px;
+  font-family:     var(--font-family-primary);
+  font-size:       var(--text-body);
+  font-weight:     var(--font-weight-medium);
+  color:           var(--color-text-primary);
+  line-height:     1;
+  text-align:      center;
+  border-left:     1px solid var(--color-border-subtle);
+  border-right:    1px solid var(--color-border-subtle);
+  padding:         12px 0;
+}
+
+
+/* ============================================================
+   07. ADD TO CART / CTA
+   ============================================================ */
+
+.pd-cta {
+  display:        flex;
+  flex-direction: column;
+  gap:            var(--space-3);
+}
+
+.pd-add-cart {
+  display:        flex;
+  align-items:    center;
+  justify-content: center;
+  padding:        17px 40px;
+  background:     var(--color-text-primary);
+  border:         none;
+  border-radius:  var(--radius-full);
+  font-family:    var(--font-family-primary);
+  font-size:      var(--text-body);
+  font-weight:    var(--font-weight-medium);
+  letter-spacing: var(--tracking-wide);
+  color:          #FFFFFF;
+  cursor:         pointer;
+  width:          100%;
+  transition:
+    background var(--duration-fast)   var(--ease-smooth),
+    transform  var(--duration-normal) var(--ease-expo-out);
+}
+
+.pd-add-cart:hover {
+  background: #333333;
+  transform:  translateY(-2px);
+}
+
+.pd-add-cart:active {
+  transform: scale(0.97);
+}
+
+.pd-add-cart--added {
+  background: #2D7A5A !important;
+}
+
+.pd-add-cart:focus-visible {
+  outline:        2px solid var(--color-border-focus);
+  outline-offset: 3px;
+}
+
+.pd-view-cart {
+  display:        flex;
+  align-items:    center;
+  justify-content: center;
+  padding:        15px 40px;
+  background:     transparent;
+  border:         1px solid var(--color-border-default);
+  border-radius:  var(--radius-full);
+  font-family:    var(--font-family-primary);
+  font-size:      var(--text-body);
+  font-weight:    var(--font-weight-regular);
+  color:          var(--color-text-secondary);
+  cursor:         pointer;
+  width:          100%;
+  transition:
+    border-color var(--duration-fast) var(--ease-smooth),
+    color        var(--duration-fast) var(--ease-smooth);
+}
+
+.pd-view-cart:hover {
+  border-color: var(--color-border-strong);
+  color:        var(--color-text-primary);
+}
+
+
+/* ============================================================
+   08. SECTION WRAPPER (features, specs, reviews, related)
+   ============================================================ */
+
+.pd-section {
+  padding:        var(--section-gap-lg) clamp(var(--space-6), 4vw, var(--space-16));
+  max-width:      1440px;
+  margin:         0 auto;
+}
+
+.pd-section--alt {
+  background: var(--color-bg-subtle);
+  max-width:  none;
+  /* inner container */
+}
+
+.pd-section--alt .pd-container {
+  max-width: 1440px;
+  margin:    0 auto;
+  padding:   0 clamp(var(--space-6), 4vw, var(--space-16));
+}
+
+.pd-section-eyebrow {
+  font-family:    var(--font-family-primary);
+  font-size:      var(--text-caption);
+  font-weight:    var(--font-weight-medium);
+  letter-spacing: var(--tracking-widest);
+  text-transform: uppercase;
+  color:          var(--color-text-tertiary);
+  margin-bottom:  var(--space-3);
+  line-height:    1;
+}
+
+.pd-section-title {
+  font-family:    var(--font-family-primary);
+  font-size:      clamp(1.75rem, 3vw, 2.75rem);
+  font-weight:    var(--font-weight-light);
+  letter-spacing: var(--tracking-snug);
+  color:          var(--color-text-primary);
+  line-height:    var(--leading-tight);
+  margin-bottom:  clamp(var(--space-10), 5vw, var(--space-16));
+}
+
+.pd-section--dark .pd-section-title {
+  color: var(--color-text-inverse);
+}
+
+.pd-section--dark .pd-section-eyebrow {
+  color: rgba(255, 255, 255, 0.40);
+}
+
+/* Full-width dark wrapper */
+.pd-section-dark-wrap {
+  background: var(--color-bg-dark);
+  padding:    var(--section-gap-lg) 0;
+}
+
+
+/* ============================================================
+   09. FEATURES GRID
+   4-card grid — icon + title + description
+   ============================================================ */
+
+.pd-features-grid {
+  display:               grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap:                   var(--space-5);
+}
+
+.pd-feat-card {
+  padding:        var(--space-8);
+  background:     var(--color-bg-card);
+  border:         1px solid var(--color-border-subtle);
+  border-radius:  var(--radius-lg);
+  display:        flex;
+  flex-direction: column;
+  gap:            var(--space-4);
+  transition:
+    box-shadow   var(--duration-normal) var(--ease-smooth),
+    border-color var(--duration-normal) var(--ease-smooth);
+}
+
+.pd-feat-card:hover {
+  box-shadow:   var(--shadow-md);
+  border-color: var(--color-border-default);
+}
+
+.pd-feat-card__icon {
+  width:  40px;
+  height: 40px;
+  color:  var(--color-text-primary);
+  display: flex;
+  align-items: center;
+}
+
+.pd-feat-card__icon svg {
+  width:  28px;
+  height: 28px;
+}
+
+.pd-feat-card__title {
+  font-family:    var(--font-family-primary);
+  font-size:      var(--text-heading-sm);
+  font-weight:    var(--font-weight-medium);
+  letter-spacing: var(--tracking-snug);
+  color:          var(--color-text-primary);
+  line-height:    var(--leading-normal);
+}
+
+.pd-feat-card__desc {
+  font-family:    var(--font-family-primary);
+  font-size:      var(--text-body-sm);
+  font-weight:    var(--font-weight-regular);
+  color:          var(--color-text-secondary);
+  line-height:    var(--leading-relaxed);
+}
+
+
+/* ============================================================
+   10. SPECIFICATIONS
+   Clean definition list — label | value pairs
+   ============================================================ */
+
+.pd-specs-list {
+  display:        grid;
+  grid-template-columns: 1fr;
+  gap:            0;
+}
+
+.pd-spec-row {
+  display:         grid;
+  grid-template-columns: 200px 1fr;
+  gap:             var(--space-8);
+  padding:         var(--space-5) 0;
+  border-bottom:   1px solid var(--color-border-subtle);
+  align-items:     baseline;
+}
+
+.pd-spec-row:first-child {
+  border-top: 1px solid var(--color-border-subtle);
+}
+
+.pd-spec-label {
+  font-family:    var(--font-family-primary);
+  font-size:      var(--text-body-sm);
+  font-weight:    var(--font-weight-semibold);
+  letter-spacing: var(--tracking-wide);
+  color:          var(--color-text-tertiary);
+  text-transform: uppercase;
+  font-size:      11px;
+  line-height:    var(--leading-normal);
+}
+
+.pd-spec-value {
+  font-family:    var(--font-family-primary);
+  font-size:      var(--text-body);
+  font-weight:    var(--font-weight-regular);
+  color:          var(--color-text-primary);
+  line-height:    var(--leading-normal);
+}
+
+
+/* ============================================================
+   11. REVIEWS GRID
+   ============================================================ */
+
+.pd-reviews-grid {
+  display:               grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap:                   var(--space-5);
+}
+
+.pd-review {
+  margin:         0;
+  padding:        var(--space-8);
+  background:     #FFFFFF;
+  border:         1px solid var(--color-border-subtle);
+  border-radius:  var(--radius-lg);
+  display:        flex;
+  flex-direction: column;
+  gap:            var(--space-5);
+  transition:
+    box-shadow   var(--duration-normal) var(--ease-smooth),
+    border-color var(--duration-normal) var(--ease-smooth);
+}
+
+.pd-review:hover {
+  box-shadow:   var(--shadow-md);
+  border-color: var(--color-border-default);
+}
+
+.pd-review__header {
+  display:         flex;
+  align-items:     center;
+  justify-content: space-between;
+}
+
+.pd-review__stars {
+  display: flex;
+  gap:     1px;
+}
+
+.pd-review__date {
+  font-family:    var(--font-family-primary);
+  font-size:      var(--text-caption);
+  color:          var(--color-text-tertiary);
+  line-height:    1;
+}
+
+.pd-review__text {
+  font-family:    var(--font-family-primary);
+  font-size:      var(--text-body);
+  font-weight:    var(--font-weight-light);
+  letter-spacing: var(--tracking-snug);
+  color:          var(--color-text-primary);
+  line-height:    var(--leading-relaxed);
+  flex:           1;
+}
+
+.pd-review__footer {
+  display:        flex;
+  flex-direction: column;
+  gap:            var(--space-1);
+  padding-top:    var(--space-5);
+  border-top:     1px solid var(--color-border-subtle);
+}
+
+.pd-review__name {
+  font-family:    var(--font-family-primary);
+  font-size:      var(--text-body-sm);
+  font-weight:    var(--font-weight-medium);
+  color:          var(--color-text-primary);
+  line-height:    1.2;
+}
+
+.pd-review__location {
+  font-family:    var(--font-family-primary);
+  font-size:      var(--text-caption);
+  color:          var(--color-text-tertiary);
+  line-height:    1;
+}
+
+
+/* ============================================================
+   12. RELATED PRODUCTS GRID
+   ============================================================ */
+
+.pd-related-grid {
+  display:               grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap:                   var(--space-5);
+}
+
+.pd-related-card {
+  display:        flex;
+  flex-direction: column;
+  text-decoration: none;
+  background:     var(--color-bg-card);
+  border:         1px solid var(--color-border-subtle);
+  border-radius:  var(--radius-lg);
+  overflow:       hidden;
+  transition:
+    box-shadow   var(--duration-normal) var(--ease-smooth),
+    transform    var(--duration-normal) var(--ease-expo-out),
+    border-color var(--duration-normal) var(--ease-smooth);
+}
+
+.pd-related-card:hover {
+  box-shadow:   var(--shadow-lg);
+  transform:    translateY(-3px);
+  border-color: var(--color-border-default);
+}
+
+.pd-related-card:focus-visible {
+  outline:        2px solid var(--color-border-focus);
+  outline-offset: 3px;
+}
+
+.pd-related-card__img-wrap {
+  aspect-ratio: 4 / 3;
+  overflow:     hidden;
+  background:   var(--color-bg-subtle);
+}
+
+.pd-related-card__img {
+  width:      100%;
+  height:     100%;
+  object-fit: cover;
+  display:    block;
+  transition: transform 600ms var(--ease-expo-out);
+}
+
+.pd-related-card:hover .pd-related-card__img {
+  transform: scale(1.04);
+}
+
+.pd-related-card__body {
+  padding:        var(--space-5);
+  display:        flex;
+  flex-direction: column;
+  gap:            var(--space-2);
+}
+
+.pd-related-card__category {
+  font-family:    var(--font-family-primary);
+  font-size:      var(--text-caption);
+  font-weight:    var(--font-weight-medium);
+  letter-spacing: var(--tracking-widest);
+  text-transform: uppercase;
+  color:          var(--color-text-tertiary);
+  line-height:    1;
+}
+
+.pd-related-card__name {
+  font-family:    var(--font-family-primary);
+  font-size:      var(--text-heading-sm);
+  font-weight:    var(--font-weight-medium);
+  color:          var(--color-text-primary);
+  line-height:    var(--leading-normal);
+}
+
+.pd-related-card__price {
+  font-family:    var(--font-family-primary);
+  font-size:      var(--text-body);
+  font-weight:    var(--font-weight-semibold);
+  color:          var(--color-text-primary);
+  margin-top:     var(--space-1);
+}
+
+
+/* ============================================================
+   13. NOT FOUND STATE
+   ============================================================ */
+
+.pd-not-found {
+  display:        flex;
+  flex-direction: column;
+  align-items:    center;
+  justify-content: center;
+  min-height:     60vh;
+  padding:        var(--space-16) var(--space-8);
+  text-align:     center;
+  gap:            var(--space-5);
+}
+
+.pd-not-found__eyebrow {
+  font-family:    var(--font-family-primary);
+  font-size:      5rem;
+  font-weight:    var(--font-weight-extralight);
+  color:          var(--color-border-strong);
+  line-height:    1;
+}
+
+.pd-not-found__title {
+  font-family:    var(--font-family-primary);
+  font-size:      clamp(1.75rem, 4vw, 3rem);
+  font-weight:    var(--font-weight-light);
+  color:          var(--color-text-primary);
+  letter-spacing: var(--tracking-snug);
+}
+
+.pd-not-found__text {
+  font-size:    var(--text-body-lg);
+  color:        var(--color-text-tertiary);
+  max-width:    400px;
+  line-height:  var(--leading-relaxed);
+}
+
+.pd-not-found__btn {
+  display:        inline-flex;
+  align-items:    center;
+  padding:        14px 32px;
+  background:     var(--color-text-primary);
+  color:          #FFFFFF;
+  border-radius:  var(--radius-full);
+  font-family:    var(--font-family-primary);
+  font-size:      var(--text-body);
+  font-weight:    var(--font-weight-medium);
+  text-decoration: none;
+  margin-top:     var(--space-4);
+  transition:
+    background var(--duration-fast)   var(--ease-smooth),
+    transform  var(--duration-normal) var(--ease-expo-out);
+}
+
+.pd-not-found__btn:hover {
+  background: #333333;
+  transform:  translateY(-2px);
+}
+
+
+/* ============================================================
+   14. RESPONSIVE
+   ============================================================ */
+
+/* ── Tablet (below 1024px) ── */
+@media (max-width: 1023px) {
+
+  .pd-hero {
+    grid-template-columns: 1fr;
+    min-height:            auto;
+    padding-top:           var(--space-8);
+    padding-bottom:        var(--space-12);
+  }
+
+  .pd-hero__img-wrap {
+    aspect-ratio: 16 / 9;
+  }
+
+  .pd-hero__info {
+    gap: var(--space-5);
+  }
+
+  .pd-name {
+    font-size: 2rem;
+  }
+
+  .pd-features-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .pd-reviews-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .pd-related-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+}
+
+/* ── Mobile (below 768px) ── */
+@media (max-width: 767px) {
+
+  .pd-hero__img-wrap {
+    aspect-ratio: 4 / 3;
+  }
+
+  .pd-features-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .pd-spec-row {
+    grid-template-columns: 1fr;
+    gap: var(--space-1);
+    padding: var(--space-4) 0;
+  }
+
+  .pd-related-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-3);
+  }
+
+  .pd-add-cart,
+  .pd-view-cart {
+    padding: 15px 24px;
+  }
+
+}
+
+/* ── Small mobile (below 480px) ── */
+@media (max-width: 479px) {
+
+  .pd-related-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .pd-name {
+    font-size: 1.75rem;
+  }
+
+}
+
+
+/* ============================================================
+   15. REDUCED MOTION
+   ============================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+
+  .pd-page {
+    opacity:    1 !important;
+    transform:  none !important;
+    transition: none !important;
+  }
+
+  .pd-hero__img,
+  .pd-related-card__img,
+  .pd-related-card {
+    transition: none !important;
+  }
+
+  .pd-related-card:hover { transform: none !important; }
+  .pd-hero__img-wrap:hover .pd-hero__img { transform: none !important; }
+
+}

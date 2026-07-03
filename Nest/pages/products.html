@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="NEST Products — Browse 50+ premium smart home devices. Smart speakers, lighting, security, climate, and more." />
+  <meta name="theme-color" content="#0A0A0A" />
+
+  <title>Products — NEST</title>
+  <link rel="icon" href="../fav.png" type="image/png" />
+
+  <!-- Design System (Phase 0) -->
+  <link rel="stylesheet" href="../css/style.css" />
+
+  <!-- Phase 1: Intro Animation + Navbar -->
+  <link rel="stylesheet" href="../css/navbar.css" />
+
+  <!-- Phase 4: Products Page -->
+  <link rel="stylesheet" href="../css/products-page.css" />
+
+  <!-- Phase 3 footer reuse -->
+  <link rel="stylesheet" href="../css/sections.css" />
+
+</head>
+<body>
+
+  <!-- ============================================================
+       OPENING ANIMATION (Phase 1 — identical to homepage)
+       ============================================================ -->
+
+  <div id="nest-intro" class="nest-intro" aria-hidden="true" role="presentation">
+    <div class="intro-brand" id="intro-brand">
+      <span class="intro-wordmark">NEST</span>
+      <span class="intro-tagline">Technology That Belongs.</span>
+    </div>
+  </div>
+
+
+  <!-- ============================================================
+       NAVBAR (Phase 1 — identical to homepage)
+       ============================================================ -->
+
+  <header id="nest-navbar" class="navbar" role="banner">
+    <nav class="navbar__inner" aria-label="Main navigation">
+
+      <a href="../index.html" class="navbar__logo" aria-label="NEST — Return to homepage">
+        <span class="navbar__wordmark">NEST</span>
+      </a>
+
+      <ul class="navbar__nav" role="list" id="navbar-nav">
+        <li class="navbar__nav-item">
+          <a href="./products.html" class="navbar__nav-link" aria-current="page" id="nav-link-products">
+            Products
+          </a>
+        </li>
+        <li class="navbar__nav-item">
+          <a href="../index.html#categories" class="navbar__nav-link" id="nav-link-categories">
+            Categories
+          </a>
+        </li>
+        <li class="navbar__nav-item">
+          <a href="../index.html#about" class="navbar__nav-link" id="nav-link-about">
+            About
+          </a>
+        </li>
+      </ul>
+
+      <div class="navbar__actions" role="group" aria-label="Site utilities">
+
+        <button class="navbar__action-btn" id="btn-search" aria-label="Open search" type="button">
+          <svg class="navbar__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+               stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
+               aria-hidden="true" focusable="false">
+            <circle cx="11" cy="11" r="7"/>
+            <line x1="16.5" y1="16.5" x2="22" y2="22"/>
+          </svg>
+        </button>
+
+        <button class="navbar__action-btn" id="btn-cart" aria-label="Open cart, 0 items" type="button">
+          <svg class="navbar__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+               stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
+               aria-hidden="true" focusable="false">
+            <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
+            <line x1="3" y1="6" x2="21" y2="6"/>
+            <path d="M16 10a4 4 0 0 1-8 0"/>
+          </svg>
+          <span class="navbar__cart-badge" id="cart-count" aria-live="polite">0</span>
+        </button>
+
+        <button class="navbar__action-btn" id="btn-account" aria-label="My account" type="button">
+          <svg class="navbar__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+               stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
+               aria-hidden="true" focusable="false">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+            <circle cx="12" cy="7" r="4"/>
+          </svg>
+        </button>
+
+        <button class="navbar__action-btn navbar__hamburger"
+                id="btn-hamburger"
+                aria-label="Open navigation menu"
+                aria-expanded="false"
+                aria-controls="mobile-menu"
+                type="button">
+          <span class="hamburger-bar"></span>
+          <span class="hamburger-bar"></span>
+          <span class="hamburger-bar"></span>
+        </button>
+
+      </div>
+
+    </nav>
+  </header>
+
+
+  <!-- ============================================================
+       MOBILE SLIDE-OUT MENU (Phase 1)
+       ============================================================ -->
+
+  <div
+    id="mobile-menu"
+    class="mobile-menu"
+    role="dialog"
+    aria-modal="true"
+    aria-label="Navigation menu"
+    hidden
+  >
+    <div class="mobile-menu__backdrop" id="mobile-backdrop" aria-hidden="true"></div>
+    <div class="mobile-menu__drawer" id="mobile-drawer" tabindex="-1">
+      <div class="mobile-menu__header">
+        <span class="mobile-menu__wordmark" aria-hidden="true">NEST</span>
+        <button class="mobile-menu__close"
+                id="btn-menu-close"
+                aria-label="Close navigation menu"
+                type="button">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+               stroke-width="1.5" stroke-linecap="round"
+               aria-hidden="true" focusable="false">
+            <line x1="18" y1="6" x2="6" y2="18"/>
+            <line x1="6" y1="6" x2="18" y2="18"/>
+          </svg>
+        </button>
+      </div>
+      <nav aria-label="Mobile navigation">
+        <ul class="mobile-menu__nav" role="list">
+          <li><a href="./products.html"      class="mobile-menu__link" id="mob-nav-products">Products</a></li>
+          <li><a href="../index.html#categories" class="mobile-menu__link" id="mob-nav-categories">Categories</a></li>
+          <li><a href="../index.html#about"   class="mobile-menu__link" id="mob-nav-about">About</a></li>
+          <li><a href="./account.html"                  class="mobile-menu__link" id="mob-nav-account">Account</a></li>
+        </ul>
+      </nav>
+      <footer class="mobile-menu__footer" aria-label="Brand tagline">
+        <p class="mobile-menu__tagline">Technology That Belongs.</p>
+      </footer>
+    </div>
+  </div>
+
+
+  <!-- ============================================================
+       MAIN
+       ============================================================ -->
+
+  <main id="main-content" class="site-main" tabindex="-1">
+
+    <!-- ── Page Hero ── -->
+    <section class="ppage-hero" aria-label="Products page header">
+      <div class="ppage-hero__inner">
+        <p class="ppage-hero__eyebrow">NEST Collection</p>
+        <div class="ppage-hero__title-row">
+          <h1 class="ppage-hero__heading">Explore Products</h1>
+          <span class="ppage-hero__count" id="results-count" aria-live="polite">52 products</span>
+        </div>
+        <p class="ppage-hero__subtext">
+          Discover premium smart devices designed to elevate modern living.
+        </p>
+      </div>
+    </section>
+
+    <!-- ── Top Controls Section ── -->
+    <section class="top-controls-section" aria-label="Product filter controls">
+      <div class="top-controls-inner">
+        
+        <!-- Search Bar -->
+        <div class="top-search" role="search">
+          <svg class="top-search__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+            <circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="22" y2="22"/>
+          </svg>
+          <input
+            type="search"
+            id="search-input"
+            class="top-search__input"
+            placeholder="Search smart devices, audio, lighting..."
+            autocomplete="off"
+            aria-label="Search products by name, category, or description"
+          />
+          <button
+            class="top-search__clear"
+            id="clear-search"
+            type="button"
+            hidden
+            aria-label="Clear search"
+          >
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <line x1="4" y1="4" x2="12" y2="12"/><line x1="12" y1="4" x2="4" y2="12"/>
+            </svg>
+          </button>
+        </div>
+
+        <!-- Category Filter Pills -->
+        <div class="top-categories" role="tablist" aria-label="Filter by category">
+          <button class="cat-pill is-active" type="button" role="tab" aria-selected="true" tabindex="0" data-category="all">All</button>
+          <button class="cat-pill" type="button" role="tab" aria-selected="false" tabindex="-1" data-category="Smart Speakers & Audio">Audio</button>
+          <button class="cat-pill" type="button" role="tab" aria-selected="false" tabindex="-1" data-category="Smart Lighting">Lighting</button>
+          <button class="cat-pill" type="button" role="tab" aria-selected="false" tabindex="-1" data-category="Security Devices">Security</button>
+          <button class="cat-pill" type="button" role="tab" aria-selected="false" tabindex="-1" data-category="Climate & Appliances">Climate</button>
+          <button class="cat-pill" type="button" role="tab" aria-selected="false" tabindex="-1" data-category="Connectivity & Power">Connectivity</button>
+          <button class="cat-pill" type="button" role="tab" aria-selected="false" tabindex="-1" data-category="Kitchen Essentials">Kitchen</button>
+          <button class="cat-pill" type="button" role="tab" aria-selected="false" tabindex="-1" data-category="Cleaning Devices">Cleaning</button>
+        </div>
+
+        <!-- Sort Control -->
+        <div class="top-sort">
+          <label for="sort-select" class="top-sort__label">Sort by</label>
+          <div class="top-sort__select-wrap">
+            <select id="sort-select" class="top-sort__select" aria-label="Sort products">
+              <option value="featured">Featured</option>
+              <option value="price-asc">Price: Low to High</option>
+              <option value="price-desc">Price: High to Low</option>
+              <option value="newest">New Arrivals</option>
+            </select>
+            <svg class="top-sort__arrow" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M4 6l4 4 4-4"/>
+            </svg>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Hidden form for backwards compatibility with filterForm state references -->
+    <form id="filter-form" hidden aria-hidden="true">
+      <input type="checkbox" name="category" data-category="Smart Speakers & Audio" value="Smart Speakers & Audio" />
+      <input type="checkbox" name="category" data-category="Smart Lighting" value="Smart Lighting" />
+      <input type="checkbox" name="category" data-category="Security Devices" value="Security Devices" />
+      <input type="checkbox" name="category" data-category="Climate & Appliances" value="Climate & Appliances" />
+      <input type="checkbox" name="category" data-category="Connectivity & Power" value="Connectivity & Power" />
+      <input type="checkbox" name="category" data-category="Kitchen Essentials" value="Kitchen Essentials" />
+      <input type="checkbox" name="category" data-category="Cleaning Devices" value="Cleaning Devices" />
+      <button id="clear-filters" type="button"></button>
+    </form>
+
+    <!-- ── Product Grid Container ── -->
+    <div class="ppage-grid-container">
+      
+      <!-- Active Filter Tags -->
+      <div class="active-tags-bar" id="active-tags-bar" hidden aria-label="Active filters"></div>
+
+      <!-- Product Grid -->
+      <div
+        id="products-grid"
+        class="ppage-grid"
+        role="list"
+        aria-label="Product listing"
+      ></div>
+
+      <!-- Empty State -->
+      <div id="empty-state" class="ppage-empty" hidden role="status">
+        <div class="ppage-empty__inner">
+          <div class="ppage-empty__icon-wrap">
+            <svg class="ppage-empty__icon" viewBox="0 0 24 24" fill="none"
+                 stroke="currentColor" stroke-width="1.2" aria-hidden="true">
+              <circle cx="11" cy="11" r="7"/>
+              <line x1="16.5" y1="16.5" x2="22" y2="22"/>
+              <line x1="8" y1="11" x2="14" y2="11"/>
+            </svg>
+          </div>
+          <h2 class="ppage-empty__title">No products found</h2>
+          <p class="ppage-empty__text">
+            We couldn't find any items matching your search or filter criteria. Try exploring another category or clearing your query.
+          </p>
+          <button class="ppage-empty__btn" type="button" id="empty-reset-btn">
+            Reset All Filters
+          </button>
+        </div>
+      </div>
+
+    </div>
+
+  </main>
+
+
+  <!-- ============================================================
+       FOOTER (Phase 3 — reuse)
+       ============================================================ -->
+  <footer class="site-footer" role="contentinfo" aria-label="Site footer">
+    <div class="footer-inner">
+
+      <div class="footer-brand">
+        <span class="footer-wordmark">NEST</span>
+        <p class="footer-tagline">Technology That Belongs.</p>
+      </div>
+
+      <nav class="footer-nav" aria-label="Footer navigation">
+        <div class="footer-nav-col">
+          <p class="footer-nav-label">Explore</p>
+          <ul role="list">
+            <li><a href="./products.html" class="footer-nav-link">Products</a></li>
+            <li><a href="../index.html#categories" class="footer-nav-link">Categories</a></li>
+            <li><a href="../index.html#about" class="footer-nav-link">About</a></li>
+          </ul>
+        </div>
+        <div class="footer-nav-col">
+          <p class="footer-nav-label">Account</p>
+          <ul role="list">
+            <li><a href="./account.html" class="footer-nav-link">My Account</a></li>
+            <li><a href="./orders.html" class="footer-nav-link">Order History</a></li>
+            <li><a href="./wishlist.html" class="footer-nav-link">Wishlist</a></li>
+          </ul>
+        </div>
+      </nav>
+
+    </div>
+    <div class="footer-bottom">
+      <p class="footer-copy">&copy; 2026 NEST. All rights reserved.</p>
+    </div>
+  </footer>
+
+
+  <!-- ============================================================
+       SCRIPTS
+       ============================================================ -->
+
+  <!-- Phase 1: Navbar -->
+  <script src="../js/navbar.js"></script>
+
+  <!-- Phase 4: Product Data + Logic -->
+  <script src="../js/data.js"></script>
+  <script src="../js/products.js"></script>
+  <script src="../js/cart.js"></script>
+
+  <!-- Inline utilities -->
+  <script>
+    /* ── Filter Section Collapse/Expand ── */
+    function toggleSection (section) {
+      section.classList.toggle('is-collapsed');
+      var header = section.querySelector('.sidebar-section__header');
+      var expanded = !section.classList.contains('is-collapsed');
+      if (header) header.setAttribute('aria-expanded', expanded);
+
+      /* Animate max-height for smooth collapse */
+      var body = section.querySelector('.sidebar-section__body');
+      if (body) {
+        if (expanded) {
+          body.style.maxHeight = body.scrollHeight + 'px';
+        } else {
+          body.style.maxHeight = '0px';
+        }
+      }
+    }
+
+    /* Set initial max-heights so CSS transition has a value to animate from */
+    document.addEventListener('DOMContentLoaded', function () {
+      document.querySelectorAll('.sidebar-section__body').forEach(function (body) {
+        body.style.maxHeight = body.scrollHeight + 'px';
+      });
+
+      /* Show mobile filter buttons on tablet/mobile */
+      var mobileBar = document.getElementById('ppage-mobile-bar');
+      var mobileBtn2 = document.getElementById('mobile-filter-btn-2');
+      function checkWidth () {
+        if (window.innerWidth < 1024) {
+          if (mobileBar) mobileBar.style.display = 'block';
+          if (mobileBtn2) mobileBtn2.style.display = 'flex';
+        } else {
+          if (mobileBar) mobileBar.style.display = 'none';
+          if (mobileBtn2) mobileBtn2.style.display = 'none';
+        }
+      }
+      checkWidth();
+      window.addEventListener('resize', checkWidth, { passive: true });
+
+      /* Second mobile filter button wires to same sidebar */
+      var sidebar = document.getElementById('products-sidebar');
+      var closeBtn = document.getElementById('mobile-filter-close');
+      if (mobileBtn2 && sidebar) {
+        mobileBtn2.addEventListener('click', function () {
+          sidebar.classList.add('sidebar--open');
+          document.body.classList.add('filter-open');
+          if (closeBtn) closeBtn.focus();
+        });
+      }
+
+      /* Backdrop close */
+      var backdrop = document.getElementById('sidebar-backdrop');
+      if (backdrop && sidebar) {
+        backdrop.addEventListener('click', function () {
+          sidebar.classList.remove('sidebar--open');
+          document.body.classList.remove('filter-open');
+        });
+      }
+    });
+  </script>
+
+</body>
+</html>

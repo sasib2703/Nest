@@ -1,0 +1,892 @@
+/* ============================================================
+   NEST — Phase 1
+   Opening Animation + Premium Navbar
+   ============================================================
+
+   TABLE OF CONTENTS
+   ─────────────────────────────────────────────────────────────
+   01. Opening Animation
+   02. Navbar — Layout & Base
+   03. Navbar — Logo / Wordmark
+   04. Navbar — Navigation Links
+   05. Navbar — Action Buttons (Big Three)
+   06. Navbar — Cart Badge
+   07. Navbar — Scroll-refined State
+   08. Mobile Hamburger Button
+   09. Mobile Menu — Drawer
+   10. Mobile Menu — Links & Footer
+   11. Reduced Motion Overrides
+   ─────────────────────────────────────────────────────────────
+*/
+
+
+/* ============================================================
+   01. OPENING ANIMATION
+   Two soft organic panels slide apart horizontally
+   ============================================================ */
+
+/* Intro container — full viewport overlay */
+.nest-intro {
+  position:         fixed;
+  inset:            0;
+  width:            100vw;
+  height:           100vh;
+  z-index:          999999 !important;
+  display:          flex;
+  align-items:      center;
+  justify-content:  center;
+  overflow:         hidden;
+  pointer-events:   all;
+  background:       #f5f5f7 !important;
+  opacity:          1;
+  transition:       opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* State: intro skipped immediately via script or class */
+html.no-intro-splash .nest-intro {
+  display: none !important;
+}
+
+/* State: intro has played — container fades out and is removed from flow */
+.nest-intro.is-done {
+  opacity:    0;
+  pointer-events: none;
+}
+
+/* ── Brand Lockup ── */
+.intro-brand {
+  position:        relative;
+  z-index:         1;
+  display:         flex;
+  flex-direction:  column;
+  align-items:     center;
+  gap:             var(--space-3);
+  opacity:         0;
+  transform:       scale(0.97);
+  transition:      all 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* State: brand appears */
+.nest-intro.is-brand-visible .intro-brand {
+  opacity:   1;
+  transform: scale(1);
+}
+
+/* State: brand fades out smoothly */
+.nest-intro.is-parting .intro-brand {
+  opacity:   0;
+  transform: scale(1);
+  transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ── Wordmark ── */
+.intro-wordmark {
+  font-family:    var(--font-family-primary);
+  font-size:      clamp(2.2rem, 5vw, 3.8rem);
+  font-weight:    600;
+  letter-spacing: 0.14em;
+  color:          #111111;
+  line-height:    1;
+  -webkit-user-select: none;
+  user-select:    none;
+}
+
+/* ── Tagline ── */
+.intro-tagline {
+  font-family:    var(--font-family-primary);
+  font-size:      clamp(0.6875rem, 1.2vw, 0.8125rem);
+  font-weight:    500;
+  letter-spacing: 0.12em;
+  color:          #666666;
+  text-transform: uppercase;
+  line-height:    1;
+  -webkit-user-select: none;
+  user-select:    none;
+}
+
+
+/* ============================================================
+   02. NAVBAR — LAYOUT & BASE
+   ============================================================ */
+
+.navbar {
+  position:         sticky;
+  top:              0;
+  left:             0;
+  right:            0;
+  z-index:          var(--z-sticky);         /* 200 */
+  height:           72px;
+  background:       rgba(255, 255, 255, 0.7);
+  -webkit-backdrop-filter: blur(24px) saturate(200%);
+          backdrop-filter: blur(24px) saturate(200%);
+  border-bottom:    1px solid rgba(0, 0, 0, 0.05);
+  /* Initial state: hidden during intro, revealed after */
+  opacity:          0;
+  transform:        translateY(-8px);
+  transition:
+    height          400ms cubic-bezier(0.16, 1, 0.3, 1),
+    background      400ms cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow      400ms cubic-bezier(0.16, 1, 0.3, 1),
+    border-color    400ms cubic-bezier(0.16, 1, 0.3, 1),
+    top             400ms cubic-bezier(0.16, 1, 0.3, 1),
+    left            400ms cubic-bezier(0.16, 1, 0.3, 1),
+    right           400ms cubic-bezier(0.16, 1, 0.3, 1),
+    border-radius   400ms cubic-bezier(0.16, 1, 0.3, 1),
+    opacity         500ms var(--ease-out)      1500ms,
+    transform       600ms var(--ease-expo-out) 1500ms;
+}
+
+/* Navbar becomes visible after intro sequence */
+.navbar.is-visible {
+  opacity:   1;
+  transform: translateY(0);
+}
+
+.navbar.no-intro {
+  transition-delay: 0ms !important;
+}
+
+/* ── Inner Flex Row ── */
+.navbar__inner {
+  display:         flex;
+  align-items:     center;
+  justify-content: space-between;
+  height:          100%;
+  max-width:       1440px;
+  margin:          0 auto;
+  padding:         0 clamp(var(--space-6), 4vw, var(--space-16));
+  gap:             var(--space-8);
+}
+
+
+/* ============================================================
+   03. NAVBAR — LOGO / WORDMARK
+   ============================================================ */
+
+.navbar__logo {
+  flex-shrink: 0;
+  display:     flex;
+  align-items: center;
+  position:    relative;
+  padding:     4px 0;
+  text-decoration: none;
+  transition:
+    transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+    filter 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.navbar__logo:hover {
+  transform: translateY(-2px);
+  filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.08));
+}
+
+.navbar__logo:focus-visible {
+  outline:        2px solid var(--color-border-focus);
+  outline-offset: 4px;
+  border-radius:  var(--radius-xs);
+}
+
+.navbar__wordmark {
+  font-family:    var(--font-family-primary);
+  font-size:      1.05rem;
+  font-weight:    600;
+  letter-spacing: 0.14em;
+  color:          #111111;
+  line-height:    1;
+  position:       relative;
+  -webkit-user-select: none;
+  user-select:    none;
+  transition: color 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+
+
+/* Minimal roof hint above N on hover */
+.navbar__wordmark::before {
+  content: "";
+  position: absolute;
+  top: -6px;
+  left: 1px;
+  width: 7px;
+  height: 3px;
+  background: #111111;
+  border-radius: 1px 1px 0 0;
+  clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+  opacity: 0;
+  transform: translateY(2px);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.navbar__logo:hover .navbar__wordmark::before {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+
+/* ============================================================
+   04. NAVBAR — NAVIGATION LINKS
+   ============================================================ */
+
+.navbar__nav {
+  display:         flex;
+  align-items:     center;
+  gap:             clamp(var(--space-8), 3vw, var(--space-12));
+  list-style:      none;
+}
+
+.navbar__nav-link {
+  position:       relative;
+  font-family:    var(--font-family-primary);
+  font-size:      var(--text-body-sm);        /* ~15px fluid */
+  font-weight:    var(--font-weight-regular);
+  letter-spacing: var(--tracking-normal);
+  color:          var(--color-text-secondary);
+  text-decoration: none;
+  padding:        6px 14px;
+  border-radius:  100px;
+  transition:     all 300ms var(--ease-smooth);
+}
+
+.navbar__nav-link:hover {
+  color: var(--color-text-primary);
+  background: rgba(0, 0, 0, 0.04);
+}
+
+.navbar__nav-link[aria-current="page"] {
+  color: var(--color-text-primary);
+  background: rgba(0, 0, 0, 0.06);
+}
+
+.navbar__nav-link:focus-visible {
+  outline:        2px solid var(--color-border-focus);
+  outline-offset: 4px;
+  border-radius:  var(--radius-xs);
+}
+
+
+/* ============================================================
+   05. NAVBAR — ACTION BUTTONS (Big Three + Hamburger)
+   ============================================================ */
+
+.navbar__actions {
+  display:     flex;
+  align-items: center;
+  gap:         var(--space-1);
+  flex-shrink: 0;
+  position:    relative;
+}
+
+.navbar__action-btn {
+  position:        relative;
+  display:         flex;
+  align-items:     center;
+  justify-content: center;
+  width:           40px;
+  height:          40px;
+  border:          none;
+  background:      transparent;
+  border-radius:   var(--radius-full);
+  color:           var(--color-text-primary);
+  cursor:          pointer;
+  transition:
+    background var(--duration-fast)   var(--ease-smooth),
+    opacity    var(--duration-normal) var(--ease-smooth),
+    transform  var(--duration-fast)   var(--ease-expo-out);
+}
+
+.navbar__action-btn:hover {
+  background: var(--color-bg-hover);    /* rgba(0,0,0,0.03) */
+  transform:  translateY(-1px);
+}
+
+.navbar__action-btn:active {
+  transform: translateY(0) scale(0.96);
+}
+
+.navbar__action-btn:focus-visible {
+  outline:        2px solid var(--color-border-focus);
+  outline-offset: 2px;
+}
+
+/* ── Icon sizing ── */
+.navbar__icon {
+  width:        20px;
+  height:       20px;
+  stroke:       currentColor;
+  flex-shrink:  0;
+}
+
+
+/* ============================================================
+   06. NAVBAR — CART BADGE
+   ============================================================ */
+
+.navbar__cart-badge {
+  position:       absolute;
+  top:            5px;
+  right:          4px;
+  min-width:      16px;
+  height:         16px;
+  padding:        0 4px;
+  border-radius:  var(--radius-full);
+  background:     var(--color-text-primary);
+  color:          var(--color-text-inverse);
+  font-size:      10px;
+  font-weight:    var(--font-weight-medium);
+  line-height:    16px;
+  text-align:     center;
+  letter-spacing: 0;
+  /* Hidden when count is 0 */
+  opacity:        0;
+  transform:      scale(0.6);
+  transition:
+    opacity   var(--duration-normal) var(--ease-expo-out),
+    transform var(--duration-normal) var(--ease-spring);
+}
+
+.navbar__cart-badge.is-active {
+  opacity:   1;
+  transform: scale(1);
+}
+
+
+/* ============================================================
+   07. NAVBAR — SCROLL-REFINED STATE
+   ============================================================ */
+
+.navbar.is-scrolled {
+  top:          16px;
+  margin:       0 auto;
+  width:        calc(100% - 32px);
+  max-width:    1400px;
+  height:       64px;
+  border-radius: 100px;
+  background:   rgba(255, 255, 255, 0.85);
+  box-shadow:
+    0 12px 32px rgba(0, 0, 0, 0.08),
+    0 2px 8px rgba(0, 0, 0, 0.04),
+    inset 0 1px 0 rgba(255, 255, 255, 0.6);
+  border:       1px solid rgba(0, 0, 0, 0.06);
+}
+
+/* Wordmark subtly responds to scroll too */
+.navbar.is-scrolled .navbar__wordmark {
+  letter-spacing: 0.10em;
+}
+
+/* ── Hide-on-scroll-down state ── */
+.navbar.is-hidden,
+.navbar.is-scroll-ready.is-hidden {
+  transform: translateY(-150%) !important;
+  opacity:   0 !important;
+  pointer-events: none !important;
+  transition:
+    transform 320ms cubic-bezier(0.4, 0, 1, 1),
+    opacity   260ms cubic-bezier(0.4, 0, 1, 1),
+    height          400ms cubic-bezier(0.16, 1, 0.3, 1),
+    background      400ms cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow      400ms cubic-bezier(0.16, 1, 0.3, 1),
+    border-color    400ms cubic-bezier(0.16, 1, 0.3, 1),
+    top             400ms cubic-bezier(0.16, 1, 0.3, 1),
+    left            400ms cubic-bezier(0.16, 1, 0.3, 1),
+    right           400ms cubic-bezier(0.16, 1, 0.3, 1),
+    border-radius   400ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.navbar.is-hidden.is-scrolled,
+.navbar.is-scroll-ready.is-hidden.is-scrolled {
+  transform: translateY(-180%) !important;
+}
+
+/* Reveal: slower expo-out gives premium snap-back feel when scrolling UP */
+.navbar:not(.is-hidden),
+.navbar.is-scroll-ready:not(.is-hidden) {
+  transform: translateY(0);
+  pointer-events: auto;
+  transition:
+    transform 420ms cubic-bezier(0.16, 1, 0.3, 1),
+    opacity   380ms cubic-bezier(0.16, 1, 0.3, 1),
+    height          400ms cubic-bezier(0.16, 1, 0.3, 1),
+    background      400ms cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow      400ms cubic-bezier(0.16, 1, 0.3, 1),
+    border-color    400ms cubic-bezier(0.16, 1, 0.3, 1),
+    top             400ms cubic-bezier(0.16, 1, 0.3, 1),
+    left            400ms cubic-bezier(0.16, 1, 0.3, 1),
+    right           400ms cubic-bezier(0.16, 1, 0.3, 1),
+    border-radius   400ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+
+/* ============================================================
+   08. MOBILE — HAMBURGER BUTTON
+   (Visible only below 768px)
+   ============================================================ */
+
+.navbar__hamburger {
+  display:        none;
+  flex-direction: column;
+  gap:            5px;
+  padding:        10px;
+  width:          40px;
+  height:         40px;
+  align-items:    center;
+  justify-content:center;
+}
+
+.hamburger-bar {
+  display:          block;
+  width:            18px;
+  height:           1px;
+  background:       var(--color-text-primary);
+  border-radius:    var(--radius-full);
+  transform-origin: center;
+  transition:
+    transform  var(--duration-normal) var(--ease-expo-out),
+    opacity    var(--duration-fast)   var(--ease-smooth),
+    width      var(--duration-normal) var(--ease-expo-out);
+}
+
+/* Hamburger → X morphing animation */
+.navbar__hamburger[aria-expanded="true"] .hamburger-bar:nth-child(1) {
+  transform: translateY(6px) rotate(45deg);
+}
+.navbar__hamburger[aria-expanded="true"] .hamburger-bar:nth-child(2) {
+  opacity:   0;
+  transform: scaleX(0);
+}
+.navbar__hamburger[aria-expanded="true"] .hamburger-bar:nth-child(3) {
+  transform: translateY(-6px) rotate(-45deg);
+}
+
+
+/* ============================================================
+   09. MOBILE MENU — DRAWER
+   ============================================================ */
+
+.mobile-menu {
+  position:       fixed;
+  inset:          0;
+  z-index:        var(--z-overlay);          /* 300 */
+  pointer-events: none;
+  /* Visible state toggled via class */
+}
+
+.mobile-menu:not([hidden]) {
+  pointer-events: all;
+}
+
+/* ── Backdrop ── */
+.mobile-menu__backdrop {
+  position:   absolute;
+  inset:      0;
+  background: rgba(0, 0, 0, 0);
+  transition: background var(--duration-slow) var(--ease-smooth);
+}
+
+.mobile-menu.is-open .mobile-menu__backdrop {
+  background: rgba(0, 0, 0, 0.3);
+}
+
+/* ── Drawer ── */
+.mobile-menu__drawer {
+  position:        absolute;
+  top:             0;
+  right:           0;
+  bottom:          0;
+  width:           min(320px, 88vw);
+  background:      var(--color-bg-elevated);  /* #FFFFFF */
+  display:         flex;
+  flex-direction:  column;
+  padding:         var(--space-6) var(--space-6) var(--space-12);
+  transform:       translateX(100%);
+  transition:      transform 480ms cubic-bezier(0.76, 0, 0.24, 1);
+  overflow-y:      auto;
+}
+
+.mobile-menu.is-open .mobile-menu__drawer {
+  transform: translateX(0);
+}
+
+/* ── Drawer Header ── */
+.mobile-menu__header {
+  display:         flex;
+  align-items:     center;
+  justify-content: space-between;
+  padding-bottom:  var(--space-8);
+  border-bottom:   1px solid var(--color-border-subtle);
+  margin-bottom:   var(--space-8);
+}
+
+.mobile-menu__wordmark {
+  font-family:    var(--font-family-primary);
+  font-size:      1.0625rem;
+  font-weight:    var(--font-weight-extralight);
+  letter-spacing: var(--tracking-widest);
+  color:          var(--color-text-primary);
+  -webkit-user-select: none;
+  user-select:    none;
+}
+
+.mobile-menu__close {
+  display:         flex;
+  align-items:     center;
+  justify-content: center;
+  width:           36px;
+  height:          36px;
+  border-radius:   var(--radius-full);
+  color:           var(--color-text-secondary);
+  transition:
+    background var(--duration-fast)   var(--ease-smooth),
+    color      var(--duration-fast)   var(--ease-smooth);
+}
+
+.mobile-menu__close:hover {
+  background: var(--color-bg-hover);
+  color:      var(--color-text-primary);
+}
+
+.mobile-menu__close:focus-visible {
+  outline:        2px solid var(--color-border-focus);
+  outline-offset: 2px;
+}
+
+.mobile-menu__close svg {
+  width:  20px;
+  height: 20px;
+}
+
+
+/* ============================================================
+   10. MOBILE MENU — LINKS & FOOTER
+   ============================================================ */
+
+.mobile-menu__nav {
+  display:        flex;
+  flex-direction: column;
+  gap:            0;
+  flex:           1;
+}
+
+.mobile-menu__link {
+  display:          block;
+  font-family:      var(--font-family-primary);
+  font-size:        var(--text-heading-sm);    /* ~1.25rem fluid */
+  font-weight:      var(--font-weight-light);
+  letter-spacing:   var(--tracking-snug);
+  color:            var(--color-text-primary);
+  text-decoration:  none;
+  padding:          var(--space-5) 0;
+  border-bottom:    1px solid var(--color-border-subtle);
+  /* Staggered entrance via JS-applied delay */
+  opacity:          0;
+  transform:        translateX(12px);
+  transition:
+    opacity   350ms var(--ease-out),
+    transform 450ms var(--ease-expo-out),
+    color     var(--duration-normal) var(--ease-smooth);
+}
+
+.mobile-menu.is-open .mobile-menu__link {
+  opacity:   1;
+  transform: translateX(0);
+}
+
+/* Stagger delays */
+.mobile-menu.is-open .mobile-menu__nav li:nth-child(1) .mobile-menu__link { transition-delay: 80ms;  }
+.mobile-menu.is-open .mobile-menu__nav li:nth-child(2) .mobile-menu__link { transition-delay: 130ms; }
+.mobile-menu.is-open .mobile-menu__nav li:nth-child(3) .mobile-menu__link { transition-delay: 180ms; }
+.mobile-menu.is-open .mobile-menu__nav li:nth-child(4) .mobile-menu__link { transition-delay: 230ms; }
+
+.mobile-menu__link:hover {
+  color: var(--color-text-secondary);
+}
+
+.mobile-menu__link:focus-visible {
+  outline:        2px solid var(--color-border-focus);
+  outline-offset: 4px;
+  border-radius:  var(--radius-xs);
+}
+
+/* ── Drawer Footer ── */
+.mobile-menu__footer {
+  margin-top:    auto;
+  padding-top:   var(--space-8);
+}
+
+.mobile-menu__tagline {
+  font-family:    var(--font-family-primary);
+  font-size:      var(--text-caption);
+  font-weight:    var(--font-weight-regular);
+  letter-spacing: var(--tracking-caps);
+  color:          var(--color-text-tertiary);
+  text-transform: uppercase;
+}
+
+
+/* ============================================================
+   RESPONSIVE BREAKPOINTS
+   ============================================================ */
+
+/* ── Tablet & smaller (below 768px) ── */
+@media (max-width: 767px) {
+
+  /* Hide desktop nav links */
+  .navbar__nav {
+    display: none;
+  }
+
+  /* Show hamburger */
+  .navbar__hamburger {
+    display: flex;
+  }
+
+  /* Adjust search/cart/account icon spacing and touch targets */
+  .navbar__actions {
+    gap: 0;
+  }
+
+  .navbar__action-btn {
+    width: 44px;
+    height: 44px;
+  }
+
+}
+
+/* ── Small mobile (below 480px) ── */
+@media (max-width: 479px) {
+
+  .navbar__inner {
+    padding: 0 var(--space-5);
+  }
+
+}
+
+
+/* ============================================================
+   11. REDUCED MOTION OVERRIDES
+   Respect prefers-reduced-motion — no animation, instant transitions
+   ============================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+
+  .nest-intro,
+  .nest-intro.is-done,
+  .intro-brand,
+  .nest-intro.is-parting .intro-brand {
+    transition: none !important;
+    animation:  none !important;
+  }
+
+  /* Skip intro instantly */
+  .nest-intro {
+    display: none;
+  }
+
+  /* Show navbar immediately */
+  .navbar {
+    opacity:   1 !important;
+    transform: none !important;
+    transition:
+      height       400ms var(--ease-smooth),
+      background   300ms var(--ease-smooth),
+      box-shadow   300ms var(--ease-smooth);
+  }
+
+  .mobile-menu__drawer {
+    transition: none;
+  }
+
+  .mobile-menu__link {
+    opacity:   1 !important;
+    transform: none !important;
+    transition: color var(--duration-normal) var(--ease-smooth) !important;
+  }
+
+  .hamburger-bar {
+    transition: none;
+  }
+
+}
+
+
+/* ============================================================
+   12. NAVBAR — HERO OVERLAY STATE (Phase 2)
+   When hero is in viewport, navbar text + icons shift to white
+   for legibility against the dark cinematic background.
+   ============================================================ */
+
+.navbar.is-over-hero {
+  background:   transparent;
+  border-color: rgba(255, 255, 255, 0.0);
+  box-shadow:   none;
+  /*
+   * Must include opacity + transform here because this class is added
+   * immediately on load (before is-visible), which overrides the base
+   * .navbar transition. Keeping them here preserves the entrance animation.
+   */
+  transition:
+    background    400ms var(--ease-smooth),
+    border-color  400ms var(--ease-smooth),
+    box-shadow    400ms var(--ease-smooth),
+    height        400ms var(--ease-smooth),
+    opacity       500ms var(--ease-out)      1500ms,
+    transform     600ms var(--ease-expo-out) 1500ms;
+}
+
+
+.navbar.is-over-hero .navbar__wordmark {
+  color: #FFFFFF;
+}
+
+.navbar.is-over-hero .navbar__nav-link {
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.navbar.is-over-hero .navbar__nav-link:hover,
+.navbar.is-over-hero .navbar__nav-link[aria-current="page"] {
+  color: #FFFFFF;
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.navbar.is-over-hero .navbar__action-btn {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.navbar.is-over-hero .navbar__action-btn:hover {
+  background: rgba(255, 255, 255, 0.12);
+  color:      #FFFFFF;
+}
+
+.navbar.is-over-hero .hamburger-bar {
+  background: #FFFFFF;
+}
+
+/* Scrolled state wins over hero overlay */
+.navbar.is-over-hero.is-scrolled {
+  background:   rgba(10, 10, 10, 0.88);
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+/* ============================================================
+   06. NAVBAR — PROFILE DROPDOWN
+   ============================================================ */
+
+.navbar__dropdown {
+  position: absolute;
+  top: calc(100% + 12px);
+  right: 0;
+  width: 220px;
+  background: #ffffff;
+  border-radius: var(--radius-lg);
+  box-shadow: 0 12px 48px rgba(0, 0, 0, 0.12), 0 4px 16px rgba(0, 0, 0, 0.04);
+  padding: var(--space-3);
+  z-index: 1000;
+  
+  /* Animation Start State */
+  opacity: 0;
+  transform: translateY(10px);
+  pointer-events: none;
+  transition: opacity 300ms var(--ease-smooth), transform 300ms var(--ease-smooth);
+}
+
+.navbar__dropdown.is-open {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.navbar__dropdown-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.navbar__dropdown-item {
+  display: block;
+  font-family: var(--font-family-primary);
+  font-size: var(--text-body-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-secondary);
+  text-decoration: none;
+  padding: 10px 16px;
+  border-radius: var(--radius-sm);
+  transition: background 200ms var(--ease-smooth), color 200ms var(--ease-smooth);
+}
+
+.navbar__dropdown-item:hover,
+.navbar__dropdown-item:focus-visible {
+  background: var(--color-bg-subtle);
+  color: var(--color-text-primary);
+  outline: none;
+}
+
+.navbar__dropdown-item:focus-visible {
+  box-shadow: 0 0 0 2px var(--color-border-focus);
+}
+
+.navbar__dropdown-divider {
+  height: 1px;
+  background: var(--color-border-subtle);
+  margin: var(--space-2) 0;
+}
+
+/* ── Global Search Dropdown ── */
+.navbar__search-dropdown {
+  width: 280px;
+  right: 48px; /* Offset so it doesn't cover the cart/profile buttons completely */
+}
+
+@media (max-width: 767px) {
+  .navbar__search-dropdown {
+    width: 240px;
+    right: 0;
+  }
+}
+
+.navbar__search-form {
+  margin: 0;
+  display: flex;
+}
+
+.navbar__search-input {
+  width: 100%;
+  font-family: var(--font-family-primary);
+  font-size: var(--text-body-sm);
+  padding: 10px 14px;
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-md);
+  background: var(--color-bg-subtle);
+  color: var(--color-text-primary);
+  outline: none;
+  transition: border-color 200ms var(--ease-smooth), background 200ms var(--ease-smooth);
+}
+
+.navbar__search-input:focus {
+  border-color: var(--color-border-focus);
+  background: #ffffff;
+}
+
+
+/* ============================================================
+   REDUCED MOTION — Accessibility override
+   ============================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  /* Disable scroll-hide slide animation — use opacity-only fade */
+  .navbar.is-scroll-ready.is-hidden {
+    transform:  none;
+    opacity:    0;
+    transition: opacity 200ms linear;
+  }
+
+  .navbar.is-scroll-ready.is-hidden.is-scrolled {
+    transform: none;
+  }
+
+  .navbar.is-scroll-ready:not(.is-hidden) {
+    transition: opacity 200ms linear;
+  }
+}

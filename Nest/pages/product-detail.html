@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="NEST — Premium smart home product details. Explore specs, features, and reviews." />
+  <meta name="theme-color" content="#FAFAFA" />
+
+  <title>Product — NEST</title>
+  <link rel="icon" href="../fav.png" type="image/png" />
+
+  <!-- Design System (Phase 0) -->
+  <link rel="stylesheet" href="../css/style.css" />
+
+  <!-- Phase 1: Intro Animation + Navbar -->
+  <link rel="stylesheet" href="../css/navbar.css" />
+
+  <!-- Phase 3 footer reuse -->
+  <link rel="stylesheet" href="../css/sections.css" />
+
+  <!-- Phase 4 star styles reuse -->
+  <link rel="stylesheet" href="../css/products-page.css" />
+
+  <!-- Phase 5: Product Detail -->
+  <link rel="stylesheet" href="../css/product-detail.css" />
+
+</head>
+<body>
+
+  <!-- ============================================================
+       OPENING ANIMATION (Phase 1)
+       ============================================================ -->
+
+  <div id="nest-intro" class="nest-intro" aria-hidden="true" role="presentation">
+    <div class="intro-brand" id="intro-brand">
+      <span class="intro-wordmark">NEST</span>
+      <span class="intro-tagline">Technology That Belongs.</span>
+    </div>
+  </div>
+
+
+  <!-- ============================================================
+       NAVBAR (Phase 1)
+       ============================================================ -->
+
+  <header id="nest-navbar" class="navbar" role="banner">
+    <nav class="navbar__inner" aria-label="Main navigation">
+
+      <a href="../index.html" class="navbar__logo" aria-label="NEST — Return to homepage">
+        <span class="navbar__wordmark">NEST</span>
+      </a>
+
+      <ul class="navbar__nav" role="list" id="navbar-nav">
+        <li class="navbar__nav-item">
+          <a href="./products.html" class="navbar__nav-link" id="nav-link-products">Products</a>
+        </li>
+        <li class="navbar__nav-item">
+          <a href="../index.html#categories" class="navbar__nav-link" id="nav-link-categories">Categories</a>
+        </li>
+        <li class="navbar__nav-item">
+          <a href="../index.html#about" class="navbar__nav-link" id="nav-link-about">About</a>
+        </li>
+      </ul>
+
+      <div class="navbar__actions" role="group" aria-label="Site utilities">
+
+        <button class="navbar__action-btn" id="btn-search" aria-label="Open search" type="button">
+          <svg class="navbar__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+               stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+            <circle cx="11" cy="11" r="7"/>
+            <line x1="16.5" y1="16.5" x2="22" y2="22"/>
+          </svg>
+        </button>
+
+        <button class="navbar__action-btn" id="btn-cart" aria-label="Open cart" type="button">
+          <svg class="navbar__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+               stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+            <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
+            <line x1="3" y1="6" x2="21" y2="6"/>
+            <path d="M16 10a4 4 0 0 1-8 0"/>
+          </svg>
+          <span class="navbar__cart-badge" id="cart-count" aria-live="polite">0</span>
+        </button>
+
+        <button class="navbar__action-btn" id="btn-account" aria-label="My account" type="button">
+          <svg class="navbar__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+               stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+            <circle cx="12" cy="7" r="4"/>
+          </svg>
+        </button>
+
+        <button class="navbar__action-btn navbar__hamburger"
+                id="btn-hamburger" aria-label="Open navigation menu"
+                aria-expanded="false" aria-controls="mobile-menu" type="button">
+          <span class="hamburger-bar"></span>
+          <span class="hamburger-bar"></span>
+          <span class="hamburger-bar"></span>
+        </button>
+
+      </div>
+
+    </nav>
+  </header>
+
+
+  <!-- ============================================================
+       MOBILE MENU (Phase 1)
+       ============================================================ -->
+
+  <div id="mobile-menu" class="mobile-menu" role="dialog" aria-modal="true"
+       aria-label="Navigation menu" hidden>
+    <div class="mobile-menu__backdrop" id="mobile-backdrop" aria-hidden="true"></div>
+    <div class="mobile-menu__drawer" id="mobile-drawer" tabindex="-1">
+      <div class="mobile-menu__header">
+        <span class="mobile-menu__wordmark" aria-hidden="true">NEST</span>
+        <button class="mobile-menu__close" id="btn-menu-close"
+                aria-label="Close navigation menu" type="button">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+               stroke-width="1.5" stroke-linecap="round" aria-hidden="true">
+            <line x1="18" y1="6" x2="6" y2="18"/>
+            <line x1="6" y1="6" x2="18" y2="18"/>
+          </svg>
+        </button>
+      </div>
+      <nav aria-label="Mobile navigation">
+        <ul class="mobile-menu__nav" role="list">
+          <li><a href="./products.html"         class="mobile-menu__link">Products</a></li>
+          <li><a href="../index.html#categories" class="mobile-menu__link">Categories</a></li>
+          <li><a href="../index.html#about"      class="mobile-menu__link">About</a></li>
+          <li><a href="./account.html"                     class="mobile-menu__link">Account</a></li>
+        </ul>
+      </nav>
+      <footer class="mobile-menu__footer">
+        <p class="mobile-menu__tagline">Technology That Belongs.</p>
+      </footer>
+    </div>
+  </div>
+
+
+  <!-- ============================================================
+       MAIN CONTENT — dynamically populated by product-detail.js
+       ============================================================ -->
+
+  <main id="main-content" class="site-main" tabindex="-1">
+
+    <div id="pd-page" class="pd-page">
+
+      <!-- Breadcrumb -->
+      <nav class="pd-breadcrumb" aria-label="Breadcrumb">
+        <a href="../index.html">Home</a>
+        <span class="pd-breadcrumb__sep" aria-hidden="true">/</span>
+        <a href="./products.html">Products</a>
+        <span class="pd-breadcrumb__sep" aria-hidden="true">/</span>
+        <span class="pd-breadcrumb__current" id="crumb-product" aria-current="page">Product</span>
+      </nav>
+
+      <!-- ── Hero: Image + Info ── -->
+      <section class="pd-hero" aria-label="Product information">
+
+        <!-- Left: Product Image -->
+        <div class="pd-hero__gallery" aria-label="Product image">
+          <div class="pd-hero__img-wrap">
+            <img id="pd-img" src="" alt="" class="pd-hero__img" />
+            <div class="pd-badges" id="pd-badges" aria-hidden="true"></div>
+          </div>
+        </div>
+
+        <!-- Right: Product Info -->
+        <div class="pd-hero__info">
+
+          <p class="pd-category" id="pd-category">—</p>
+
+          <h1 class="pd-name" id="pd-name">Loading...</h1>
+
+          <div class="pd-rating-wrap" id="pd-rating" aria-label="Product rating"></div>
+
+          <p class="pd-desc" id="pd-desc"></p>
+
+          <div class="pd-hero__divider"></div>
+
+          <div class="pd-price-row">
+            <span class="pd-price" id="pd-price" aria-label="Price">—</span>
+          </div>
+
+          <p class="pd-tax-note" id="pd-tax-note"></p>
+
+          <!-- Quantity + CTA -->
+          <div class="pd-actions">
+
+            <div class="pd-qty" role="group" aria-label="Product quantity">
+              <button class="pd-qty__btn" id="pd-qty-dec" type="button"
+                      aria-label="Decrease quantity">−</button>
+              <span class="pd-qty__val" id="pd-qty-val" aria-live="polite">1</span>
+              <button class="pd-qty__btn" id="pd-qty-inc" type="button"
+                      aria-label="Increase quantity">+</button>
+            </div>
+
+            <div class="pd-cta">
+              <button id="pd-add-cart" class="pd-add-cart" type="button"
+                      aria-label="Add product to cart">
+                Add to Cart
+              </button>
+              <button id="pd-view-cart" class="pd-view-cart" type="button"
+                      aria-label="View your cart">
+                View Cart
+              </button>
+            </div>
+
+          </div>
+
+        </div>
+        <!-- /hero info -->
+
+      </section>
+      <!-- /hero -->
+
+
+      <!-- ── Features Section ── -->
+      <section class="pd-section" aria-labelledby="pd-features-title">
+        <p class="pd-section-eyebrow">Key Features</p>
+        <h2 class="pd-section-title" id="pd-features-title">What Makes It Special</h2>
+        <div id="pd-features-grid" class="pd-features-grid" role="list"></div>
+      </section>
+
+
+      <!-- ── Specifications Section ── -->
+      <div class="pd-section--alt">
+        <section class="pd-section pd-container" aria-labelledby="pd-specs-title">
+          <p class="pd-section-eyebrow">Technical</p>
+          <h2 class="pd-section-title" id="pd-specs-title">Specifications</h2>
+          <dl id="pd-specs-list" class="pd-specs-list"></dl>
+        </section>
+      </div>
+
+
+      <!-- ── Reviews Section ── -->
+      <section class="pd-section" aria-labelledby="pd-reviews-title">
+        <p class="pd-section-eyebrow">Reviews</p>
+        <h2 class="pd-section-title" id="pd-reviews-title">What Customers Say</h2>
+        <div id="pd-reviews-grid" class="pd-reviews-grid"></div>
+      </section>
+
+
+      <!-- ── Related Products ── -->
+      <div class="pd-section--alt">
+        <section class="pd-section pd-container" aria-labelledby="pd-related-title">
+          <p class="pd-section-eyebrow">Discover More</p>
+          <h2 class="pd-section-title" id="pd-related-title">You May Also Like</h2>
+          <div id="pd-related-grid" class="pd-related-grid"></div>
+        </section>
+      </div>
+
+    </div><!-- /pd-page -->
+
+  </main>
+
+
+  <!-- ============================================================
+       FOOTER (Phase 3 reuse)
+       ============================================================ -->
+  <footer class="site-footer" role="contentinfo">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <span class="footer-wordmark">NEST</span>
+        <p class="footer-tagline">Technology That Belongs.</p>
+      </div>
+      <nav class="footer-nav" aria-label="Footer navigation">
+        <div class="footer-nav-col">
+          <p class="footer-nav-label">Explore</p>
+          <ul role="list">
+            <li><a href="./products.html" class="footer-nav-link">Products</a></li>
+            <li><a href="../index.html#categories" class="footer-nav-link">Categories</a></li>
+            <li><a href="../index.html#about" class="footer-nav-link">About</a></li>
+          </ul>
+        </div>
+        <div class="footer-nav-col">
+          <p class="footer-nav-label">Account</p>
+          <ul role="list">
+            <li><a href="./account.html" class="footer-nav-link">My Account</a></li>
+            <li><a href="./orders.html" class="footer-nav-link">Order History</a></li>
+            <li><a href="./wishlist.html" class="footer-nav-link">Wishlist</a></li>
+          </ul>
+        </div>
+      </nav>
+    </div>
+    <div class="footer-bottom">
+      <p class="footer-copy">&copy; 2026 NEST. All rights reserved.</p>
+    </div>
+  </footer>
+
+
+  <!-- Scripts -->
+  <script src="../js/navbar.js"></script>
+  <script src="../js/data.js"></script>
+  <script src="../js/cart.js"></script>
+  <script src="../js/product-detail.js"></script>
+
+</body>
+</html>

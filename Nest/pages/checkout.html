@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="NEST Checkout — Securely complete your purchase of premium smart home devices." />
+  <meta name="theme-color" content="#FAFAFA" />
+
+  <title>Checkout — NEST</title>
+  <link rel="icon" href="../fav.png" type="image/png" />
+
+  <!-- Design System (Phase 0) -->
+  <link rel="stylesheet" href="../css/style.css" />
+
+  <!-- Phase 1: Intro Animation + Navbar -->
+  <link rel="stylesheet" href="../css/navbar.css" />
+
+  <!-- Phase 3 footer -->
+  <link rel="stylesheet" href="../css/sections.css" />
+
+  <!-- Phase 6: Checkout Page -->
+  <link rel="stylesheet" href="../css/checkout.css?v=1.0.2" />
+
+</head>
+<body>
+
+  <!-- ============================================================
+       OPENING ANIMATION (Phase 1)
+       ============================================================ -->
+
+  <div id="nest-intro" class="nest-intro" aria-hidden="true" role="presentation">
+    <div class="intro-brand" id="intro-brand">
+      <span class="intro-wordmark">NEST</span>
+      <span class="intro-tagline">Technology That Belongs.</span>
+    </div>
+  </div>
+
+
+  <!-- ============================================================
+       NAVBAR (Phase 1)
+       ============================================================ -->
+
+  <header id="nest-navbar" class="navbar" role="banner">
+    <nav class="navbar__inner" aria-label="Main navigation">
+
+      <a href="../index.html" class="navbar__logo" aria-label="NEST — Return to homepage">
+        <span class="navbar__wordmark">NEST</span>
+      </a>
+
+      <ul class="navbar__nav" role="list" id="navbar-nav">
+        <li class="navbar__nav-item">
+          <a href="./products.html" class="navbar__nav-link" id="nav-link-products">Products</a>
+        </li>
+        <li class="navbar__nav-item">
+          <a href="../index.html#categories" class="navbar__nav-link" id="nav-link-categories">Categories</a>
+        </li>
+        <li class="navbar__nav-item">
+          <a href="../index.html#about" class="navbar__nav-link" id="nav-link-about">About</a>
+        </li>
+      </ul>
+
+      <div class="navbar__actions" role="group" aria-label="Site utilities">
+
+        <button class="navbar__action-btn" id="btn-search" aria-label="Open search" type="button">
+          <svg class="navbar__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+               stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+            <circle cx="11" cy="11" r="7"/>
+            <line x1="16.5" y1="16.5" x2="22" y2="22"/>
+          </svg>
+        </button>
+
+        <a href="./cart.html" class="navbar__action-btn" aria-label="View cart">
+          <svg class="navbar__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+               stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+            <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
+            <line x1="3" y1="6" x2="21" y2="6"/>
+            <path d="M16 10a4 4 0 0 1-8 0"/>
+          </svg>
+          <span class="navbar__cart-badge" id="cart-count" aria-live="polite">0</span>
+        </a>
+
+        <button class="navbar__action-btn" id="btn-account" aria-label="My account" type="button">
+          <svg class="navbar__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+               stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+            <circle cx="12" cy="7" r="4"/>
+          </svg>
+        </button>
+
+        <button class="navbar__action-btn navbar__hamburger"
+                id="btn-hamburger" aria-label="Open navigation menu"
+                aria-expanded="false" aria-controls="mobile-menu" type="button">
+          <span class="hamburger-bar"></span>
+          <span class="hamburger-bar"></span>
+          <span class="hamburger-bar"></span>
+        </button>
+
+      </div>
+
+    </nav>
+  </header>
+
+
+  <!-- ============================================================
+       MOBILE MENU (Phase 1)
+       ============================================================ -->
+
+  <div id="mobile-menu" class="mobile-menu" role="dialog" aria-modal="true"
+       aria-label="Navigation menu" hidden>
+    <div class="mobile-menu__backdrop" id="mobile-backdrop" aria-hidden="true"></div>
+    <div class="mobile-menu__drawer" id="mobile-drawer" tabindex="-1">
+      <div class="mobile-menu__header">
+        <span class="mobile-menu__wordmark" aria-hidden="true">NEST</span>
+        <button class="mobile-menu__close" id="btn-menu-close"
+                aria-label="Close navigation menu" type="button">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+               stroke-width="1.5" stroke-linecap="round" aria-hidden="true">
+            <line x1="18" y1="6" x2="6" y2="18"/>
+            <line x1="6" y1="6" x2="18" y2="18"/>
+          </svg>
+        </button>
+      </div>
+      <nav aria-label="Mobile navigation">
+        <ul class="mobile-menu__nav" role="list">
+          <li><a href="./products.html"         class="mobile-menu__link">Products</a></li>
+          <li><a href="../index.html#categories" class="mobile-menu__link">Categories</a></li>
+          <li><a href="../index.html#about"      class="mobile-menu__link">About</a></li>
+          <li><a href="./account.html"                     class="mobile-menu__link">Account</a></li>
+        </ul>
+      </nav>
+      <footer class="mobile-menu__footer">
+        <p class="mobile-menu__tagline">Technology That Belongs.</p>
+      </footer>
+    </div>
+  </div>
+
+
+  <!-- ============================================================
+       MAIN CONTENT
+       ============================================================ -->
+
+  <main id="main-content" class="site-main checkout-page" tabindex="-1">
+
+    <header class="checkout-header">
+      <p class="checkout-header__eyebrow">Secure Checkout</p>
+      <h1 class="checkout-header__title">Complete Your Order</h1>
+    </header>
+
+
+    <!-- Progress Bar -->
+    <div class="progress-bar" role="progressbar" aria-label="Checkout progress" aria-valuenow="1" aria-valuemin="1" aria-valuemax="3">
+      <div class="progress-step progress-step--active" id="prog-step-1">
+        <div class="progress-step__circle">1</div>
+        <span class="progress-step__label">Shipping</span>
+      </div>
+      <div class="progress-connector">
+        <div class="progress-connector__fill" id="prog-bar-fill"></div>
+      </div>
+      <div class="progress-step" id="prog-step-2">
+        <div class="progress-step__circle">2</div>
+        <span class="progress-step__label">Review</span>
+      </div>
+      <div class="progress-connector"></div>
+      <div class="progress-step" id="prog-step-3">
+        <div class="progress-step__circle">3</div>
+        <span class="progress-step__label">Confirm</span>
+      </div>
+    </div>
+
+
+    <div class="checkout-grid">
+
+      <!-- ── LEFT COLUMN: Flow Steps ── -->
+      <div class="checkout-flow">
+
+        <!-- STEP 1: SHIPPING INFORMATION -->
+        <div class="checkout-step checkout-step--active checkout-step--visible" id="step-1">
+          <div class="step-header">
+            <h2 class="step-title">Shipping Information</h2>
+            <p class="step-desc">Enter the address where you want your Nest devices delivered.</p>
+          </div>
+
+          <form id="shipping-form" class="form-grid" onsubmit="event.preventDefault();">
+            
+            <div class="form-group form-group--full">
+              <label class="form-label" for="ship-name">Full Name</label>
+              <input type="text" id="ship-name" class="form-input" placeholder="e.g. Sasi Kumar" required autocomplete="name" />
+              <span class="form-error-msg">Please enter your full name.</span>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="ship-email">Email Address</label>
+              <input type="email" id="ship-email" class="form-input" placeholder="sasi@example.com" required autocomplete="email" />
+              <span class="form-error-msg">Please enter a valid email address.</span>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="ship-phone">Phone Number</label>
+              <input type="tel" id="ship-phone" class="form-input" placeholder="+91 98765 43210" required autocomplete="tel" />
+              <span class="form-error-msg">Please enter a valid phone number (at least 7 digits).</span>
+            </div>
+
+            <div class="form-group form-group--full">
+              <label class="form-label" for="ship-address">Street Address</label>
+              <input type="text" id="ship-address" class="form-input" placeholder="Flat / House No., Building, Street" required autocomplete="street-address" />
+              <span class="form-error-msg">Please enter your street address.</span>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="ship-city">City</label>
+              <input type="text" id="ship-city" class="form-input" placeholder="Bengaluru" required autocomplete="address-level2" />
+              <span class="form-error-msg">Please enter your city.</span>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="ship-state">State / Province</label>
+              <input type="text" id="ship-state" class="form-input" placeholder="Karnataka" required autocomplete="address-level1" />
+              <span class="form-error-msg">Please enter your state.</span>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="ship-zip">PIN / Zip Code</label>
+              <input type="text" id="ship-zip" class="form-input" placeholder="560001" required autocomplete="postal-code" />
+              <span class="form-error-msg">Please enter your postal code.</span>
+            </div>
+
+          </form>
+
+          <div class="step-actions">
+            <a href="./cart.html" class="btn-secondary">Return to Cart</a>
+            <button type="button" class="btn-primary" id="btn-to-review">
+              Continue to Review
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" width="18" height="18" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </button>
+          </div>
+        </div>
+        <!-- /STEP 1 -->
+
+
+        <!-- STEP 2: REVIEW ORDER -->
+        <div class="checkout-step" id="step-2">
+          <div class="step-header">
+            <h2 class="step-title">Review Order</h2>
+            <p class="step-desc">Verify your shipping details and selected items before final confirmation.</p>
+          </div>
+
+          <!-- Shipping Summary Card -->
+          <div class="review-section">
+            <div class="review-section__header">
+              <span class="review-section__title">Shipping Details</span>
+              <button type="button" class="review-edit-link" id="btn-edit-shipping">Edit</button>
+            </div>
+            <div id="review-shipping-details" class="review-shipping-grid">
+              <!-- Populated by JS -->
+            </div>
+          </div>
+
+          <!-- Items List Card -->
+          <div class="review-section">
+            <div class="review-section__header">
+              <span class="review-section__title">Items in Cart</span>
+              <a href="./cart.html" class="review-edit-link">Edit Cart</a>
+            </div>
+            <div id="review-items-list" class="review-items-list">
+              <!-- Populated by JS -->
+            </div>
+          </div>
+
+          <div class="step-actions">
+            <button type="button" class="btn-secondary" id="btn-back-shipping">Back to Shipping</button>
+            <button type="button" class="btn-primary" id="btn-to-confirm">
+              Continue to Confirmation
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" width="18" height="18" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </button>
+          </div>
+        </div>
+        <!-- /STEP 2 -->
+
+
+        <!-- STEP 3: CONFIRMATION -->
+        <div class="checkout-step" id="step-3">
+          <div class="step-header">
+            <h2 class="step-title">Final Confirmation</h2>
+            <p class="step-desc">Almost there. Please review your final order terms and place your order.</p>
+          </div>
+
+          <div class="confirm-box">
+            <div class="confirm-box__icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="28" height="28"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>
+            </div>
+            <h3 class="confirm-box__title">Ready to Authorise Purchase</h3>
+            <p class="confirm-box__text">
+              By clicking "Place Order", you authorize NEST to process your simulated payment and initiate shipment to your provided delivery address.
+            </p>
+
+            <div class="confirm-details">
+              <div>
+                <div class="review-info-label">Order Total</div>
+                <div class="review-info-val" id="conf-total-val">₹0</div>
+              </div>
+              <div>
+                <div class="review-info-label">Estimated Delivery</div>
+                <div class="review-info-val" id="conf-delivery-val">By 3–5 days</div>
+              </div>
+              <div>
+                <div class="review-info-label">Payment Method</div>
+                <div class="review-info-val" id="conf-payment-val">Secured Online Payment</div>
+              </div>
+            </div>
+
+            <div class="security-badge">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="16" height="16"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+              <span>256-Bit SSL Encrypted Checkout</span>
+            </div>
+          </div>
+
+          <div class="step-actions">
+            <button type="button" class="btn-secondary" id="btn-back-review">Back to Review</button>
+            <button type="button" class="btn-primary" id="btn-place-order">
+              Place Order
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" width="18" height="18" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+            </button>
+          </div>
+        </div>
+        <!-- /STEP 3 -->
+
+      </div>
+      <!-- /LEFT COLUMN -->
+
+
+      <!-- ── RIGHT COLUMN: Sticky Order Summary ── -->
+      <aside class="checkout-summary" aria-label="Order Summary">
+        <h2 class="checkout-summary__title">Order Summary</h2>
+
+        <div id="sum-mini-items" class="summary-items-mini">
+          <!-- Populated by JS -->
+        </div>
+
+        <div class="summary-line">
+          <span class="summary-label">Subtotal</span>
+          <span class="summary-value" id="sum-subtotal">₹0</span>
+        </div>
+
+        <div class="summary-line">
+          <span class="summary-label">GST (18%)</span>
+          <span class="summary-value" id="sum-tax">₹0</span>
+        </div>
+
+        <div class="summary-line">
+          <span class="summary-label">Shipping</span>
+          <span class="summary-value summary-value--green" id="sum-shipping">Free</span>
+        </div>
+
+        <div class="summary-line summary-line--total">
+          <span class="summary-label">Total</span>
+          <span class="summary-value" id="sum-total">₹0</span>
+        </div>
+      </aside>
+      <!-- /RIGHT COLUMN -->
+
+    </div>
+    <!-- /checkout-grid -->
+
+  </main>
+
+
+  <!-- ============================================================
+       FOOTER (Phase 3 reuse)
+       ============================================================ -->
+  <footer class="site-footer" role="contentinfo">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <span class="footer-wordmark">NEST</span>
+        <p class="footer-tagline">Technology That Belongs.</p>
+      </div>
+      <nav class="footer-nav" aria-label="Footer navigation">
+        <div class="footer-nav-col">
+          <p class="footer-nav-label">Explore</p>
+          <ul role="list">
+            <li><a href="./products.html" class="footer-nav-link">Products</a></li>
+            <li><a href="../index.html#categories" class="footer-nav-link">Categories</a></li>
+            <li><a href="../index.html#about" class="footer-nav-link">About</a></li>
+          </ul>
+        </div>
+        <div class="footer-nav-col">
+          <p class="footer-nav-label">Account</p>
+          <ul role="list">
+            <li><a href="./account.html" class="footer-nav-link">My Account</a></li>
+            <li><a href="./orders.html" class="footer-nav-link">Order History</a></li>
+            <li><a href="./wishlist.html" class="footer-nav-link">Wishlist</a></li>
+          </ul>
+        </div>
+      </nav>
+    </div>
+    <div class="footer-bottom">
+      <p class="footer-copy">&copy; 2026 NEST. All rights reserved.</p>
+    </div>
+  </footer>
+
+
+  <!-- Scripts -->
+  <script src="../js/navbar.js"></script>
+  <script src="../js/data.js"></script>
+  <script src="../js/cart.js"></script>
+  <script src="../js/checkout.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,695 @@
+/* ============================================================
+   NEST — Phase 6
+   checkout.css — Checkout Page Styles
+   ============================================================
+
+   TABLE OF CONTENTS
+   01. Page Container & Header
+   02. Progress Indicator (3 Steps)
+   03. Two-Column Layout (Form Left, Summary Right)
+   04. Step Containers & Transitions
+   05. Form Inputs & Floating Labels
+   06. Validation & Error States
+   07. Review Order Step UI
+   08. Confirmation Step UI
+   09. Sticky Order Summary Box
+   10. Action Buttons & Navigation
+   11. Responsive Design
+   12. Reduced Motion
+   ============================================================ */
+
+
+/* ============================================================
+   01. PAGE CONTAINER & HEADER
+   ============================================================ */
+
+.checkout-page {
+  max-width:   1440px;
+  margin:      0 auto;
+  padding:     var(--space-8) clamp(var(--space-6), 4vw, var(--space-16)) var(--space-20);
+  min-height:  80vh;
+}
+
+.checkout-header {
+  text-align:    center;
+  margin-bottom: clamp(var(--space-8), 4vw, var(--space-12));
+}
+
+.checkout-header__eyebrow {
+  font-family:    var(--font-family-primary);
+  font-size:      var(--text-caption);
+  font-weight:    var(--font-weight-medium);
+  letter-spacing: var(--tracking-widest);
+  text-transform: uppercase;
+  color:          var(--color-text-tertiary);
+  margin-bottom:  var(--space-2);
+  line-height:    1;
+}
+
+.checkout-header__title {
+  font-family:    var(--font-family-primary);
+  font-size:      clamp(2rem, 4vw, 3.25rem);
+  font-weight:    var(--font-weight-light);
+  letter-spacing: var(--tracking-tight);
+  color:          var(--color-text-primary);
+  line-height:    var(--leading-tight);
+}
+
+
+/* ============================================================
+   02. PROGRESS INDICATOR (3 STEPS)
+   ============================================================ */
+
+.progress-bar {
+  display:         flex;
+  align-items:     center;
+  justify-content: center;
+  max-width:       600px;
+  margin:          0 auto clamp(var(--space-10), 5vw, var(--space-16));
+  position:        relative;
+}
+
+.progress-step {
+  display:        flex;
+  flex-direction: column;
+  align-items:    center;
+  gap:            var(--space-2);
+  position:       relative;
+  z-index:        2;
+  flex:           1;
+}
+
+.progress-step__circle {
+  width:           40px;
+  height:          40px;
+  border-radius:   50%;
+  background:      var(--color-bg-subtle);
+  border:          2px solid var(--color-border-default);
+  display:         flex;
+  align-items:     center;
+  justify-content: center;
+  font-family:     var(--font-family-primary);
+  font-size:       var(--text-body-sm);
+  font-weight:     var(--font-weight-semibold);
+  color:           var(--color-text-tertiary);
+  transition:
+    background   400ms var(--ease-smooth),
+    border-color 400ms var(--ease-smooth),
+    color        400ms var(--ease-smooth),
+    transform    400ms var(--ease-expo-out);
+}
+
+.progress-step__label {
+  font-family:    var(--font-family-primary);
+  font-size:      12px;
+  font-weight:    var(--font-weight-medium);
+  letter-spacing: var(--tracking-wide);
+  color:          var(--color-text-tertiary);
+  text-transform: uppercase;
+  transition:     color 400ms var(--ease-smooth);
+}
+
+/* Connecting Line */
+.progress-connector {
+  flex:       1;
+  height:     2px;
+  background: var(--color-border-subtle);
+  margin:     0 -10px;
+  position:   relative;
+  top:        -12px;
+  z-index:    1;
+  overflow:   hidden;
+}
+
+.progress-connector__fill {
+  width:      0%;
+  height:     100%;
+  background: var(--color-text-primary);
+  transition: width 500ms var(--ease-expo-out);
+}
+
+/* Active Step */
+.progress-step--active .progress-step__circle {
+  background:   var(--color-text-primary);
+  border-color: var(--color-text-primary);
+  color:        #FFFFFF;
+  transform:    scale(1.1);
+  box-shadow:   0 0 0 4px rgba(0, 0, 0, 0.08);
+}
+
+.progress-step--active .progress-step__label {
+  color:       var(--color-text-primary);
+  font-weight: var(--font-weight-semibold);
+}
+
+/* Completed Step */
+.progress-step--completed .progress-step__circle {
+  background:   #2D7A5A;
+  border-color: #2D7A5A;
+  color:        #FFFFFF;
+}
+
+.progress-step--completed .progress-step__label {
+  color: #2D7A5A;
+}
+
+
+/* ============================================================
+   03. TWO-COLUMN LAYOUT
+   ============================================================ */
+
+.checkout-grid {
+  display:               grid;
+  grid-template-columns: 2.1fr 1fr;
+  gap:                   clamp(var(--space-6), 3vw, var(--space-10));
+  align-items:           flex-start;
+}
+
+
+/* ============================================================
+   04. STEP CONTAINERS & TRANSITIONS
+   ============================================================ */
+
+.checkout-step {
+  display:    none;
+  opacity:    0;
+  transform:  translateY(12px);
+  transition:
+    opacity   400ms var(--ease-out),
+    transform 500ms var(--ease-expo-out);
+}
+
+.checkout-step--active {
+  display: block;
+}
+
+.checkout-step--visible {
+  opacity:   1;
+  transform: none;
+}
+
+.step-header {
+  margin-bottom: var(--space-8);
+  padding-bottom: var(--space-4);
+  border-bottom: 1px solid var(--color-border-subtle);
+}
+
+.step-title {
+  font-family:    var(--font-family-primary);
+  font-size:      var(--text-heading-md);
+  font-weight:    var(--font-weight-light);
+  letter-spacing: var(--tracking-snug);
+  color:          var(--color-text-primary);
+  margin-bottom:  var(--space-1);
+}
+
+.step-desc {
+  font-family: var(--font-family-primary);
+  font-size:   var(--text-body-sm);
+  color:       var(--color-text-secondary);
+}
+
+
+/* ============================================================
+   05. FORM INPUTS & SLEEK LABELS
+   ============================================================ */
+
+.form-grid {
+  display:               grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap:                   var(--space-5);
+}
+
+.form-group {
+  display:        flex;
+  flex-direction: column;
+  gap:            var(--space-2);
+  position:       relative;
+}
+
+.form-group--full {
+  grid-column: 1 / -1;
+}
+
+.form-label {
+  font-family:    var(--font-family-primary);
+  font-size:      12px;
+  font-weight:    var(--font-weight-semibold);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color:          var(--color-text-secondary);
+}
+
+.form-input {
+  width:         100%;
+  padding:       16px 18px;
+  background:    var(--color-bg-card);
+  border:        1px solid var(--color-border-default);
+  border-radius: var(--radius-lg);
+  font-family:   var(--font-family-primary);
+  font-size:     var(--text-body);
+  color:         var(--color-text-primary);
+  transition:
+    border-color var(--duration-fast) var(--ease-smooth),
+    box-shadow   var(--duration-fast) var(--ease-smooth);
+}
+
+.form-input::placeholder {
+  color: var(--color-text-tertiary);
+}
+
+.form-input:focus {
+  outline:      none;
+  border-color: var(--color-text-primary);
+  box-shadow:   0 0 0 3px rgba(0, 0, 0, 0.06);
+}
+
+
+/* ============================================================
+   06. VALIDATION & ERROR STATES
+   ============================================================ */
+
+.form-group.has-error .form-input {
+  border-color: #DC2626;
+  background:   #FEF2F2;
+}
+
+.form-group.has-error .form-input:focus {
+  box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.12);
+}
+
+.form-error-msg {
+  font-family: var(--font-family-primary);
+  font-size:   12px;
+  font-weight: var(--font-weight-medium);
+  color:       #DC2626;
+  display:     none;
+  margin-top:  2px;
+}
+
+.form-group.has-error .form-error-msg {
+  display: block;
+}
+
+
+/* ============================================================
+   07. REVIEW ORDER STEP UI
+   ============================================================ */
+
+.review-section {
+  background:    var(--color-bg-card);
+  border:        1px solid var(--color-border-subtle);
+  border-radius: var(--radius-xl);
+  padding:       var(--space-6);
+  margin-bottom: var(--space-6);
+}
+
+.review-section__header {
+  display:         flex;
+  align-items:     center;
+  justify-content: space-between;
+  margin-bottom:   var(--space-4);
+  padding-bottom:  var(--space-3);
+  border-bottom:   1px solid var(--color-border-subtle);
+}
+
+.review-section__title {
+  font-family:    var(--font-family-primary);
+  font-size:      var(--text-body);
+  font-weight:    var(--font-weight-semibold);
+  color:          var(--color-text-primary);
+}
+
+.review-edit-link {
+  font-family:           var(--font-family-primary);
+  font-size:             var(--text-caption);
+  font-weight:           var(--font-weight-medium);
+  color:                 var(--color-text-secondary);
+  background:            transparent;
+  border:                none;
+  cursor:                pointer;
+  text-decoration:       underline;
+  text-underline-offset: 3px;
+}
+
+.review-edit-link:hover {
+  color: var(--color-text-primary);
+}
+
+/* Shipping summary grid inside Review */
+.review-shipping-grid {
+  display:               grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap:                   var(--space-4);
+}
+
+.review-info-item {
+  display:        flex;
+  flex-direction: column;
+  gap:            2px;
+}
+
+.review-info-label {
+  font-size:      11px;
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wider);
+  color:          var(--color-text-tertiary);
+  font-weight:    var(--font-weight-semibold);
+}
+
+.review-info-val {
+  font-size:   var(--text-body-sm);
+  color:       var(--color-text-primary);
+  font-weight: var(--font-weight-medium);
+}
+
+/* Items List in Review */
+.review-items-list {
+  display:        flex;
+  flex-direction: column;
+  gap:            var(--space-4);
+}
+
+.review-item {
+  display:               grid;
+  grid-template-columns: 64px 1fr auto;
+  gap:                   var(--space-4);
+  align-items:           center;
+  padding-bottom:        var(--space-4);
+  border-bottom:         1px solid var(--color-border-subtle);
+}
+
+.review-item:last-child {
+  padding-bottom: 0;
+  border-bottom:  none;
+}
+
+.review-item__img {
+  width:         64px;
+  height:        64px;
+  object-fit:    cover;
+  border-radius: var(--radius-md);
+  background:    var(--color-bg-subtle);
+}
+
+.review-item__name {
+  font-size:   var(--text-body-sm);
+  font-weight: var(--font-weight-medium);
+  color:       var(--color-text-primary);
+}
+
+.review-item__qty {
+  font-size: var(--text-caption);
+  color:     var(--color-text-tertiary);
+}
+
+.review-item__price {
+  font-size:   var(--text-body-sm);
+  font-weight: var(--font-weight-semibold);
+  color:       var(--color-text-primary);
+}
+
+
+/* ============================================================
+   08. CONFIRMATION STEP UI
+   ============================================================ */
+
+.confirm-box {
+  background:    var(--color-bg-subtle);
+  border:        1px solid var(--color-border-default);
+  border-radius: var(--radius-xl);
+  padding:       var(--space-8);
+  text-align:    center;
+  margin-bottom: var(--space-8);
+}
+
+.confirm-box__icon {
+  width:         56px;
+  height:        56px;
+  border-radius: 50%;
+  background:    #EBFAF3;
+  color:         #2D7A5A;
+  display:       flex;
+  align-items:   center;
+  justify-content: center;
+  margin:        0 auto var(--space-4);
+}
+
+.confirm-box__title {
+  font-size:     var(--text-heading-sm);
+  font-weight:   var(--font-weight-medium);
+  color:         var(--color-text-primary);
+  margin-bottom: var(--space-2);
+}
+
+.confirm-box__text {
+  font-size:   var(--text-body);
+  color:       var(--color-text-secondary);
+  max-width:   480px;
+  margin:      0 auto var(--space-6);
+  line-height: var(--leading-relaxed);
+}
+
+.confirm-details {
+  display:               grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap:                   var(--space-4);
+  padding-top:           var(--space-6);
+  border-top:            1px solid var(--color-border-subtle);
+  text-align:            left;
+}
+
+.security-badge {
+  display:         flex;
+  align-items:     center;
+  justify-content: center;
+  gap:             var(--space-2);
+  font-size:       var(--text-caption);
+  color:           var(--color-text-tertiary);
+  margin-top:      var(--space-4);
+}
+
+
+/* ============================================================
+   09. STICKY ORDER SUMMARY BOX (RIGHT COLUMN)
+   ============================================================ */
+
+.checkout-summary {
+  position:      sticky;
+  top:           calc(72px + var(--space-10));
+  background:    var(--color-bg-card);
+  border:        1px solid var(--color-border-subtle);
+  border-radius: var(--radius-xl);
+  padding:       var(--space-7);
+  margin-top:    var(--space-4);
+}
+
+.summary-line {
+  display:         flex;
+  align-items:     center;
+  justify-content: space-between;
+  font-size:       var(--text-body-sm);
+  padding-block:   var(--space-2);
+  color:           var(--color-text-secondary);
+}
+
+.summary-label {
+  font-family: var(--font-family-primary);
+}
+
+.summary-value {
+  font-family: var(--font-family-primary);
+  font-weight: var(--font-weight-medium);
+  color:       var(--color-text-primary);
+}
+
+.summary-value--green {
+  color:       #2D7A5A;
+  font-weight: var(--font-weight-semibold);
+}
+
+.summary-line--total {
+  margin-top:    var(--space-4);
+  padding-top:   var(--space-4);
+  border-top:    1px solid var(--color-border-subtle);
+  font-size:     var(--text-heading-sm);
+  font-weight:   var(--font-weight-semibold);
+  color:         var(--color-text-primary);
+}
+
+.summary-line--total .summary-value {
+  font-size:   var(--text-heading-sm);
+  font-weight: var(--font-weight-bold);
+}
+
+.checkout-summary__title {
+  font-size:     var(--text-heading-sm);
+  font-weight:   var(--font-weight-medium);
+  color:         var(--color-text-primary);
+  margin-bottom: var(--space-6);
+}
+
+.summary-items-mini {
+  max-height:     240px;
+  overflow-y:     auto;
+  margin-bottom:  var(--space-6);
+  padding-right:  var(--space-2);
+  display:        flex;
+  flex-direction: column;
+  gap:            var(--space-3);
+}
+
+.mini-item {
+  display:         flex;
+  align-items:     center;
+  justify-content: space-between;
+  font-size:       var(--text-body-sm);
+}
+
+.mini-item__name {
+  color:         var(--color-text-secondary);
+  white-space:   nowrap;
+  overflow:      hidden;
+  text-overflow: ellipsis;
+  max-width:     220px;
+}
+
+.mini-item__price {
+  font-weight: var(--font-weight-medium);
+  color:       var(--color-text-primary);
+}
+
+
+/* ============================================================
+   10. ACTION BUTTONS & NAVIGATION
+   ============================================================ */
+
+.step-actions {
+  display:         flex;
+  align-items:     center;
+  justify-content: space-between;
+  margin-top:      var(--space-10);
+  padding-top:     var(--space-6);
+  border-top:      1px solid var(--color-border-subtle);
+}
+
+.btn-primary {
+  display:         inline-flex;
+  align-items:     center;
+  justify-content: center;
+  gap:             var(--space-2);
+  padding:         16px 36px;
+  background:      var(--color-text-primary);
+  color:           #FFFFFF;
+  border:          none;
+  border-radius:   var(--radius-full);
+  font-family:     var(--font-family-primary);
+  font-size:       var(--text-body);
+  font-weight:     var(--font-weight-medium);
+  cursor:          pointer;
+  transition:
+    background var(--duration-fast)   var(--ease-smooth),
+    transform  var(--duration-normal) var(--ease-expo-out);
+}
+
+.btn-primary:hover {
+  background: #333333;
+  transform:  translateY(-2px);
+}
+
+.btn-primary:active {
+  transform: scale(0.97);
+}
+
+.btn-primary:disabled {
+  background: var(--color-border-strong);
+  cursor:     not-allowed;
+  transform:  none;
+}
+
+.btn-secondary {
+  display:         inline-flex;
+  align-items:     center;
+  justify-content: center;
+  padding:         16px 28px;
+  background:      transparent;
+  color:           var(--color-text-secondary);
+  border:          1px solid var(--color-border-default);
+  border-radius:   var(--radius-full);
+  font-family:     var(--font-family-primary);
+  font-size:       var(--text-body);
+  font-weight:     var(--font-weight-regular);
+  cursor:          pointer;
+  transition:
+    border-color var(--duration-fast) var(--ease-smooth),
+    color        var(--duration-fast) var(--ease-smooth);
+}
+
+.btn-secondary:hover {
+  border-color: var(--color-border-strong);
+  color:        var(--color-text-primary);
+}
+
+
+/* ============================================================
+   11. RESPONSIVE DESIGN
+   ============================================================ */
+
+@media (max-width: 1023px) {
+  .checkout-grid {
+    grid-template-columns: 1fr;
+    gap:                   var(--space-8);
+  }
+
+  .checkout-summary {
+    position:      relative;
+    top:           auto;
+    order:         -1; /* Show summary above form on mobile */
+    margin-top:    0;
+    margin-bottom: var(--space-6);
+  }
+
+  .confirm-details {
+    grid-template-columns: 1fr;
+    gap: var(--space-3);
+  }
+}
+
+@media (max-width: 639px) {
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .review-shipping-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .step-actions {
+    flex-direction: column-reverse;
+    gap:            var(--space-3);
+  }
+
+  .btn-primary,
+  .btn-secondary {
+    width: 100%;
+  }
+
+  .progress-step__label {
+    font-size: 10px;
+  }
+}
+
+
+/* ============================================================
+   12. REDUCED MOTION
+   ============================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  .checkout-step,
+  .progress-step__circle,
+  .progress-connector__fill,
+  .btn-primary {
+    transition: none !important;
+    transform:  none !important;
+  }
+}

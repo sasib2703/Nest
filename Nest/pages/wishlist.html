@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Wishlist — NEST</title>
+  <link rel="icon" href="../fav.png" type="image/png" />
+  <link rel="stylesheet" href="../css/style.css" />
+  <link rel="stylesheet" href="../css/navbar.css" />
+  <link rel="stylesheet" href="../css/orders-wishlist.css" />
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <header id="nest-navbar" class="navbar" role="banner">
+    <nav class="navbar__inner" aria-label="Main navigation">
+      <a href="../index.html" class="navbar__logo" aria-label="NEST — Return to homepage">
+        <span class="navbar__wordmark">NEST</span>
+      </a>
+      <ul class="navbar__nav" role="list">
+        <li class="navbar__nav-item"><a href="./products.html" class="navbar__nav-link">Products</a></li>
+        <li class="navbar__nav-item"><a href="../index.html#categories" class="navbar__nav-link">Categories</a></li>
+        <li class="navbar__nav-item"><a href="../index.html#about" class="navbar__nav-link">About</a></li>
+      </ul>
+      <div class="navbar__actions" role="group" aria-label="Site utilities">
+        <button class="navbar__action-btn" id="btn-search" aria-label="Open search" type="button">
+          <svg class="navbar__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="22" y2="22"/></svg>
+        </button>
+        <a href="./cart.html" class="navbar__action-btn" aria-label="View cart">
+          <svg class="navbar__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+          <span class="navbar__cart-badge" id="cart-count" aria-live="polite">0</span>
+        </a>
+        <a href="./account.html" class="navbar__action-btn" aria-label="My account">
+          <svg class="navbar__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        </a>
+        <button class="navbar__action-btn navbar__hamburger" id="btn-hamburger" aria-label="Open navigation menu" aria-expanded="false" aria-controls="mobile-menu" type="button">
+          <span class="hamburger-bar"></span><span class="hamburger-bar"></span><span class="hamburger-bar"></span>
+        </button>
+      </div>
+    </nav>
+  </header>
+
+  <!-- MAIN CONTENT -->
+  <main class="dash-page">
+
+    <!-- Top Section -->
+    <header class="dash-header">
+      <div class="dash-header__left">
+        <div class="dash-header__eyebrow">SAVED ITEMS</div>
+        <div class="dash-header__title-row">
+          <h1 class="dash-header__title">Your Wishlist</h1>
+          <span class="dash-header__count" id="wish-count-badge">6 items</span>
+        </div>
+        <p class="dash-header__subtext">
+          Curate your favorite smart devices, monitor upcoming price updates, and move items directly into your cart.
+        </p>
+      </div>
+      <div class="dash-header__actions">
+        <button class="btn-dash-primary" id="add-all-btn" type="button">
+          Add All to Cart
+        </button>
+        <button class="btn-dash-secondary" id="clear-wish-btn" type="button">
+          Clear Wishlist
+        </button>
+      </div>
+    </header>
+
+    <!-- Wishlist Grid -->
+    <div class="wishlist-grid" id="wishlist-populated">
+
+      <!-- Item 1 -->
+      <article class="wish-card">
+        <div class="wish-card__img-wrap">
+          <img src="https://images.unsplash.com/photo-1545454675-3531b543be5d?q=80&w=400&auto=format&fit=crop" alt="Nest Sound Studio" class="wish-card__img" />
+          <button class="wish-card__remove" aria-label="Remove Nest Sound Studio from wishlist" type="button">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          </button>
+        </div>
+        <div class="wish-card__body">
+          <a href="./product-detail.html?id=103" class="wish-card__name">Nest Sound Studio</a>
+          <div class="wish-card__desc">Space Gray · Studio Grade Active Noise Cancellation</div>
+          <div class="wish-card__footer">
+            <div class="wish-card__price">₹24,999</div>
+            <button class="wish-card__add-btn" type="button" data-id="103">Add to Cart</button>
+          </div>
+        </div>
+      </article>
+
+      <!-- Item 2 -->
+      <article class="wish-card">
+        <div class="wish-card__img-wrap">
+          <img src="https://images.unsplash.com/photo-1589939705384-5185137a7f0f?q=80&w=400&auto=format&fit=crop" alt="Nest CleanBot Pro" class="wish-card__img" />
+          <button class="wish-card__remove" aria-label="Remove Nest CleanBot Pro from wishlist" type="button">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          </button>
+        </div>
+        <div class="wish-card__body">
+          <a href="./product-detail.html?id=104" class="wish-card__name">Nest CleanBot Pro</a>
+          <div class="wish-card__desc">Matte Black · Autonomous AI LIDAR Vacuum & Mop</div>
+          <div class="wish-card__footer">
+            <div class="wish-card__price">₹34,999</div>
+            <button class="wish-card__add-btn" type="button" data-id="104">Add to Cart</button>
+          </div>
+        </div>
+      </article>
+
+      <!-- Item 3 -->
+      <article class="wish-card">
+        <div class="wish-card__img-wrap">
+          <img src="https://images.unsplash.com/photo-1556910103-1c02745aae4d?q=80&w=400&auto=format&fit=crop" alt="Nest Chef Assistant" class="wish-card__img" />
+          <button class="wish-card__remove" aria-label="Remove Nest Chef Assistant from wishlist" type="button">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          </button>
+        </div>
+        <div class="wish-card__body">
+          <a href="./product-detail.html?id=106" class="wish-card__name">Nest Chef Assistant</a>
+          <div class="wish-card__desc">Charcoal · Precision Smart Kitchen Display Hub</div>
+          <div class="wish-card__footer">
+            <div class="wish-card__price">₹8,999</div>
+            <button class="wish-card__add-btn" type="button" data-id="106">Add to Cart</button>
+          </div>
+        </div>
+      </article>
+
+      <!-- Item 4 -->
+      <article class="wish-card">
+        <div class="wish-card__img-wrap">
+          <img src="https://images.unsplash.com/photo-1544197150-b99a580bb7a8?q=80&w=400&auto=format&fit=crop" alt="Nest Mesh Router" class="wish-card__img" />
+          <button class="wish-card__remove" aria-label="Remove Nest Mesh Router from wishlist" type="button">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          </button>
+        </div>
+        <div class="wish-card__body">
+          <a href="./product-detail.html?id=107" class="wish-card__name">Nest Mesh Router</a>
+          <div class="wish-card__desc">Snow White · Tri-Band Wi-Fi 7 Smart System</div>
+          <div class="wish-card__footer">
+            <div class="wish-card__price">₹12,999</div>
+            <button class="wish-card__add-btn" type="button" data-id="107">Add to Cart</button>
+          </div>
+        </div>
+      </article>
+
+      <!-- Item 5 -->
+      <article class="wish-card">
+        <div class="wish-card__img-wrap">
+          <img src="https://images.unsplash.com/photo-1557324232-b8917d3c3dcb?q=80&w=400&auto=format&fit=crop" alt="Nest Vision Pro" class="wish-card__img" />
+          <button class="wish-card__remove" aria-label="Remove Nest Vision Pro from wishlist" type="button">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          </button>
+        </div>
+        <div class="wish-card__body">
+          <a href="./product-detail.html?id=101" class="wish-card__name">Nest Vision Pro</a>
+          <div class="wish-card__desc">Matte Silver · Spatial Audio Headset with OLED</div>
+          <div class="wish-card__footer">
+            <div class="wish-card__price">₹18,499</div>
+            <button class="wish-card__add-btn" type="button" data-id="101">Add to Cart</button>
+          </div>
+        </div>
+      </article>
+
+      <!-- Item 6 -->
+      <article class="wish-card">
+        <div class="wish-card__img-wrap">
+          <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?q=80&w=400&auto=format&fit=crop" alt="Nest Security Hub" class="wish-card__img" />
+          <button class="wish-card__remove" aria-label="Remove Nest Security Hub from wishlist" type="button">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          </button>
+        </div>
+        <div class="wish-card__body">
+          <a href="./product-detail.html?id=108" class="wish-card__name">Nest Security Hub</a>
+          <div class="wish-card__desc">Graphite · 360° AI Biometric Monitoring Station</div>
+          <div class="wish-card__footer">
+            <div class="wish-card__price">₹16,499</div>
+            <button class="wish-card__add-btn" type="button" data-id="108">Add to Cart</button>
+          </div>
+        </div>
+      </article>
+
+    </div>
+
+    <!-- Premium Empty State (Hidden by default) -->
+    <div class="dash-empty" id="wishlist-empty" hidden>
+      <div class="dash-empty__inner">
+        <div class="dash-empty__icon-wrap">
+          <svg class="dash-empty__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+          </svg>
+        </div>
+        <h2 class="dash-empty__title">Your wishlist is empty</h2>
+        <p class="dash-empty__text">
+          Save smart devices you love for later. Tap the heart icon on any product card across the store to build your personal curated collection.
+        </p>
+        <a href="./products.html" class="btn-dash-primary">Discover Devices</a>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="site-footer" role="contentinfo">
+    <div class="footer-inner">
+      <div class="footer-brand"><span class="footer-wordmark">NEST</span><p class="footer-tagline">Technology That Belongs.</p></div>
+      <nav class="footer-nav" aria-label="Footer navigation">
+        <div class="footer-nav-col">
+          <p class="footer-nav-label">Explore</p>
+          <ul role="list">
+            <li><a href="./products.html" class="footer-nav-link">Products</a></li>
+            <li><a href="../index.html#categories" class="footer-nav-link">Categories</a></li>
+            <li><a href="../index.html#about" class="footer-nav-link">About</a></li>
+          </ul>
+        </div>
+        <div class="footer-nav-col">
+          <p class="footer-nav-label">Account</p>
+          <ul role="list">
+            <li><a href="./account.html" class="footer-nav-link">My Account</a></li>
+            <li><a href="./orders.html" class="footer-nav-link">Order History</a></li>
+            <li><a href="./wishlist.html" class="footer-nav-link">Wishlist</a></li>
+          </ul>
+        </div>
+      </nav>
+    </div>
+    <div class="footer-bottom"><p class="footer-copy">&copy; 2026 NEST. All rights reserved.</p></div>
+  </footer>
+
+  <script src="../js/navbar.js"></script>
+  <script src="../js/data.js"></script>
+  <script src="../js/cart.js"></script>
+  <script>
+    /* Wishlist interactive scripting */
+    (function() {
+      var grid = document.getElementById('wishlist-populated');
+      var empty = document.getElementById('wishlist-empty');
+      var countBadge = document.getElementById('wish-count-badge');
+      var clearBtn = document.getElementById('clear-wish-btn');
+      var addAllBtn = document.getElementById('add-all-btn');
+
+      function updateCount() {
+        if (!grid) return;
+        var cards = grid.querySelectorAll('.wish-card:not(.is-removed)');
+        var count = cards.length;
+        if (countBadge) countBadge.textContent = count + (count === 1 ? ' item' : ' items');
+        if (count === 0) {
+          if (grid) grid.hidden = true;
+          if (empty) empty.hidden = false;
+        }
+      }
+
+      /* Remove single card */
+      var removeBtns = document.querySelectorAll('.wish-card__remove');
+      removeBtns.forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          var card = btn.closest('.wish-card');
+          if (card) {
+            card.classList.add('is-removed');
+            setTimeout(function() {
+              card.remove();
+              updateCount();
+            }, 250);
+          }
+        });
+      });
+
+      /* Clear wishlist button */
+      if (clearBtn) {
+        clearBtn.addEventListener('click', function() {
+          var cards = grid ? grid.querySelectorAll('.wish-card') : [];
+          cards.forEach(function(card) {
+            card.classList.add('is-removed');
+          });
+          setTimeout(function() {
+            if (grid) grid.innerHTML = '';
+            updateCount();
+          }, 250);
+        });
+      }
+
+      /* Add single card to cart */
+      var addBtns = document.querySelectorAll('.wish-card__add-btn');
+      addBtns.forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          var id = btn.getAttribute('data-id');
+          if (window.addToCart && id) {
+            window.addToCart(parseInt(id, 10));
+          }
+          btn.textContent = 'Added to Cart ✓';
+          btn.classList.add('is-added');
+          setTimeout(function() {
+            btn.textContent = 'Add to Cart';
+            btn.classList.remove('is-added');
+          }, 1800);
+        });
+      });
+
+      /* Add all to cart */
+      if (addAllBtn) {
+        addAllBtn.addEventListener('click', function() {
+          var addBtns = grid ? grid.querySelectorAll('.wish-card__add-btn') : [];
+          addBtns.forEach(function(btn) {
+            btn.click();
+          });
+        });
+      }
+    })();
+  </script>
+</body>
+</html>

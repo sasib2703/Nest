@@ -1,0 +1,1597 @@
+/* ============================================================
+   NEST — Global Design System
+   Premium Smart Home E-Commerce
+   Foundation CSS Architecture
+   ============================================================
+   
+   TABLE OF CONTENTS
+   ─────────────────────────────────────────────────────────────
+   01. Google Fonts Import
+   02. CSS Reset & Base
+   03. Design Tokens — Color System
+   04. Design Tokens — Typography Scale
+   05. Design Tokens — Spacing System
+   06. Design Tokens — Border Radius
+   07. Design Tokens — Shadow System
+   08. Design Tokens — Motion System
+   09. Design Tokens — Z-Index
+   10. Base Typography Styles
+   11. Grid System
+   12. Container Utilities
+   13. Spacing Utilities
+   14. Flexbox Utilities
+   15. Button System
+   16. Card System
+   17. Animation System
+   18. Section Utilities
+   19. Text Utilities
+   20. Divider Utilities
+   21. Responsive Breakpoints
+   ─────────────────────────────────────────────────────────────
+*/
+
+
+/* ============================================================
+   01. GOOGLE FONTS IMPORT
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+
+
+/* ============================================================
+   02. CSS RESET & BASE
+   ============================================================ */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: #f5f5f7 !important;
+  color-scheme: light;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  overflow-x: clip;
+  width: 100%;
+}
+
+body {
+  font-family: var(--font-family-primary);
+  background-color: #f5f5f7 !important;
+  color: var(--color-text-primary);
+  line-height: var(--leading-body);
+  min-height: 100vh;
+  overflow-x: clip;
+  width: 100%;
+  opacity: 0;
+  transition: opacity 250ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+body.loaded {
+  opacity: 1;
+}
+
+img,
+video,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  border: none;
+  background: none;
+  outline: none;
+}
+
+input[type="search"]::-webkit-search-decoration,
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-results-button,
+input[type="search"]::-webkit-search-results-decoration {
+  -webkit-appearance: none;
+  appearance: none;
+  display: none;
+}
+
+button {
+  cursor: pointer;
+}
+
+ul,
+ol {
+  list-style: none;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: inherit;
+  font-size: inherit;
+  line-height: inherit;
+}
+
+
+/* ============================================================
+   03. DESIGN TOKENS — COLOR SYSTEM
+   ============================================================ */
+
+:root {
+
+  /* ── Core Backgrounds ── */
+  --color-bg-primary:       #f5f5f7;
+  --color-bg-card:          #FFFFFF;
+  --color-bg-elevated:      #FFFFFF;
+  --color-bg-subtle:        #F5F5F5;
+  --color-bg-hover:         rgba(0, 0, 0, 0.03);
+  --color-bg-overlay:       rgba(245, 245, 247, 0.85);
+  --color-bg-inverse:       #1A1A1A;
+
+  /* ── Core Text ── */
+  --color-text-primary:     #1A1A1A;
+  --color-text-secondary:   #666666;
+  --color-text-tertiary:    #999999;
+  --color-text-placeholder: #BBBBBB;
+  --color-text-inverse:     #FAFAFA;
+  --color-text-on-dark:     #FAFAFA;
+
+  /* ── Borders ── */
+  --color-border-default:   rgba(0, 0, 0, 0.08);
+  --color-border-subtle:    rgba(0, 0, 0, 0.05);
+  --color-border-strong:    rgba(0, 0, 0, 0.15);
+  --color-border-focus:     rgba(0, 0, 0, 0.35);
+
+  /* ── Brand Accent ── */
+  --color-accent:           #1A1A1A;
+  --color-accent-hover:     #333333;
+  --color-accent-muted:     rgba(26, 26, 26, 0.08);
+
+  /* ── Semantic ── */
+  --color-success:          #2D7A5A;
+  --color-error:            #C0392B;
+  --color-warning:          #C67C2C;
+  --color-info:             #2C5282;
+
+  /* ── Dark Section Override ── */
+  --color-bg-dark:          #111111;
+  --color-bg-dark-elevated: #1C1C1C;
+  --color-border-dark:      rgba(255, 255, 255, 0.08);
+
+}
+
+
+/* ============================================================
+   04. DESIGN TOKENS — TYPOGRAPHY SCALE
+   ============================================================ */
+
+:root {
+
+  /* ── Font Families ── */
+  --font-family-primary: 'Inter', -apple-system, BlinkMacSystemFont,
+                          'SF Pro Display', 'Segoe UI', Helvetica, Arial,
+                          sans-serif;
+  --font-family-mono:    'SF Mono', 'Fira Code', 'Fira Mono', 'Roboto Mono',
+                          monospace;
+
+  /* ── Font Weights ── */
+  --font-weight-thin:       100;
+  --font-weight-extralight: 200;
+  --font-weight-light:      300;
+  --font-weight-regular:    400;
+  --font-weight-medium:     500;
+  --font-weight-semibold:   600;
+  --font-weight-bold:       700;
+  --font-weight-extrabold:  800;
+
+  /* ── Type Scale (fluid via clamp) ── */
+
+  /* Hero Display */
+  --text-hero:          clamp(2.5rem, 6vw + 1rem, 6.5rem);
+
+  /* Display */
+  --text-display:       clamp(2.25rem, 5vw + 0.5rem, 5rem);
+
+  /* Section Title */
+  --text-section-title: clamp(1.75rem, 3.5vw + 0.5rem, 3.5rem);
+
+  /* Large Heading */
+  --text-heading-lg:    clamp(1.625rem, 2.5vw + 0.375rem, 2.75rem);
+
+  /* Medium Heading */
+  --text-heading-md:    clamp(1.25rem, 1.75vw + 0.25rem, 2rem);
+
+  /* Small Heading */
+  --text-heading-sm:    clamp(1rem, 1.25vw + 0.125rem, 1.375rem);
+
+  /* Body Large */
+  --text-body-lg:       clamp(1.0625rem, 1vw + 0.25rem, 1.25rem);
+
+  /* Body */
+  --text-body:          clamp(0.9375rem, 0.75vw + 0.1875rem, 1.0625rem);
+
+  /* Body Small */
+  --text-body-sm:       clamp(0.8125rem, 0.5vw + 0.125rem, 0.9375rem);
+
+  /* Caption */
+  --text-caption:       clamp(0.6875rem, 0.35vw + 0.1rem, 0.8125rem);
+
+  /* ── Line Heights ── */
+  --leading-none:    1;
+  --leading-tight:   1.06;
+  --leading-snug:    1.15;
+  --leading-normal:  1.35;
+  --leading-body:    1.6;
+  --leading-relaxed: 1.75;
+  --leading-loose:   2;
+
+  /* ── Letter Spacing ── */
+  --tracking-tightest: -0.06em;
+  --tracking-tighter:  -0.045em;
+  --tracking-tight:    -0.035em;
+  --tracking-snug:     -0.02em;
+  --tracking-normal:    0em;
+  --tracking-wide:      0.02em;
+  --tracking-wider:     0.05em;
+  --tracking-widest:    0.12em;
+  --tracking-caps:      0.08em;
+
+}
+
+
+/* ============================================================
+   05. DESIGN TOKENS — SPACING SYSTEM
+   ============================================================ */
+
+:root {
+
+  --space-1:   4px;
+  --space-2:   8px;
+  --space-3:  12px;
+  --space-4:  16px;
+  --space-5:  20px;
+  --space-6:  24px;
+  --space-7:  28px;
+  --space-8:  32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-20: 80px;
+  --space-24: 96px;
+  --space-28: 112px;
+  --space-32: 128px;
+  --space-40: 160px;
+  --space-48: 192px;
+
+  /* ── Section Vertical Rhythm ── */
+  --section-gap-sm: clamp(3rem,   6vw, 5rem);
+  --section-gap-md: clamp(5rem,  10vw, 8rem);
+  --section-gap-lg: clamp(6rem,  12vw, 10rem);
+  --section-gap-xl: clamp(8rem,  14vw, 13rem);
+
+}
+
+
+/* ============================================================
+   06. DESIGN TOKENS — BORDER RADIUS
+   ============================================================ */
+
+:root {
+
+  --radius-xs:   4px;
+  --radius-sm:   8px;
+  --radius-md:  12px;
+  --radius-lg:  16px;
+  --radius-xl:  24px;
+  --radius-2xl: 32px;
+  --radius-3xl: 48px;
+  --radius-full: 9999px;
+
+}
+
+
+/* ============================================================
+   07. DESIGN TOKENS — SHADOW SYSTEM
+   ============================================================ */
+
+:root {
+
+  --shadow-xs:
+    0 1px 2px rgba(0, 0, 0, 0.04);
+
+  --shadow-sm:
+    0 2px 8px rgba(0, 0, 0, 0.05),
+    0 1px 2px rgba(0, 0, 0, 0.04);
+
+  --shadow-md:
+    0 4px 16px rgba(0, 0, 0, 0.07),
+    0 2px 4px  rgba(0, 0, 0, 0.04);
+
+  --shadow-lg:
+    0 8px 32px rgba(0, 0, 0, 0.08),
+    0 4px 8px  rgba(0, 0, 0, 0.04);
+
+  --shadow-xl:
+    0 16px 48px rgba(0, 0, 0, 0.10),
+    0  8px 16px rgba(0, 0, 0, 0.05);
+
+  --shadow-focus:
+    0 0 0 3px rgba(26, 26, 26, 0.12);
+
+  --shadow-inset:
+    inset 0 1px 3px rgba(0, 0, 0, 0.06);
+
+}
+
+
+/* ============================================================
+   08. DESIGN TOKENS — MOTION SYSTEM
+   ============================================================ */
+
+:root {
+
+  /* ── Easing Curves ── */
+  --ease-default:  cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --ease-smooth:   cubic-bezier(0.4,  0.0,  0.2, 1.0);
+  --ease-in:       cubic-bezier(0.4,  0.0,  1.0, 1.0);
+  --ease-out:      cubic-bezier(0.0,  0.0,  0.2, 1.0);
+  --ease-spring:   cubic-bezier(0.34, 1.56, 0.64, 1.0);
+  --ease-enter:    cubic-bezier(0.0,  0.0,  0.2, 1.0);
+  --ease-exit:     cubic-bezier(0.4,  0.0,  1.0, 1.0);
+  --ease-expo-out: cubic-bezier(0.16, 1.0,  0.3, 1.0);
+
+  /* ── Duration Scale ── */
+  --duration-instant:  80ms;
+  --duration-fast:    150ms;
+  --duration-normal:  250ms;
+  --duration-slow:    400ms;
+  --duration-slower:  600ms;
+  --duration-slowest: 900ms;
+  --duration-reveal: 1100ms;
+
+  /* ── Preset Transitions ── */
+  --transition-default:
+    all var(--duration-normal) var(--ease-default);
+
+  --transition-colors:
+    color            var(--duration-fast)   var(--ease-smooth),
+    background-color var(--duration-fast)   var(--ease-smooth),
+    border-color     var(--duration-fast)   var(--ease-smooth),
+    opacity          var(--duration-normal) var(--ease-smooth);
+
+  --transition-transform:
+    transform var(--duration-normal) var(--ease-expo-out);
+
+  --transition-shadow:
+    box-shadow var(--duration-normal) var(--ease-smooth);
+
+  --transition-hover:
+    transform  var(--duration-normal) var(--ease-expo-out),
+    box-shadow var(--duration-normal) var(--ease-smooth),
+    opacity    var(--duration-normal) var(--ease-smooth);
+
+  --transition-reveal:
+    opacity   var(--duration-slower)  var(--ease-out),
+    transform var(--duration-slowest) var(--ease-expo-out);
+
+}
+
+
+/* ============================================================
+   09. DESIGN TOKENS — Z-INDEX
+   ============================================================ */
+
+:root {
+
+  --z-below:   -1;
+  --z-base:     0;
+  --z-raised:  10;
+  --z-dropdown:100;
+  --z-sticky:  200;
+  --z-overlay: 300;
+  --z-modal:   400;
+  --z-toast:   500;
+  --z-tooltip: 600;
+
+}
+
+
+/* ============================================================
+   10. BASE TYPOGRAPHY STYLES
+   ============================================================ */
+
+.text-hero {
+  font-family:    var(--font-family-primary);
+  font-size:      var(--text-hero);
+  font-weight:    var(--font-weight-extralight);
+  line-height:    var(--leading-tight);
+  letter-spacing: var(--tracking-tighter);
+  color:          var(--color-text-primary);
+}
+
+.acct-card__footer {
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid var(--color-border-subtle);
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.acct-card__action--compact {
+  margin-top: 4px;
+}
+
+.acct-card__action--danger {
+  color: var(--color-error);
+  border-color: var(--color-error);
+}
+
+.text-display {
+  font-family:    var(--font-family-primary);
+  font-size:      var(--text-display);
+  font-weight:    var(--font-weight-light);
+  line-height:    var(--leading-tight);
+  letter-spacing: var(--tracking-tight);
+  color:          var(--color-text-primary);
+}
+
+.text-section-title {
+  font-family:    var(--font-family-primary);
+  font-size:      var(--text-section-title);
+  font-weight:    var(--font-weight-light);
+  line-height:    var(--leading-snug);
+  letter-spacing: var(--tracking-tight);
+  color:          var(--color-text-primary);
+}
+
+.text-heading-lg {
+  font-family:    var(--font-family-primary);
+  font-size:      var(--text-heading-lg);
+  font-weight:    var(--font-weight-regular);
+  line-height:    var(--leading-normal);
+  letter-spacing: var(--tracking-snug);
+  color:          var(--color-text-primary);
+}
+
+.text-heading-md {
+  font-family:    var(--font-family-primary);
+  font-size:      var(--text-heading-md);
+  font-weight:    var(--font-weight-medium);
+  line-height:    var(--leading-normal);
+  letter-spacing: var(--tracking-snug);
+  color:          var(--color-text-primary);
+}
+
+.text-heading-sm {
+  font-family:    var(--font-family-primary);
+  font-size:      var(--text-heading-sm);
+  font-weight:    var(--font-weight-medium);
+  line-height:    var(--leading-normal);
+  letter-spacing: var(--tracking-normal);
+  color:          var(--color-text-primary);
+}
+
+.text-body-lg {
+  font-family:    var(--font-family-primary);
+  font-size:      var(--text-body-lg);
+  font-weight:    var(--font-weight-regular);
+  line-height:    var(--leading-body);
+  letter-spacing: var(--tracking-normal);
+  color:          var(--color-text-primary);
+}
+
+.text-body {
+  font-family:    var(--font-family-primary);
+  font-size:      var(--text-body);
+  font-weight:    var(--font-weight-regular);
+  line-height:    var(--leading-body);
+  letter-spacing: var(--tracking-normal);
+  color:          var(--color-text-primary);
+}
+
+.text-body-sm {
+  font-family:    var(--font-family-primary);
+  font-size:      var(--text-body-sm);
+  font-weight:    var(--font-weight-regular);
+  line-height:    var(--leading-body);
+  letter-spacing: var(--tracking-normal);
+  color:          var(--color-text-secondary);
+}
+
+.text-caption {
+  font-family:    var(--font-family-primary);
+  font-size:      var(--text-caption);
+  font-weight:    var(--font-weight-medium);
+  line-height:    var(--leading-normal);
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  color:          var(--color-text-tertiary);
+}
+
+/* ── Color Modifiers ── */
+.text-primary   { color: var(--color-text-primary);   }
+.text-secondary { color: var(--color-text-secondary); }
+.text-tertiary  { color: var(--color-text-tertiary);  }
+.text-inverse   { color: var(--color-text-inverse);   }
+.text-on-dark   { color: var(--color-text-on-dark);   }
+
+/* ── Weight Modifiers ── */
+.font-thin       { font-weight: var(--font-weight-thin);       }
+.font-extralight { font-weight: var(--font-weight-extralight); }
+.font-light      { font-weight: var(--font-weight-light);      }
+.font-regular    { font-weight: var(--font-weight-regular);    }
+.font-medium     { font-weight: var(--font-weight-medium);     }
+.font-semibold   { font-weight: var(--font-weight-semibold);   }
+.font-bold       { font-weight: var(--font-weight-bold);       }
+
+/* ── Alignment ── */
+.text-left   { text-align: left;   }
+.text-center { text-align: center; }
+.text-right  { text-align: right;  }
+
+/* ── Tracking Modifiers ── */
+.tracking-tight   { letter-spacing: var(--tracking-tight);   }
+.tracking-normal  { letter-spacing: var(--tracking-normal);  }
+.tracking-wide    { letter-spacing: var(--tracking-wide);    }
+.tracking-caps    { letter-spacing: var(--tracking-caps);    }
+
+/* ── Leading Modifiers ── */
+.leading-tight    { line-height: var(--leading-tight);    }
+.leading-normal   { line-height: var(--leading-normal);   }
+.leading-body     { line-height: var(--leading-body);     }
+.leading-relaxed  { line-height: var(--leading-relaxed);  }
+
+/* ── Label / Eyebrow Style ── */
+.label {
+  font-size:      var(--text-caption);
+  font-weight:    var(--font-weight-semibold);
+  letter-spacing: var(--tracking-widest);
+  text-transform: uppercase;
+  color:          var(--color-text-tertiary);
+  line-height:    var(--leading-none);
+}
+
+.label--dark {
+  color: rgba(255, 255, 255, 0.45);
+}
+
+
+/* ============================================================
+   11. GRID SYSTEM
+   ============================================================ */
+
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin-inline: auto;
+  padding-inline: var(--space-6);
+}
+
+.container--narrow {
+  max-width: 720px;
+  margin-inline: auto;
+  padding-inline: var(--space-6);
+}
+
+.container--wide {
+  max-width: 1440px;
+  margin-inline: auto;
+  padding-inline: var(--space-6);
+}
+
+.container--flush {
+  width: 100%;
+  max-width: 1200px;
+  margin-inline: auto;
+}
+
+.grid {
+  display: grid;
+  gap: var(--space-6);
+}
+
+/* 4-col desktop / 2-col tablet / 1-col mobile */
+.grid--products {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-6);
+}
+
+.grid--2 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-6);
+}
+
+.grid--3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-6);
+}
+
+.grid--auto {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: var(--space-6);
+}
+
+.grid--editorial {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-16);
+  align-items: center;
+}
+
+.grid--editorial-reverse {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-16);
+  align-items: center;
+}
+
+.grid--editorial-reverse > *:first-child { order: 2; }
+.grid--editorial-reverse > *:last-child  { order: 1; }
+
+.grid--features {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-8);
+}
+
+/* Gap modifiers */
+.gap-2  { gap: var(--space-2);  }
+.gap-4  { gap: var(--space-4);  }
+.gap-6  { gap: var(--space-6);  }
+.gap-8  { gap: var(--space-8);  }
+.gap-12 { gap: var(--space-12); }
+.gap-16 { gap: var(--space-16); }
+
+
+/* ============================================================
+   12. CONTAINER UTILITIES
+   ============================================================ */
+
+.w-full       { width: 100%;     }
+.h-full       { height: 100%;    }
+.min-h-screen { min-height: 100vh; }
+
+.relative { position: relative; }
+.absolute { position: absolute; }
+.fixed    { position: fixed;    }
+.sticky   { position: sticky;   }
+
+.overflow-hidden  { overflow: hidden;  }
+.overflow-visible { overflow: visible; }
+
+.inset-0 { top: 0; right: 0; bottom: 0; left: 0; }
+
+
+/* ============================================================
+   13. SPACING UTILITIES
+   ============================================================ */
+
+.p-2  { padding: var(--space-2);  }
+.p-4  { padding: var(--space-4);  }
+.p-6  { padding: var(--space-6);  }
+.p-8  { padding: var(--space-8);  }
+.p-12 { padding: var(--space-12); }
+.p-16 { padding: var(--space-16); }
+
+.px-4  { padding-inline: var(--space-4);  }
+.px-6  { padding-inline: var(--space-6);  }
+.px-8  { padding-inline: var(--space-8);  }
+.px-12 { padding-inline: var(--space-12); }
+.px-16 { padding-inline: var(--space-16); }
+
+.py-4  { padding-block: var(--space-4);  }
+.py-6  { padding-block: var(--space-6);  }
+.py-8  { padding-block: var(--space-8);  }
+.py-12 { padding-block: var(--space-12); }
+.py-16 { padding-block: var(--space-16); }
+.py-24 { padding-block: var(--space-24); }
+.py-32 { padding-block: var(--space-32); }
+
+.mt-2  { margin-top: var(--space-2);  }
+.mt-4  { margin-top: var(--space-4);  }
+.mt-6  { margin-top: var(--space-6);  }
+.mt-8  { margin-top: var(--space-8);  }
+.mt-12 { margin-top: var(--space-12); }
+.mt-16 { margin-top: var(--space-16); }
+.mt-24 { margin-top: var(--space-24); }
+
+.mb-2  { margin-bottom: var(--space-2);  }
+.mb-4  { margin-bottom: var(--space-4);  }
+.mb-6  { margin-bottom: var(--space-6);  }
+.mb-8  { margin-bottom: var(--space-8);  }
+.mb-12 { margin-bottom: var(--space-12); }
+.mb-16 { margin-bottom: var(--space-16); }
+.mb-24 { margin-bottom: var(--space-24); }
+
+.mx-auto { margin-inline: auto; }
+
+
+/* ============================================================
+   14. FLEXBOX UTILITIES
+   ============================================================ */
+
+.flex        { display: flex;          }
+.flex-col    { flex-direction: column; }
+.flex-row    { flex-direction: row;    }
+.flex-wrap   { flex-wrap: wrap;        }
+.flex-nowrap { flex-wrap: nowrap;      }
+
+.items-start    { align-items: flex-start; }
+.items-center   { align-items: center;     }
+.items-end      { align-items: flex-end;   }
+.items-baseline { align-items: baseline;   }
+
+.justify-start   { justify-content: flex-start;    }
+.justify-center  { justify-content: center;        }
+.justify-end     { justify-content: flex-end;      }
+.justify-between { justify-content: space-between; }
+.justify-around  { justify-content: space-around;  }
+
+.flex-1    { flex: 1 1 0%;   }
+.flex-auto { flex: 1 1 auto; }
+.flex-none { flex: none;     }
+
+.self-start  { align-self: flex-start; }
+.self-center { align-self: center;     }
+.self-end    { align-self: flex-end;   }
+
+
+/* ============================================================
+   15. BUTTON SYSTEM
+   ============================================================ */
+
+.btn {
+  display:         inline-flex;
+  align-items:     center;
+  justify-content: center;
+  gap:             var(--space-2);
+  font-family:     var(--font-family-primary);
+  font-size:       var(--text-body-sm);
+  font-weight:     var(--font-weight-medium);
+  letter-spacing:  var(--tracking-wide);
+  line-height:     var(--leading-none);
+  white-space:     nowrap;
+  cursor:          pointer;
+  border:          1px solid transparent;
+  border-radius:   var(--radius-full);
+  padding:         var(--space-3) var(--space-8);
+  transition:
+    transform         var(--duration-normal) var(--ease-expo-out),
+    box-shadow        var(--duration-normal) var(--ease-smooth),
+    background-color  var(--duration-fast)   var(--ease-smooth),
+    border-color      var(--duration-fast)   var(--ease-smooth),
+    color             var(--duration-fast)   var(--ease-smooth);
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.btn:focus-visible {
+  outline:        2px solid var(--color-text-primary);
+  outline-offset: 3px;
+}
+
+.btn:active {
+  transform: scale(0.97);
+}
+
+/* ── Primary ── */
+.btn--primary {
+  background-color: var(--color-bg-inverse);
+  color:            var(--color-text-on-dark);
+  border-color:     var(--color-bg-inverse);
+}
+
+.btn--primary:hover {
+  background-color: var(--color-accent-hover);
+  border-color:     var(--color-accent-hover);
+  transform:        scale(1.015);
+  box-shadow:       var(--shadow-md);
+}
+
+/* ── Secondary ── */
+.btn--secondary {
+  background-color: transparent;
+  color:            var(--color-text-primary);
+  border-color:     var(--color-border-strong);
+}
+
+.btn--secondary:hover {
+  background-color: var(--color-bg-hover);
+  border-color:     var(--color-border-focus);
+  transform:        scale(1.015);
+}
+
+/* ── Ghost ── */
+.btn--ghost {
+  background-color: transparent;
+  color:            var(--color-text-secondary);
+  border-color:     transparent;
+  padding-inline:   var(--space-2);
+  letter-spacing:   var(--tracking-normal);
+  border-radius:    var(--radius-sm);
+}
+
+.btn--ghost:hover {
+  color:            var(--color-text-primary);
+  background-color: var(--color-bg-hover);
+}
+
+/* ── Icon Button ── */
+.btn--icon {
+  padding:       var(--space-3);
+  border-radius: var(--radius-full);
+  width:         44px;
+  height:        44px;
+}
+
+/* ── Sizes ── */
+.btn--sm {
+  font-size: var(--text-caption);
+  padding:   var(--space-2) var(--space-6);
+}
+
+.btn--lg {
+  font-size: var(--text-body);
+  padding:   var(--space-4) var(--space-12);
+}
+
+/* ── Dark Variants ── */
+.btn--primary-inverse {
+  background-color: var(--color-bg-card);
+  color:            var(--color-text-primary);
+  border-color:     var(--color-bg-card);
+}
+
+.btn--primary-inverse:hover {
+  background-color: rgba(255, 255, 255, 0.88);
+  transform:        scale(1.015);
+  box-shadow:       var(--shadow-md);
+}
+
+.btn--secondary-inverse {
+  background-color: transparent;
+  color:            var(--color-text-on-dark);
+  border-color:     rgba(255, 255, 255, 0.25);
+}
+
+.btn--secondary-inverse:hover {
+  background-color: rgba(255, 255, 255, 0.08);
+  border-color:     rgba(255, 255, 255, 0.45);
+}
+
+/* ── Disabled ── */
+.btn:disabled,
+.btn[aria-disabled="true"] {
+  opacity:        0.4;
+  pointer-events: none;
+  cursor:         default;
+}
+
+/* ── Full Width ── */
+.btn--block {
+  width:           100%;
+  justify-content: center;
+}
+
+
+/* ============================================================
+   16. CARD SYSTEM
+   ============================================================ */
+
+.card {
+  background-color: var(--color-bg-card);
+  border-radius:    var(--radius-xl);
+  border:           1px solid var(--color-border-default);
+  overflow:         hidden;
+  transition:       var(--transition-hover);
+}
+
+.card:hover {
+  box-shadow: var(--shadow-md);
+  transform:  translateY(-2px);
+}
+
+/* ── Product Card ── */
+.card--product {
+  background-color: var(--color-bg-card);
+  border-radius:    var(--radius-xl);
+  border:           1px solid var(--color-border-default);
+  overflow:         hidden;
+  cursor:           pointer;
+  transition:
+    transform    var(--duration-slow)   var(--ease-expo-out),
+    box-shadow   var(--duration-slow)   var(--ease-smooth),
+    border-color var(--duration-normal) var(--ease-smooth);
+}
+
+.card--product:hover {
+  box-shadow:   var(--shadow-lg);
+  transform:    translateY(-4px);
+  border-color: var(--color-border-subtle);
+}
+
+.card--product:hover .card__media img {
+  transform: scale(1.03);
+}
+
+/* ── Card Media ── */
+.card__media {
+  position:         relative;
+  overflow:         hidden;
+  background-color: var(--color-bg-subtle);
+  aspect-ratio:     4 / 3;
+}
+
+.card__media img {
+  width:      100%;
+  height:     100%;
+  object-fit: cover;
+  transition: transform var(--duration-slower) var(--ease-expo-out);
+}
+
+.card__media--4-3   { aspect-ratio: 4 / 3;  }
+.card__media--16-9  { aspect-ratio: 16 / 9; }
+.card__media--3-4   { aspect-ratio: 3 / 4;  }
+
+/* ── Card Body ── */
+.card__body    { padding: var(--space-6); }
+.card__body--sm { padding: var(--space-4); }
+.card__body--lg { padding: var(--space-8); }
+
+/* ── Card Label ── */
+.card__label {
+  font-size:      var(--text-caption);
+  font-weight:    var(--font-weight-semibold);
+  letter-spacing: var(--tracking-widest);
+  text-transform: uppercase;
+  color:          var(--color-text-tertiary);
+  margin-bottom:  var(--space-2);
+}
+
+/* ── Card Title ── */
+.card__title {
+  font-size:      var(--text-heading-md);
+  font-weight:    var(--font-weight-regular);
+  letter-spacing: var(--tracking-snug);
+  line-height:    var(--leading-normal);
+  color:          var(--color-text-primary);
+  margin-bottom:  var(--space-2);
+}
+
+/* ── Card Description ── */
+.card__desc {
+  font-size:     var(--text-body-sm);
+  line-height:   var(--leading-body);
+  color:         var(--color-text-secondary);
+  margin-bottom: var(--space-4);
+}
+
+/* ── Card Price ── */
+.card__price {
+  font-size:   var(--text-body);
+  font-weight: var(--font-weight-medium);
+  color:       var(--color-text-primary);
+}
+
+.card__price--original {
+  text-decoration: line-through;
+  color:           var(--color-text-tertiary);
+  margin-left:     var(--space-2);
+  font-weight:     var(--font-weight-regular);
+}
+
+/* ── Card Footer ── */
+.card__footer {
+  padding:         var(--space-4) var(--space-6) var(--space-6);
+  display:         flex;
+  align-items:     center;
+  justify-content: space-between;
+  gap:             var(--space-4);
+}
+
+/* ── Feature Card ── */
+.card--feature {
+  background-color: var(--color-bg-card);
+  border-radius:    var(--radius-xl);
+  border:           1px solid var(--color-border-default);
+  padding:          var(--space-8);
+  transition:       var(--transition-hover);
+}
+
+.card--feature:hover {
+  box-shadow:   var(--shadow-sm);
+  border-color: var(--color-border-strong);
+  transform:    translateY(-1px);
+}
+
+/* ── Dark Card ── */
+.card--dark {
+  background-color: var(--color-bg-dark-elevated);
+  border-color:     var(--color-border-dark);
+  color:            var(--color-text-on-dark);
+}
+
+.card--dark .card__title { color: var(--color-text-on-dark);      }
+.card--dark .card__desc  { color: rgba(255, 255, 255, 0.55);       }
+.card--dark .card__label { color: rgba(255, 255, 255, 0.35);       }
+.card--dark .card__price { color: var(--color-text-on-dark);      }
+
+/* ── Flat Card ── */
+.card--flat {
+  background-color: var(--color-bg-subtle);
+  border:           none;
+  border-radius:    var(--radius-xl);
+}
+
+.card--flat:hover {
+  background-color: #EFEFEF;
+  box-shadow:       none;
+  transform:        translateY(-1px);
+}
+
+
+/* ============================================================
+   17. ANIMATION SYSTEM
+   ============================================================ */
+
+@keyframes fadeUp {
+  from {
+    opacity:   0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity:   1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes fadeDown {
+  from {
+    opacity:   0;
+    transform: translateY(-16px);
+  }
+  to {
+    opacity:   1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scaleUp {
+  from {
+    opacity:   0;
+    transform: scale(0.96);
+  }
+  to {
+    opacity:   1;
+    transform: scale(1);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity:   0;
+    transform: translateX(24px);
+  }
+  to {
+    opacity:   1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity:   0;
+    transform: translateX(-24px);
+  }
+  to {
+    opacity:   1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes revealLine {
+  from { transform: scaleX(0); }
+  to   { transform: scaleX(1); }
+}
+
+@keyframes pulseSoft {
+  0%, 100% { opacity: 1;   }
+  50%       { opacity: 0.4; }
+}
+
+/* ── Animation Utilities ── */
+.animate-fade-up    { animation: fadeUp       var(--duration-slowest) var(--ease-expo-out) both; }
+.animate-fade-in    { animation: fadeIn       var(--duration-slower)  var(--ease-out)      both; }
+.animate-fade-down  { animation: fadeDown     var(--duration-slow)    var(--ease-expo-out) both; }
+.animate-scale-up   { animation: scaleUp      var(--duration-slower)  var(--ease-expo-out) both; }
+.animate-slide-right{ animation: slideInRight var(--duration-slow)    var(--ease-expo-out) both; }
+.animate-slide-left { animation: slideInLeft  var(--duration-slow)    var(--ease-expo-out) both; }
+.animate-pulse-soft { animation: pulseSoft    2s var(--ease-smooth) infinite;                    }
+
+/* ── Delay Modifiers ── */
+.delay-75   { animation-delay:  75ms; }
+.delay-100  { animation-delay: 100ms; }
+.delay-150  { animation-delay: 150ms; }
+.delay-200  { animation-delay: 200ms; }
+.delay-300  { animation-delay: 300ms; }
+.delay-400  { animation-delay: 400ms; }
+.delay-500  { animation-delay: 500ms; }
+.delay-700  { animation-delay: 700ms; }
+.delay-1000 { animation-delay: 1000ms; }
+
+/* ── Scroll Reveal (JS toggled via .is-visible) ── */
+.reveal {
+  opacity:    0;
+  transform:  translateY(28px);
+  transition: var(--transition-reveal);
+}
+.reveal.is-visible {
+  opacity:   1;
+  transform: translateY(0);
+}
+
+.reveal--scale {
+  opacity:    0;
+  transform:  scale(0.97);
+  transition: var(--transition-reveal);
+}
+.reveal--scale.is-visible {
+  opacity:   1;
+  transform: scale(1);
+}
+
+.reveal--left {
+  opacity:    0;
+  transform:  translateX(-28px);
+  transition: var(--transition-reveal);
+}
+.reveal--left.is-visible {
+  opacity:   1;
+  transform: translateX(0);
+}
+
+.reveal--right {
+  opacity:    0;
+  transform:  translateX(28px);
+  transition: var(--transition-reveal);
+}
+.reveal--right.is-visible {
+  opacity:   1;
+  transform: translateX(0);
+}
+
+/* ── Stagger Children ── */
+.stagger > *:nth-child(1) { transition-delay:   0ms; }
+.stagger > *:nth-child(2) { transition-delay:  80ms; }
+.stagger > *:nth-child(3) { transition-delay: 160ms; }
+.stagger > *:nth-child(4) { transition-delay: 240ms; }
+.stagger > *:nth-child(5) { transition-delay: 320ms; }
+.stagger > *:nth-child(6) { transition-delay: 400ms; }
+.stagger > *:nth-child(7) { transition-delay: 480ms; }
+.stagger > *:nth-child(8) { transition-delay: 560ms; }
+
+/* ── Hover Micro-interactions ── */
+.hover-lift {
+  transition: var(--transition-hover);
+}
+.hover-lift:hover {
+  transform:  translateY(-3px);
+  box-shadow: var(--shadow-md);
+}
+
+.hover-scale {
+  transition: var(--transition-transform);
+}
+.hover-scale:hover {
+  transform: scale(1.02);
+}
+
+.hover-dim {
+  transition: opacity var(--duration-normal) var(--ease-smooth);
+}
+.hover-dim:hover {
+  opacity: 0.7;
+}
+
+.hover-bright {
+  transition: opacity var(--duration-normal) var(--ease-smooth);
+}
+.hover-bright:hover {
+  opacity: 0.85;
+}
+
+
+/* ============================================================
+   18. SECTION UTILITIES
+   ============================================================ */
+
+.section    { padding-block: var(--section-gap-md); }
+.section--sm { padding-block: var(--section-gap-sm); }
+.section--lg { padding-block: var(--section-gap-lg); }
+.section--xl { padding-block: var(--section-gap-xl); }
+
+.section--light        { background-color: var(--color-bg-primary);       }
+.section--white        { background-color: var(--color-bg-card);           }
+.section--subtle       { background-color: var(--color-bg-subtle);         }
+.section--dark         { background-color: var(--color-bg-dark);           color: var(--color-text-on-dark); }
+.section--dark-elevated{ background-color: var(--color-bg-dark-elevated);  color: var(--color-text-on-dark); }
+
+.section-header {
+  margin-bottom: var(--space-16);
+}
+
+.section-header--center {
+  text-align:    center;
+  margin-inline: auto;
+  max-width:     680px;
+  margin-bottom: var(--space-16);
+}
+
+.section-header__eyebrow {
+  font-size:      var(--text-caption);
+  font-weight:    var(--font-weight-semibold);
+  letter-spacing: var(--tracking-widest);
+  text-transform: uppercase;
+  color:          var(--color-text-tertiary);
+  margin-bottom:  var(--space-4);
+}
+
+.section-header__title {
+  font-size:      var(--text-section-title);
+  font-weight:    var(--font-weight-light);
+  letter-spacing: var(--tracking-tight);
+  line-height:    var(--leading-snug);
+  color:          var(--color-text-primary);
+  margin-bottom:  var(--space-6);
+}
+
+.section-header__desc {
+  font-size:   var(--text-body-lg);
+  line-height: var(--leading-relaxed);
+  color:       var(--color-text-secondary);
+}
+
+.section--dark .section-header__eyebrow { color: rgba(255,255,255,0.35); }
+.section--dark .section-header__title   { color: var(--color-text-on-dark); }
+.section--dark .section-header__desc    { color: rgba(255,255,255,0.55); }
+
+
+/* ============================================================
+   19. TEXT UTILITIES
+   ============================================================ */
+
+.truncate {
+  overflow:      hidden;
+  text-overflow: ellipsis;
+  white-space:   nowrap;
+}
+
+.line-clamp-2 {
+  display:            -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp:         2;
+  -webkit-box-orient: vertical;
+  overflow:           hidden;
+}
+
+.line-clamp-3 {
+  display:            -webkit-box;
+  -webkit-line-clamp: 3;
+  line-clamp:         3;
+  -webkit-box-orient: vertical;
+  overflow:           hidden;
+}
+
+
+.sr-only {
+  position:    absolute;
+  width:       1px;
+  height:      1px;
+  padding:     0;
+  margin:      -1px;
+  overflow:    hidden;
+  clip:        rect(0, 0, 0, 0);
+  border:      0;
+  white-space: nowrap;
+}
+
+.opacity-0   { opacity: 0;    }
+.opacity-50  { opacity: 0.5;  }
+.opacity-75  { opacity: 0.75; }
+.opacity-100 { opacity: 1;    }
+
+.pointer-none   { pointer-events: none; }
+.pointer-auto   { pointer-events: auto; }
+.cursor-pointer { cursor: pointer;      }
+
+
+/* ============================================================
+   20. DIVIDER UTILITIES
+   ============================================================ */
+
+.divider {
+  width:            100%;
+  height:           1px;
+  background-color: var(--color-border-default);
+  border:           none;
+  margin-block:     0;
+}
+
+.divider--vertical {
+  width:            1px;
+  height:           100%;
+  background-color: var(--color-border-default);
+  flex-shrink:      0;
+}
+
+.divider--dark {
+  background-color: var(--color-border-dark);
+}
+
+.divider--animated {
+  transform-origin: left center;
+  animation: revealLine var(--duration-reveal) var(--ease-expo-out) both;
+}
+
+/* ── Tag / Chip ── */
+.tag {
+  display:          inline-flex;
+  align-items:      center;
+  gap:              var(--space-1);
+  font-size:        var(--text-caption);
+  font-weight:      var(--font-weight-medium);
+  letter-spacing:   var(--tracking-wide);
+  padding:          var(--space-1) var(--space-3);
+  border-radius:    var(--radius-full);
+  background-color: var(--color-bg-subtle);
+  color:            var(--color-text-secondary);
+  border:           1px solid var(--color-border-default);
+  line-height:      var(--leading-none);
+  white-space:      nowrap;
+}
+
+.tag--dark {
+  background-color: rgba(255, 255, 255, 0.08);
+  color:            rgba(255, 255, 255, 0.6);
+  border-color:     rgba(255, 255, 255, 0.12);
+}
+
+/* ── Aspect Ratios ── */
+.aspect-square   { aspect-ratio: 1 / 1;  }
+.aspect-video    { aspect-ratio: 16 / 9; }
+.aspect-photo    { aspect-ratio: 4 / 3;  }
+.aspect-portrait { aspect-ratio: 3 / 4;  }
+
+/* ── Object Fit ── */
+.object-cover    { object-fit: cover;     }
+.object-contain  { object-fit: contain;   }
+.object-center   { object-position: center; }
+
+/* ── Display ── */
+.block        { display: block;        }
+.inline-block { display: inline-block; }
+.inline-flex  { display: inline-flex;  }
+.hidden       { display: none;         }
+
+
+/* ============================================================
+   21. RESPONSIVE BREAKPOINTS
+   ============================================================ */
+
+/* ── Tablet (< 1024px) ── */
+@media (max-width: 1023px) {
+
+  .container {
+    padding-inline: var(--space-6);
+  }
+
+  .grid--products {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-5);
+  }
+
+  .grid--features {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .grid--editorial,
+  .grid--editorial-reverse {
+    grid-template-columns: 1fr;
+    gap: var(--space-12);
+  }
+
+  .grid--editorial-reverse > *:first-child { order: unset; }
+  .grid--editorial-reverse > *:last-child  { order: unset; }
+
+  .grid--3 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .section-header--center {
+    max-width: 100%;
+  }
+
+}
+
+/* ── Mobile (< 768px) ── */
+@media (max-width: 767px) {
+
+  .container,
+  .container--narrow,
+  .container--wide {
+    padding-inline: var(--space-4);
+  }
+
+  .grid--products,
+  .grid--2,
+  .grid--3,
+  .grid--features {
+    grid-template-columns: 1fr;
+    gap: var(--space-4);
+  }
+
+  .reveal,
+  .reveal--scale,
+  .reveal--left,
+  .reveal--right {
+    transform: translateY(12px);
+  }
+
+  .text-hero {
+    letter-spacing: var(--tracking-tight);
+  }
+
+}
+
+/* ── Small Mobile (< 480px) ── */
+@media (max-width: 479px) {
+
+  .container {
+    padding-inline: var(--space-4);
+  }
+
+  .card__body {
+    padding: var(--space-4);
+  }
+
+}
+
+/* ============================================================
+   16. PRODUCT CARD QUANTITY CONTROLS (Swiggy / Amazon Style)
+   ============================================================ */
+
+.card-qty-ctrl {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--color-text-primary);
+  color: #FFFFFF;
+  border-radius: var(--radius-full);
+  padding: 4px 6px;
+  min-width: 108px;
+  height: 38px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.18);
+  animation: qtyCtrlPop 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 5;
+}
+
+@keyframes qtyCtrlPop {
+  0% { transform: scale(0.9); opacity: 0; }
+  10% { transform: scale(1); opacity: 1; }
+}
+
+.card-qty-ctrl__btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  background: rgba(255, 255, 255, 0.18);
+  color: #FFFFFF;
+  border: none;
+  border-radius: 50%;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.15s, transform 0.15s;
+  padding: 0;
+  line-height: 1;
+}
+
+.card-qty-ctrl__btn:hover {
+  background: rgba(255, 255, 255, 0.35);
+  transform: scale(1.08);
+}
+
+.card-qty-ctrl__btn:active {
+  transform: scale(0.95);
+}
+
+.card-qty-ctrl__num {
+  font-family: var(--font-family-primary);
+  font-size: 14px;
+  font-weight: 600;
+  min-width: 24px;
+  text-align: center;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+/* Specific positioning when replacing floating quick add on Products page */
+.pcard__img-wrap .card-qty-ctrl {
+  position: absolute;
+  bottom: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(100% - 24px);
+  max-width: 160px;
+}
+
+
+/* ── Reduced Motion Accessibility ── */
+@media (prefers-reduced-motion: reduce) {
+
+  *,
+  *::before,
+  *::after {
+    animation-duration:        0.01ms !important;
+    animation-iteration-count: 1      !important;
+    transition-duration:       0.01ms !important;
+    scroll-behavior:           auto   !important;
+  }
+
+  body,
+  .reveal,
+  .reveal--scale,
+  .reveal--left,
+  .reveal--right {
+    opacity:   1 !important;
+    transform: none;
+    transition: none;
+  }
+
+}
+
+/* ── High Contrast ── */
+@media (prefers-contrast: high) {
+
+  :root {
+    --color-border-default: rgba(0, 0, 0, 0.2);
+    --color-border-strong:  rgba(0, 0, 0, 0.4);
+    --color-text-secondary: #444444;
+    --color-text-tertiary:  #555555;
+  }
+
+}
+
+/* ============================================================
+   END OF NEST GLOBAL DESIGN SYSTEM
+   ============================================================ */

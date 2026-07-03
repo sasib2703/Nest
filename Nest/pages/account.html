@@ -1,0 +1,1484 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Your NEST account — manage orders, wishlist, and personal settings." />
+  <meta name="theme-color" content="#FAFAFA" />
+
+  <title>My Account — NEST</title>
+  <link rel="icon" href="../fav.png" type="image/png" />
+
+  <!-- Design System -->
+  <link rel="stylesheet" href="../css/style.css" />
+
+  <style>
+    /* ═══════════════════════════════════════════════
+       ACCOUNT PAGE — DASHBOARD LAYOUT
+    ═══════════════════════════════════════════════ */
+
+    /* ── Page shell ── */
+    .acct-page {
+      min-height: 100vh;
+      display: grid;
+      grid-template-rows: auto 1fr;
+      background: var(--color-bg-subtle);
+    }
+
+    /* ── Minimal Top Bar ── */
+    .acct-topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 clamp(24px, 5vw, 64px);
+      height: 64px;
+      background: var(--color-bg-card);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      transition:
+        transform 420ms cubic-bezier(0.16, 1, 0.3, 1),
+        opacity 380ms cubic-bezier(0.16, 1, 0.3, 1),
+        height 400ms cubic-bezier(0.16, 1, 0.3, 1),
+        margin 400ms cubic-bezier(0.16, 1, 0.3, 1),
+        border-radius 400ms cubic-bezier(0.16, 1, 0.3, 1),
+        box-shadow 400ms cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .acct-topbar.is-scrolled {
+      top: 16px;
+      margin: 0 auto;
+      width: calc(100% - 32px);
+      max-width: 1400px;
+      height: 56px;
+      border-radius: 100px;
+      background: rgba(255, 255, 255, 0.85);
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.08), 0 2px 8px rgba(0, 0, 0, 0.04);
+    }
+
+    .acct-topbar.is-hidden {
+      transform: translateY(-150%) !important;
+      opacity: 0 !important;
+      pointer-events: none !important;
+    }
+
+    .acct-logo {
+      font-family: var(--font-family-primary);
+      font-size: 1.05rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      color: #111111;
+      text-decoration: none;
+      text-transform: uppercase;
+      position: relative;
+      padding: 4px 0;
+      transition:
+        transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+        filter 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .acct-logo:hover {
+      transform: translateY(-2px);
+      filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.08));
+    }
+
+
+
+    .acct-logo::before {
+      content: "";
+      position: absolute;
+      top: -6px;
+      left: 1px;
+      width: 7px;
+      height: 3px;
+      background: #111111;
+      border-radius: 1px 1px 0 0;
+      clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+      opacity: 0;
+      transform: translateY(2px);
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .acct-logo:hover::before {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .acct-topbar__right {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .acct-shop-link {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-family: var(--font-family-primary);
+      font-size: 0.8125rem;
+      font-weight: 400;
+      color: var(--color-text-tertiary);
+      text-decoration: none;
+      transition: color 200ms ease;
+    }
+
+    .acct-shop-link:hover { color: var(--color-text-primary); }
+
+    .acct-shop-link svg {
+      width: 14px;
+      height: 14px;
+    }
+
+    .acct-cart-link {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: var(--color-bg-subtle);
+      color: var(--color-text-primary);
+      text-decoration: none;
+      transition: background 200ms ease;
+    }
+
+    .acct-cart-link:hover { background: var(--color-border-subtle); }
+
+    .acct-cart-link svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    /* ── Body: Sidebar + Main ── */
+    .acct-body {
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      min-height: 0;
+      max-width: 1360px;
+      margin: 0 auto;
+      width: 100%;
+      padding: 32px clamp(16px, 4vw, 40px) 48px;
+      gap: 28px;
+      align-items: start;
+    }
+
+    /* ═══════════════════════════════════════════════
+       SIDEBAR
+    ═══════════════════════════════════════════════ */
+    .acct-sidebar {
+      background: var(--color-bg-card);
+      border: 1px solid var(--color-border-subtle);
+      border-radius: 16px;
+      overflow: hidden;
+      position: sticky;
+      top: 88px; /* topbar height + gap */
+    }
+
+    /* Profile block */
+    .acct-profile-block {
+      padding: 28px 24px 24px;
+      border-bottom: 1px solid var(--color-border-subtle);
+    }
+
+    .acct-avatar {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #1a1a1a 0%, #404040 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-family: var(--font-family-primary);
+      font-size: 1.25rem;
+      font-weight: 300;
+      letter-spacing: 0.06em;
+      margin-bottom: 14px;
+      flex-shrink: 0;
+    }
+
+    .acct-profile-name {
+      font-family: var(--font-family-primary);
+      font-size: 0.9375rem;
+      font-weight: 500;
+      color: var(--color-text-primary);
+      margin-bottom: 3px;
+    }
+
+    .acct-profile-email {
+      font-family: var(--font-family-primary);
+      font-size: 0.75rem;
+      color: var(--color-text-tertiary);
+      font-weight: 400;
+    }
+
+    .acct-profile-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      margin-top: 10px;
+      padding: 3px 10px;
+      background: #F0FAF5;
+      color: #2D7A5A;
+      border-radius: 100px;
+      font-family: var(--font-family-primary);
+      font-size: 0.6875rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    /* Nav links */
+    .acct-nav {
+      padding: 12px 0;
+    }
+
+    .acct-nav__item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 11px 20px;
+      font-family: var(--font-family-primary);
+      font-size: 0.875rem;
+      font-weight: 400;
+      color: var(--color-text-secondary);
+      text-decoration: none;
+      border: none;
+      background: transparent;
+      width: 100%;
+      text-align: left;
+      cursor: pointer;
+      border-radius: 0;
+      transition:
+        background 180ms ease,
+        color 180ms ease;
+      position: relative;
+    }
+
+    .acct-nav__item svg {
+      width: 17px;
+      height: 17px;
+      flex-shrink: 0;
+      stroke: currentColor;
+      stroke-width: 1.5;
+      fill: none;
+    }
+
+    .acct-nav__item:hover {
+      background: var(--color-bg-subtle);
+      color: var(--color-text-primary);
+    }
+
+    .acct-nav__item.is-active {
+      background: var(--color-bg-subtle);
+      color: var(--color-text-primary);
+      font-weight: 500;
+    }
+
+    .acct-nav__item.is-active::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 6px;
+      bottom: 6px;
+      width: 2px;
+      background: var(--color-text-primary);
+      border-radius: 0 2px 2px 0;
+    }
+
+    .acct-nav__badge {
+      margin-left: auto;
+      min-width: 20px;
+      height: 20px;
+      padding: 0 6px;
+      background: var(--color-text-primary);
+      color: #fff;
+      border-radius: 100px;
+      font-size: 0.6875rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .acct-nav__divider {
+      height: 1px;
+      background: var(--color-border-subtle);
+      margin: 8px 0;
+    }
+
+    .acct-nav__item--danger:hover {
+      background: #FFF5F5;
+      color: #c53030;
+    }
+
+    /* ═══════════════════════════════════════════════
+       MAIN DASHBOARD CONTENT
+    ═══════════════════════════════════════════════ */
+    .acct-main {
+      min-width: 0;
+    }
+
+    /* Section panels — shown/hidden via JS */
+    .acct-section {
+      display: none;
+    }
+
+    .acct-section.is-active {
+      display: block;
+    }
+
+    /* ── Section heading ── */
+    .acct-section-eyebrow {
+      font-family: var(--font-family-primary);
+      font-size: 0.6875rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--color-text-tertiary);
+      margin-bottom: 8px;
+    }
+
+    .acct-section-title {
+      font-family: var(--font-family-primary);
+      font-size: clamp(1.375rem, 2.5vw, 1.75rem);
+      font-weight: 300;
+      letter-spacing: -0.02em;
+      color: var(--color-text-primary);
+      margin-bottom: 28px;
+      line-height: 1.2;
+    }
+
+    /* ── Cards ── */
+    .acct-card {
+      background: var(--color-bg-card);
+      border: 1px solid var(--color-border-subtle);
+      border-radius: 14px;
+      padding: 24px;
+      margin-bottom: 16px;
+    }
+
+    .acct-card:last-child {
+      margin-bottom: 0;
+    }
+
+    .acct-card__header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+
+    .acct-card__label {
+      font-family: var(--font-family-primary);
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--color-text-tertiary);
+      margin-bottom: 4px;
+    }
+
+    .acct-card__title {
+      font-family: var(--font-family-primary);
+      font-size: 1.0625rem;
+      font-weight: 500;
+      color: var(--color-text-primary);
+    }
+
+    .acct-card__action {
+      font-family: var(--font-family-primary);
+      font-size: 0.8125rem;
+      font-weight: 400;
+      color: var(--color-text-secondary);
+      text-decoration: none;
+      padding: 7px 14px;
+      border: 1px solid var(--color-border-default);
+      border-radius: 100px;
+      background: transparent;
+      cursor: pointer;
+      transition:
+        border-color 180ms ease,
+        color 180ms ease,
+        background 180ms ease;
+    }
+
+    .acct-card__action:hover {
+      border-color: var(--color-text-primary);
+      color: var(--color-text-primary);
+      background: var(--color-bg-subtle);
+    }
+
+    /* ── Summary Stats Bar ── */
+    .acct-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+
+    .acct-stat {
+      background: var(--color-bg-card);
+      border: 1px solid var(--color-border-subtle);
+      border-radius: 14px;
+      padding: 20px 20px 18px;
+    }
+
+    .acct-stat__label {
+      font-family: var(--font-family-primary);
+      font-size: 0.75rem;
+      font-weight: 500;
+      color: var(--color-text-tertiary);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 8px;
+    }
+
+    .acct-stat__value {
+      font-family: var(--font-family-primary);
+      font-size: 1.625rem;
+      font-weight: 300;
+      letter-spacing: -0.03em;
+      color: var(--color-text-primary);
+      line-height: 1;
+    }
+
+    .acct-stat__sub {
+      font-family: var(--font-family-primary);
+      font-size: 0.75rem;
+      color: var(--color-text-tertiary);
+      margin-top: 4px;
+    }
+
+    /* ── Info Grid ── */
+    .acct-info-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    .acct-info-field {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .acct-info-field__label {
+      font-family: var(--font-family-primary);
+      font-size: 0.6875rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--color-text-tertiary);
+    }
+
+    .acct-info-field__value {
+      font-family: var(--font-family-primary);
+      font-size: 0.9375rem;
+      color: var(--color-text-primary);
+      font-weight: 400;
+    }
+
+    /* ── Order List ── */
+    .acct-order {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 16px 0;
+      border-bottom: 1px solid var(--color-border-subtle);
+    }
+
+    .acct-order:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+
+    .acct-order:first-child {
+      padding-top: 0;
+    }
+
+    .acct-order__img {
+      width: 52px;
+      height: 52px;
+      border-radius: 10px;
+      object-fit: cover;
+      background: var(--color-bg-subtle);
+      flex-shrink: 0;
+    }
+
+    .acct-order__info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .acct-order__name {
+      font-family: var(--font-family-primary);
+      font-size: 0.9375rem;
+      font-weight: 500;
+      color: var(--color-text-primary);
+      margin-bottom: 3px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .acct-order__meta {
+      font-family: var(--font-family-primary);
+      font-size: 0.75rem;
+      color: var(--color-text-tertiary);
+    }
+
+    .acct-order__right {
+      text-align: right;
+      flex-shrink: 0;
+    }
+
+    .acct-order__price {
+      font-family: var(--font-family-primary);
+      font-size: 0.9375rem;
+      font-weight: 500;
+      color: var(--color-text-primary);
+      margin-bottom: 4px;
+    }
+
+    .acct-order__status {
+      display: inline-block;
+      padding: 2px 9px;
+      border-radius: 100px;
+      font-family: var(--font-family-primary);
+      font-size: 0.6875rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+    }
+
+    .acct-order__status--delivered {
+      background: #F0FAF5;
+      color: #2D7A5A;
+    }
+
+    .acct-order__status--transit {
+      background: #FFF8EC;
+      color: #B7791F;
+    }
+
+    .acct-order__status--processing {
+      background: #EFF6FF;
+      color: #2B6CB0;
+    }
+
+    /* ── Empty state ── */
+    .acct-empty {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 48px 24px;
+      text-align: center;
+      gap: 12px;
+    }
+
+    .acct-empty svg {
+      color: var(--color-border-strong);
+      margin-bottom: 4px;
+    }
+
+    .acct-empty__title {
+      font-family: var(--font-family-primary);
+      font-size: 1rem;
+      font-weight: 500;
+      color: var(--color-text-primary);
+    }
+
+    .acct-empty__text {
+      font-family: var(--font-family-primary);
+      font-size: 0.875rem;
+      color: var(--color-text-tertiary);
+    }
+
+    .acct-empty__link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 10px 22px;
+      background: var(--color-text-primary);
+      color: #fff;
+      border-radius: 100px;
+      font-family: var(--font-family-primary);
+      font-size: 0.875rem;
+      font-weight: 500;
+      text-decoration: none;
+      margin-top: 8px;
+      transition:
+        background 200ms ease,
+        transform 200ms cubic-bezier(0.16,1,0.3,1);
+    }
+
+    .acct-empty__link:hover {
+      background: #1a1a1a;
+      transform: translateY(-1px);
+    }
+
+    /* ── Settings Form ── */
+    .acct-form-field {
+      margin-bottom: 20px;
+    }
+
+    .acct-form-label {
+      display: block;
+      font-family: var(--font-family-primary);
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--color-text-secondary);
+      margin-bottom: 8px;
+    }
+
+    .acct-form-input {
+      width: 100%;
+      padding: 12px 16px;
+      background: var(--color-bg-primary);
+      border: 1px solid var(--color-border-default);
+      border-radius: 10px;
+      font-family: var(--font-family-primary);
+      font-size: 0.9375rem;
+      color: var(--color-text-primary);
+      transition:
+        border-color 200ms ease,
+        box-shadow 200ms ease;
+    }
+
+    .acct-form-input:focus {
+      outline: none;
+      border-color: var(--color-text-primary);
+      box-shadow: 0 0 0 3px rgba(0,0,0,0.06);
+    }
+
+    .acct-form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .acct-save-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 28px;
+      background: var(--color-text-primary);
+      color: #fff;
+      border: none;
+      border-radius: 100px;
+      font-family: var(--font-family-primary);
+      font-size: 0.875rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition:
+        background 200ms ease,
+        transform 200ms cubic-bezier(0.16,1,0.3,1);
+    }
+
+    .acct-save-btn:hover {
+      background: #1a1a1a;
+      transform: translateY(-1px);
+    }
+
+    .acct-save-btn:active { transform: scale(0.98); }
+
+    /* ── Toggle Switch ── */
+    .acct-toggle-row {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 24px;
+      padding: 16px 0;
+      border-bottom: 1px solid var(--color-border-subtle);
+    }
+
+    .acct-toggle-row:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+
+    .acct-toggle-info { flex: 1; }
+
+    .acct-toggle-name {
+      font-family: var(--font-family-primary);
+      font-size: 0.9375rem;
+      font-weight: 500;
+      color: var(--color-text-primary);
+      margin-bottom: 3px;
+    }
+
+    .acct-toggle-desc {
+      font-family: var(--font-family-primary);
+      font-size: 0.8125rem;
+      color: var(--color-text-tertiary);
+    }
+
+    /* iOS-style toggle */
+    .acct-switch {
+      position: relative;
+      width: 44px;
+      height: 26px;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .acct-switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+      position: absolute;
+    }
+
+    .acct-switch__track {
+      position: absolute;
+      inset: 0;
+      background: var(--color-border-default);
+      border-radius: 100px;
+      cursor: pointer;
+      transition: background 200ms ease;
+    }
+
+    .acct-switch__track::after {
+      content: '';
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: #fff;
+      border-radius: 50%;
+      top: 3px;
+      left: 3px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+      transition: transform 200ms cubic-bezier(0.16,1,0.3,1);
+    }
+
+    .acct-switch input:checked + .acct-switch__track {
+      background: var(--color-text-primary);
+    }
+
+    .acct-switch input:checked + .acct-switch__track::after {
+      transform: translateX(18px);
+    }
+
+    /* ── Wishlist grid ── */
+    .acct-wish-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+    }
+
+    .acct-wish-item {
+      background: var(--color-bg-subtle);
+      border: 1px solid var(--color-border-subtle);
+      border-radius: 12px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .acct-wish-item__img {
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      object-fit: cover;
+      display: block;
+    }
+
+    .acct-wish-item__body {
+      padding: 12px;
+    }
+
+    .acct-wish-item__name {
+      font-family: var(--font-family-primary);
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--color-text-primary);
+      margin-bottom: 4px;
+    }
+
+    .acct-wish-item__price {
+      font-family: var(--font-family-primary);
+      font-size: 0.8125rem;
+      color: var(--color-text-secondary);
+    }
+
+    .acct-wish-item__remove {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      width: 28px;
+      height: 28px;
+      background: rgba(255,255,255,0.9);
+      border: none;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: var(--color-text-tertiary);
+      -webkit-backdrop-filter: blur(8px);
+      backdrop-filter: blur(8px);
+      transition: color 180ms ease;
+    }
+
+    @media (max-width: 767px) {
+      .acct-body {
+        grid-template-columns: 1fr;
+        padding: 16px 16px 40px;
+        gap: 16px;
+      }
+
+      .acct-sidebar {
+        position: static;
+      }
+
+      .acct-nav {
+        display: flex;
+        overflow-x: auto;
+        padding: 8px 12px;
+        gap: 4px;
+      }
+
+      .acct-nav::-webkit-scrollbar { display: none; }
+
+      .acct-nav__divider { display: none; }
+
+      .acct-nav__item {
+        white-space: nowrap;
+        padding: 8px 14px;
+        border-radius: 100px;
+        flex-shrink: 0;
+        width: auto;
+      }
+
+      .acct-nav__item.is-active::before { display: none; }
+
+      .acct-nav__item.is-active {
+        background: var(--color-text-primary);
+        color: #fff;
+      }
+
+      .acct-nav__badge {
+        display: none;
+      }
+
+      .acct-profile-block {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+      }
+
+      .acct-avatar {
+        margin-bottom: 0;
+        width: 44px;
+        height: 44px;
+        font-size: 1rem;
+      }
+
+      .acct-profile-badge { display: none; }
+
+      .acct-stats {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .acct-stats > .acct-stat:last-child {
+        grid-column: 1 / -1;
+      }
+
+      .acct-info-grid,
+      .acct-form-row,
+      .acct-wish-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+
+</head>
+<body class="loaded">
+
+  <div class="acct-page">
+
+    <!-- ── Minimal Top Bar ── -->
+    <header class="acct-topbar" role="banner">
+      <a href="../index.html" class="acct-logo" aria-label="NEST — Return to homepage" onclick="try{sessionStorage.setItem('nestLogoClicked','true')}catch(e){}">NEST</a>
+      <div class="acct-topbar__right">
+        <a href="./products.html" class="acct-shop-link" aria-label="Return to shop">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+            <path d="M10 3L5 8l5 5"/>
+          </svg>
+          Back to Shop
+        </a>
+        <a href="./cart.html" class="acct-cart-link" aria-label="View cart">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+            <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
+            <line x1="3" y1="6" x2="21" y2="6"/>
+            <path d="M16 10a4 4 0 0 1-8 0"/>
+          </svg>
+        </a>
+      </div>
+    </header>
+
+
+    <!-- ── Dashboard Body ── -->
+    <div class="acct-body">
+
+      <!-- ══════════════════════════
+           SIDEBAR
+      ══════════════════════════ -->
+      <aside class="acct-sidebar" aria-label="Account navigation">
+
+        <!-- Profile block -->
+        <div class="acct-profile-block">
+          <div class="acct-avatar" aria-hidden="true">A</div>
+          <div>
+            <div class="acct-profile-name">Alex Johnson</div>
+            <div class="acct-profile-email">alex@example.com</div>
+            <span class="acct-profile-badge">
+              <svg width="8" height="8" viewBox="0 0 8 8" fill="currentColor"><circle cx="4" cy="4" r="3"/></svg>
+              Premium Member
+            </span>
+          </div>
+        </div>
+
+        <!-- Navigation -->
+        <nav class="acct-nav" aria-label="Account sections">
+          <button class="acct-nav__item is-active" id="nav-overview" onclick="showSection('overview')" type="button">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+            Overview
+          </button>
+
+          <button class="acct-nav__item" id="nav-orders" onclick="showSection('orders')" type="button">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16 4H18a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="13" y2="17"/></svg>
+            Orders
+            <span class="acct-nav__badge">3</span>
+          </button>
+
+          <button class="acct-nav__item" id="nav-wishlist" onclick="showSection('wishlist')" type="button">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+            Wishlist
+            <span class="acct-nav__badge">4</span>
+          </button>
+
+          <button class="acct-nav__item" id="nav-profile" onclick="showSection('profile')" type="button">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            Personal Info
+          </button>
+
+          <button class="acct-nav__item" id="nav-settings" onclick="showSection('settings')" type="button">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+            Settings
+          </button>
+
+          <div class="acct-nav__divider"></div>
+
+          <a href="./auth.html" class="acct-nav__item acct-nav__item--danger">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+            Sign Out
+          </a>
+        </nav>
+
+      </aside><!-- /sidebar -->
+
+
+      <!-- ══════════════════════════
+           MAIN CONTENT PANELS
+      ══════════════════════════ -->
+      <main class="acct-main" id="main-content" tabindex="-1">
+
+
+        <!-- ── OVERVIEW ── -->
+        <section class="acct-section is-active" id="section-overview" aria-label="Account overview">
+
+          <p class="acct-section-eyebrow">Dashboard</p>
+          <h1 class="acct-section-title">Good morning, Alex.</h1>
+
+          <!-- Stats -->
+          <div class="acct-stats" role="list">
+            <div class="acct-stat" role="listitem">
+              <div class="acct-stat__label">Total Orders</div>
+              <div class="acct-stat__value">12</div>
+              <div class="acct-stat__sub">Since joining</div>
+            </div>
+            <div class="acct-stat" role="listitem">
+              <div class="acct-stat__label">Saved Items</div>
+              <div class="acct-stat__value">4</div>
+              <div class="acct-stat__sub">In your wishlist</div>
+            </div>
+            <div class="acct-stat" role="listitem">
+              <div class="acct-stat__label">Total Spent</div>
+              <div class="acct-stat__value">₹1.8L</div>
+              <div class="acct-stat__sub">Lifetime value</div>
+            </div>
+          </div>
+
+          <!-- Recent Orders -->
+          <div class="acct-card">
+            <div class="acct-card__header">
+              <div>
+                <div class="acct-card__label">Recent Activity</div>
+                <div class="acct-card__title">Latest Orders</div>
+              </div>
+              <button class="acct-card__action" onclick="showSection('orders')" type="button">View All</button>
+            </div>
+
+            <div class="acct-order">
+              <img src="https://images.unsplash.com/photo-1545454675-3531b543be5d?q=80&w=100&auto=format&fit=crop"
+                   alt="Nest Sound Studio" class="acct-order__img" />
+              <div class="acct-order__info">
+                <div class="acct-order__name">Nest Sound Studio</div>
+                <div class="acct-order__meta">Order #NS-2406 &nbsp;·&nbsp; Jun 28, 2026</div>
+              </div>
+              <div class="acct-order__right">
+                <div class="acct-order__price">₹24,999</div>
+                <span class="acct-order__status acct-order__status--delivered">Delivered</span>
+              </div>
+            </div>
+
+            <div class="acct-order">
+              <img src="https://images.unsplash.com/photo-1557324232-b8917d3c3dcb?q=80&w=100&auto=format&fit=crop"
+                   alt="Nest Vision Pro" class="acct-order__img" />
+              <div class="acct-order__info">
+                <div class="acct-order__name">Nest Vision Pro</div>
+                <div class="acct-order__meta">Order #NS-2397 &nbsp;·&nbsp; Jun 15, 2026</div>
+              </div>
+              <div class="acct-order__right">
+                <div class="acct-order__price">₹18,499</div>
+                <span class="acct-order__status acct-order__status--transit">In Transit</span>
+              </div>
+            </div>
+
+            <div class="acct-order">
+              <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?q=80&w=100&auto=format&fit=crop"
+                   alt="Nest Climate Pro" class="acct-order__img" />
+              <div class="acct-order__info">
+                <div class="acct-order__name">Nest Climate Pro</div>
+                <div class="acct-order__meta">Order #NS-2381 &nbsp;·&nbsp; May 30, 2026</div>
+              </div>
+              <div class="acct-order__right">
+                <div class="acct-order__price">₹14,999</div>
+                <span class="acct-order__status acct-order__status--processing">Processing</span>
+              </div>
+            </div>
+
+          </div><!-- /recent orders card -->
+
+        </section><!-- /overview -->
+
+
+        <!-- ── ORDERS ── -->
+        <section class="acct-section" id="section-orders" aria-label="Order history">
+
+          <p class="acct-section-eyebrow">Account</p>
+          <h1 class="acct-section-title">Order History</h1>
+
+          <div class="acct-card">
+            <div class="acct-card__header">
+              <div>
+                <div class="acct-card__label">All Orders</div>
+                <div class="acct-card__title">12 orders placed</div>
+              </div>
+            </div>
+
+            <div class="acct-order">
+              <img src="https://images.unsplash.com/photo-1545454675-3531b543be5d?q=80&w=100&auto=format&fit=crop"
+                   alt="Nest Sound Studio" class="acct-order__img" />
+              <div class="acct-order__info">
+                <div class="acct-order__name">Nest Sound Studio</div>
+                <div class="acct-order__meta">Order #NS-2406 &nbsp;·&nbsp; Jun 28, 2026 &nbsp;·&nbsp; Qty: 1</div>
+              </div>
+              <div class="acct-order__right">
+                <div class="acct-order__price">₹24,999</div>
+                <span class="acct-order__status acct-order__status--delivered">Delivered</span>
+              </div>
+            </div>
+
+            <div class="acct-order">
+              <img src="https://images.unsplash.com/photo-1557324232-b8917d3c3dcb?q=80&w=100&auto=format&fit=crop"
+                   alt="Nest Vision Pro" class="acct-order__img" />
+              <div class="acct-order__info">
+                <div class="acct-order__name">Nest Vision Pro</div>
+                <div class="acct-order__meta">Order #NS-2397 &nbsp;·&nbsp; Jun 15, 2026 &nbsp;·&nbsp; Qty: 2</div>
+              </div>
+              <div class="acct-order__right">
+                <div class="acct-order__price">₹36,998</div>
+                <span class="acct-order__status acct-order__status--transit">In Transit</span>
+              </div>
+            </div>
+
+            <div class="acct-order">
+              <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?q=80&w=100&auto=format&fit=crop"
+                   alt="Nest Climate Pro" class="acct-order__img" />
+              <div class="acct-order__info">
+                <div class="acct-order__name">Nest Climate Pro</div>
+                <div class="acct-order__meta">Order #NS-2381 &nbsp;·&nbsp; May 30, 2026 &nbsp;·&nbsp; Qty: 1</div>
+              </div>
+              <div class="acct-order__right">
+                <div class="acct-order__price">₹14,999</div>
+                <span class="acct-order__status acct-order__status--processing">Processing</span>
+              </div>
+            </div>
+
+            <div class="acct-order">
+              <img src="https://images.unsplash.com/photo-1507668077129-56e32842fceb?q=80&w=100&auto=format&fit=crop"
+                   alt="Nest Glow Ambient" class="acct-order__img" />
+              <div class="acct-order__info">
+                <div class="acct-order__name">Nest Glow Ambient</div>
+                <div class="acct-order__meta">Order #NS-2360 &nbsp;·&nbsp; May 8, 2026 &nbsp;·&nbsp; Qty: 3</div>
+              </div>
+              <div class="acct-order__right">
+                <div class="acct-order__price">₹37,497</div>
+                <span class="acct-order__status acct-order__status--delivered">Delivered</span>
+              </div>
+            </div>
+
+          </div>
+
+        </section><!-- /orders -->
+
+
+        <!-- ── WISHLIST ── -->
+        <section class="acct-section" id="section-wishlist" aria-label="Wishlist">
+
+          <p class="acct-section-eyebrow">Account</p>
+          <h1 class="acct-section-title">Saved Items</h1>
+
+          <div class="acct-card">
+            <div class="acct-card__header">
+              <div>
+                <div class="acct-card__label">Wishlist</div>
+                <div class="acct-card__title">4 items saved</div>
+              </div>
+              <a href="./products.html" class="acct-card__action">Browse More</a>
+            </div>
+
+            <div class="acct-wish-grid">
+
+              <div class="acct-wish-item">
+                <img src="https://images.unsplash.com/photo-1545454675-3531b543be5d?q=80&w=400&auto=format&fit=crop"
+                     alt="Nest Sound Studio" class="acct-wish-item__img" />
+                <button class="acct-wish-item__remove" aria-label="Remove from wishlist" type="button">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+                  </svg>
+                </button>
+                <div class="acct-wish-item__body">
+                  <div class="acct-wish-item__name">Nest Sound Studio</div>
+                  <div class="acct-wish-item__price">₹24,999</div>
+                </div>
+              </div>
+
+              <div class="acct-wish-item">
+                <img src="https://images.unsplash.com/photo-1589939705384-5185137a7f0f?q=80&w=400&auto=format&fit=crop"
+                     alt="Nest CleanBot Pro" class="acct-wish-item__img" />
+                <button class="acct-wish-item__remove" aria-label="Remove from wishlist" type="button">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+                  </svg>
+                </button>
+                <div class="acct-wish-item__body">
+                  <div class="acct-wish-item__name">Nest CleanBot Pro</div>
+                  <div class="acct-wish-item__price">₹34,999</div>
+                </div>
+              </div>
+
+              <div class="acct-wish-item">
+                <img src="https://images.unsplash.com/photo-1556910103-1c02745aae4d?q=80&w=400&auto=format&fit=crop"
+                     alt="Nest Chef Assistant" class="acct-wish-item__img" />
+                <button class="acct-wish-item__remove" aria-label="Remove from wishlist" type="button">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+                  </svg>
+                </button>
+                <div class="acct-wish-item__body">
+                  <div class="acct-wish-item__name">Nest Chef Assistant</div>
+                  <div class="acct-wish-item__price">₹8,999</div>
+                </div>
+              </div>
+
+              <div class="acct-wish-item">
+                <img src="https://images.unsplash.com/photo-1544197150-b99a580bb7a8?q=80&w=400&auto=format&fit=crop"
+                     alt="Nest Mesh Router" class="acct-wish-item__img" />
+                <button class="acct-wish-item__remove" aria-label="Remove from wishlist" type="button">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+                  </svg>
+                </button>
+                <div class="acct-wish-item__body">
+                  <div class="acct-wish-item__name">Nest Mesh Router</div>
+                  <div class="acct-wish-item__price">₹12,999</div>
+                </div>
+              </div>
+
+            </div><!-- /wish-grid -->
+          </div>
+
+        </section><!-- /wishlist -->
+
+
+        <!-- ── PERSONAL INFO ── -->
+        <section class="acct-section" id="section-profile" aria-label="Personal information">
+
+          <p class="acct-section-eyebrow">Account</p>
+          <h1 class="acct-section-title">Personal Info</h1>
+
+          <div class="acct-card">
+            <div class="acct-card__header">
+              <div>
+                <div class="acct-card__label">Profile</div>
+                <div class="acct-card__title">Your Details</div>
+              </div>
+            </div>
+
+            <form onsubmit="event.preventDefault(); this.querySelector('.acct-save-btn').textContent='Saved ✓'">
+              <div class="acct-form-row">
+                <div class="acct-form-field">
+                  <label class="acct-form-label" for="first-name">First Name</label>
+                  <input class="acct-form-input" type="text" id="first-name" value="Alex" autocomplete="given-name" />
+                </div>
+                <div class="acct-form-field">
+                  <label class="acct-form-label" for="last-name">Last Name</label>
+                  <input class="acct-form-input" type="text" id="last-name" value="Johnson" autocomplete="family-name" />
+                </div>
+              </div>
+
+              <div class="acct-form-field">
+                <label class="acct-form-label" for="profile-email">Email Address</label>
+                <input class="acct-form-input" type="email" id="profile-email" value="alex@example.com" autocomplete="email" />
+              </div>
+
+              <div class="acct-form-field">
+                <label class="acct-form-label" for="profile-phone">Phone Number</label>
+                <input class="acct-form-input" type="tel" id="profile-phone" value="+91 98765 43210" autocomplete="tel" />
+              </div>
+
+              <div class="acct-form-field">
+                <label class="acct-form-label" for="profile-address">Delivery Address</label>
+                <input class="acct-form-input" type="text" id="profile-address" value="12 MG Road, Bangalore, Karnataka 560001" autocomplete="street-address" />
+              </div>
+
+              <button class="acct-save-btn" type="submit">Save Changes</button>
+            </form>
+
+          </div>
+
+          <div class="acct-card">
+            <div class="acct-card__header">
+              <div>
+                <div class="acct-card__label">Security</div>
+                <div class="acct-card__title">Password & Access</div>
+              </div>
+            </div>
+
+            <div class="acct-info-grid">
+              <div class="acct-info-field">
+                <span class="acct-info-field__label">Password</span>
+                <span class="acct-info-field__value">••••••••••••</span>
+              </div>
+              <div class="acct-info-field">
+                <span class="acct-info-field__label">Last Changed</span>
+                <span class="acct-info-field__value">March 2026</span>
+              </div>
+              <div class="acct-info-field">
+                <span class="acct-info-field__label">Two-Factor Auth</span>
+                <span class="acct-info-field__value">Enabled</span>
+              </div>
+              <div class="acct-info-field">
+                <span class="acct-info-field__label">Member Since</span>
+                <span class="acct-info-field__value">January 2025</span>
+              </div>
+            </div>
+
+            <br />
+            <button class="acct-card__action acct-card__action--compact" type="button"
+                    onclick="this.textContent='Link sent ✓'">
+              Change Password
+            </button>
+          </div>
+
+        </section><!-- /profile -->
+
+
+        <!-- ── SETTINGS ── -->
+        <section class="acct-section" id="section-settings" aria-label="Preferences and settings">
+
+          <p class="acct-section-eyebrow">Account</p>
+          <h1 class="acct-section-title">Settings</h1>
+
+          <div class="acct-card">
+            <div class="acct-card__header">
+              <div>
+                <div class="acct-card__label">Notifications</div>
+                <div class="acct-card__title">Communication Preferences</div>
+              </div>
+            </div>
+
+            <div class="acct-toggle-row">
+              <div class="acct-toggle-info">
+                <div class="acct-toggle-name">Order Updates</div>
+                <div class="acct-toggle-desc">Email notifications for shipping and delivery status.</div>
+              </div>
+              <label class="acct-switch" aria-label="Toggle order updates">
+                <input type="checkbox" checked />
+                <span class="acct-switch__track"></span>
+              </label>
+            </div>
+
+            <div class="acct-toggle-row">
+              <div class="acct-toggle-info">
+                <div class="acct-toggle-name">New Products</div>
+                <div class="acct-toggle-desc">Be the first to know about new NEST devices and collections.</div>
+              </div>
+              <label class="acct-switch" aria-label="Toggle new product notifications">
+                <input type="checkbox" checked />
+                <span class="acct-switch__track"></span>
+              </label>
+            </div>
+
+            <div class="acct-toggle-row">
+              <div class="acct-toggle-info">
+                <div class="acct-toggle-name">Promotions &amp; Offers</div>
+                <div class="acct-toggle-desc">Exclusive member discounts and limited-time deals.</div>
+              </div>
+              <label class="acct-switch" aria-label="Toggle promotional emails">
+                <input type="checkbox" />
+                <span class="acct-switch__track"></span>
+              </label>
+            </div>
+
+            <div class="acct-toggle-row">
+              <div class="acct-toggle-info">
+                <div class="acct-toggle-name">Price Alerts</div>
+                <div class="acct-toggle-desc">Notify me when wishlist items drop in price.</div>
+              </div>
+              <label class="acct-switch" aria-label="Toggle price alerts">
+                <input type="checkbox" checked />
+                <span class="acct-switch__track"></span>
+              </label>
+            </div>
+
+          </div>
+
+          <div class="acct-card">
+            <div class="acct-card__header">
+              <div>
+                <div class="acct-card__label">Privacy</div>
+                <div class="acct-card__title">Data &amp; Privacy</div>
+              </div>
+            </div>
+
+            <div class="acct-toggle-row">
+              <div class="acct-toggle-info">
+                <div class="acct-toggle-name">Analytics</div>
+                <div class="acct-toggle-desc">Help us improve by sharing anonymous usage data.</div>
+              </div>
+              <label class="acct-switch" aria-label="Toggle analytics">
+                <input type="checkbox" checked />
+                <span class="acct-switch__track"></span>
+              </label>
+            </div>
+
+            <div class="acct-toggle-row">
+              <div class="acct-toggle-info">
+                <div class="acct-toggle-name">Personalisation</div>
+                <div class="acct-toggle-desc">Allow NEST to personalise your product recommendations.</div>
+              </div>
+              <label class="acct-switch" aria-label="Toggle personalisation">
+                <input type="checkbox" checked />
+                <span class="acct-switch__track"></span>
+              </label>
+            </div>
+
+            <div class="acct-card__footer">
+              <button class="acct-card__action" type="button">Download My Data</button>
+              <button class="acct-card__action acct-card__action--danger" type="button" onclick="if(confirm('Delete your account? This cannot be undone.')){}">Delete Account</button>
+            </div>
+          </div>
+
+        </section><!-- /settings -->
+
+      </main><!-- /acct-main -->
+
+    </div><!-- /acct-body -->
+
+  </div><!-- /acct-page -->
+
+
+  <script>
+    /* ── Section switcher ── */
+    function showSection (id) {
+      /* Deactivate all nav items */
+      document.querySelectorAll('.acct-nav__item').forEach(function (btn) {
+        btn.classList.remove('is-active');
+      });
+
+      /* Activate clicked nav item */
+      var navBtn = document.getElementById('nav-' + id);
+      if (navBtn) navBtn.classList.add('is-active');
+
+      /* Hide all sections */
+      document.querySelectorAll('.acct-section').forEach(function (sec) {
+        sec.classList.remove('is-active');
+      });
+
+      /* Show target section */
+      var section = document.getElementById('section-' + id);
+      if (section) {
+        section.classList.add('is-active');
+        section.focus();
+      }
+    }
+
+    /* ── Dynamic greeting ── */
+    (function () {
+      var hour = new Date().getHours();
+      var greeting = hour < 12 ? 'Good morning' : hour < 17 ? 'Good afternoon' : 'Good evening';
+      var el = document.querySelector('#section-overview .acct-section-title');
+      if (el) el.textContent = greeting + ', Alex.';
+    }());
+
+    /* ── Floating Topbar Scroll Behavior ── */
+    (function () {
+      var topbar = document.querySelector('.acct-topbar');
+      if (!topbar) return;
+      var lastScrollY = window.scrollY;
+      var accumulatedDelta = 0;
+      var ticking = false;
+
+      window.addEventListener('scroll', function () {
+        if (!ticking) {
+          window.requestAnimationFrame(function () {
+            var currentY = window.scrollY;
+            var delta = currentY - lastScrollY;
+
+            if (currentY <= 80) {
+              topbar.classList.remove('is-hidden');
+              accumulatedDelta = 0;
+            } else {
+              accumulatedDelta += delta;
+              if (accumulatedDelta > 8) {
+                topbar.classList.add('is-hidden');
+                accumulatedDelta = 8;
+              } else if (accumulatedDelta < -8) {
+                topbar.classList.remove('is-hidden');
+                accumulatedDelta = -8;
+              }
+            }
+
+            if (currentY > 40) {
+              topbar.classList.add('is-scrolled');
+            } else {
+              topbar.classList.remove('is-scrolled');
+            }
+
+            lastScrollY = currentY;
+            ticking = false;
+          });
+          ticking = true;
+        }
+      }, { passive: true });
+    }());
+  </script>
+
+</body>
+</html>

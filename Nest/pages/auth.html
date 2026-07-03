@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Sign in or create your NEST account to manage orders, wishlist, and settings." />
+  <meta name="theme-color" content="#f5f5f7" />
+
+  <title>Sign In — NEST</title>
+  <link rel="icon" href="../fav.png" type="image/png" />
+
+  <!-- Design System -->
+  <link rel="stylesheet" href="../css/style.css" />
+
+  <style>
+    /* ── Auth Page Layout ── */
+    .auth-page {
+      min-height: 100vh;
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      background: var(--color-bg-primary);
+    }
+
+    /* ── Minimal Top Bar ── */
+    .auth-topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 24px clamp(24px, 5vw, 64px);
+      border-bottom: 1px solid var(--color-border-subtle);
+    }
+
+    .auth-logo {
+      font-family: var(--font-family-primary);
+      font-size: 1.05rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      color: #111111;
+      text-decoration: none;
+      text-transform: uppercase;
+      position: relative;
+      padding: 4px 0;
+      transition:
+        transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+        filter 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .auth-logo:hover {
+      transform: translateY(-2px);
+      filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.08));
+    }
+
+
+
+    .auth-logo::before {
+      content: "";
+      position: absolute;
+      top: -6px;
+      left: 1px;
+      width: 7px;
+      height: 3px;
+      background: #111111;
+      border-radius: 1px 1px 0 0;
+      clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+      opacity: 0;
+      transform: translateY(2px);
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .auth-logo:hover::before {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .auth-back-link {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-family: var(--font-family-primary);
+      font-size: 0.8125rem;
+      font-weight: 400;
+      color: var(--color-text-tertiary);
+      text-decoration: none;
+      transition: color 200ms ease;
+    }
+
+    .auth-back-link:hover { color: var(--color-text-primary); }
+
+    .auth-back-link svg {
+      width: 14px;
+      height: 14px;
+      flex-shrink: 0;
+    }
+
+    /* ── Main Centered Area ── */
+    .auth-main {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 48px 24px;
+    }
+
+    /* ── Auth Card ── */
+    .auth-card {
+      width: 100%;
+      max-width: 420px;
+      background: var(--color-bg-card);
+      border: 1px solid var(--color-border-subtle);
+      border-radius: 20px;
+      box-shadow:
+        0 4px 6px rgba(0, 0, 0, 0.02),
+        0 12px 40px rgba(0, 0, 0, 0.06),
+        0 1px 0 rgba(255,255,255,0.8) inset;
+      overflow: hidden;
+    }
+
+    .auth-card__inner {
+      padding: 40px 36px 36px;
+    }
+
+    /* ── Logo + Greeting ── */
+    .auth-header {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+
+    .auth-brand {
+      font-family: var(--font-family-primary);
+      font-size: 1.25rem;
+      font-weight: 200;
+      letter-spacing: 0.14em;
+      color: var(--color-text-primary);
+      text-transform: uppercase;
+      display: block;
+      margin-bottom: 20px;
+    }
+
+    .auth-title {
+      font-family: var(--font-family-primary);
+      font-size: clamp(1.375rem, 3vw, 1.625rem);
+      font-weight: 500;
+      letter-spacing: -0.02em;
+      color: var(--color-text-primary);
+      line-height: 1.2;
+      margin-bottom: 6px;
+    }
+
+    .auth-subtitle {
+      font-family: var(--font-family-primary);
+      font-size: 0.875rem;
+      color: var(--color-text-tertiary);
+      font-weight: 400;
+    }
+
+    /* ── Tab Switcher ── */
+    .auth-tabs {
+      display: flex;
+      background: var(--color-bg-subtle);
+      border-radius: 100px;
+      padding: 4px;
+      margin-bottom: 28px;
+      gap: 2px;
+    }
+
+    .auth-tab {
+      flex: 1;
+      padding: 9px 16px;
+      border-radius: 100px;
+      font-family: var(--font-family-primary);
+      font-size: 0.8125rem;
+      font-weight: 500;
+      color: var(--color-text-tertiary);
+      text-align: center;
+      cursor: pointer;
+      border: none;
+      background: transparent;
+      transition:
+        background 220ms ease,
+        color 220ms ease,
+        box-shadow 220ms ease;
+    }
+
+    .auth-tab.is-active {
+      background: #fff;
+      color: var(--color-text-primary);
+      box-shadow: 0 1px 4px rgba(0,0,0,0.1), 0 0 0 1px rgba(0,0,0,0.04);
+    }
+
+    /* ── Form Panels ── */
+    .auth-panel {
+      display: none;
+    }
+
+    .auth-panel.is-active {
+      display: block;
+    }
+
+    /* ── Form Fields ── */
+    .auth-field {
+      margin-bottom: 18px;
+    }
+
+    .auth-field:last-of-type {
+      margin-bottom: 0;
+    }
+
+    .auth-label {
+      display: block;
+      font-family: var(--font-family-primary);
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      color: var(--color-text-secondary);
+      margin-bottom: 8px;
+      text-transform: uppercase;
+    }
+
+    .auth-input {
+      width: 100%;
+      padding: 13px 16px;
+      background: var(--color-bg-primary);
+      border: 1px solid var(--color-border-default);
+      border-radius: 10px;
+      font-family: var(--font-family-primary);
+      font-size: 0.9375rem;
+      color: var(--color-text-primary);
+      transition:
+        border-color 200ms ease,
+        box-shadow 200ms ease,
+        background 200ms ease;
+      -webkit-appearance: none;
+      appearance: none;
+    }
+
+    .auth-input::placeholder {
+      color: var(--color-text-tertiary);
+      font-weight: 400;
+    }
+
+    .auth-input:focus {
+      outline: none;
+      border-color: var(--color-text-primary);
+      background: #fff;
+      box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.06);
+    }
+
+    /* ── Forgot Password ── */
+    .auth-forgot {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: -6px;
+      margin-bottom: 20px;
+    }
+
+    .auth-forgot a {
+      font-family: var(--font-family-primary);
+      font-size: 0.75rem;
+      color: var(--color-text-tertiary);
+      text-decoration: none;
+      transition: color 180ms ease;
+    }
+
+    .auth-forgot a:hover { color: var(--color-text-primary); }
+
+    /* ── Submit Button ── */
+    .auth-submit {
+      width: 100%;
+      padding: 15px 24px;
+      background: var(--color-text-primary);
+      color: #fff;
+      border: none;
+      border-radius: 100px;
+      font-family: var(--font-family-primary);
+      font-size: 0.9375rem;
+      font-weight: 500;
+      cursor: pointer;
+      margin-top: 24px;
+      transition:
+        background 200ms ease,
+        transform 200ms cubic-bezier(0.16, 1, 0.3, 1),
+        box-shadow 200ms ease;
+      letter-spacing: 0.01em;
+    }
+
+    .auth-submit:hover {
+      background: #1a1a1a;
+      transform: translateY(-1px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    }
+
+    .auth-submit:active {
+      transform: scale(0.98);
+    }
+
+    /* ── Divider ── */
+    .auth-divider {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 24px 0;
+      color: var(--color-text-tertiary);
+      font-size: 0.75rem;
+    }
+
+    .auth-divider::before,
+    .auth-divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--color-border-subtle);
+    }
+
+    /* ── Terms ── */
+    .auth-terms {
+      font-family: var(--font-family-primary);
+      font-size: 0.75rem;
+      color: var(--color-text-tertiary);
+      text-align: center;
+      margin-top: 16px;
+      line-height: 1.6;
+    }
+
+    .auth-terms a {
+      color: var(--color-text-secondary);
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+
+    /* ── Card Footer ── */
+    .auth-card__footer {
+      padding: 20px 36px;
+      background: var(--color-bg-subtle);
+      border-top: 1px solid var(--color-border-subtle);
+      text-align: center;
+      font-family: var(--font-family-primary);
+      font-size: 0.8125rem;
+      color: var(--color-text-tertiary);
+    }
+
+    /* ── Bottom Bar ── */
+    .auth-bottom {
+      padding: 20px 24px;
+      text-align: center;
+      font-family: var(--font-family-primary);
+      font-size: 0.75rem;
+      color: var(--color-text-tertiary);
+      border-top: 1px solid var(--color-border-subtle);
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 480px) {
+      .auth-card__inner {
+        padding: 32px 24px 28px;
+      }
+      .auth-card__footer {
+        padding: 18px 24px;
+      }
+    }
+  </style>
+
+</head>
+<body class="loaded">
+
+  <div class="auth-page">
+
+    <!-- ── Minimal Top Bar ── -->
+    <header class="auth-topbar" role="banner">
+      <a href="../index.html" class="auth-logo" aria-label="NEST — Return to homepage" onclick="try{sessionStorage.setItem('nestLogoClicked','true')}catch(e){}">NEST</a>
+      <a href="./products.html" class="auth-back-link" aria-label="Return to shop">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <path d="M10 3L5 8l5 5"/>
+        </svg>
+        Back to Shop
+      </a>
+    </header>
+
+
+    <!-- ── Auth Card ── -->
+    <main class="auth-main" id="main-content" tabindex="-1">
+      <div class="auth-card" role="main">
+
+        <div class="auth-card__inner">
+
+          <!-- Logo + Heading -->
+          <div class="auth-header">
+            <span class="auth-brand">NEST</span>
+            <h1 class="auth-title" id="auth-title">Welcome Back</h1>
+            <p class="auth-subtitle" id="auth-subtitle">Sign in to your account to continue.</p>
+          </div>
+
+          <!-- Tab Switcher -->
+          <div class="auth-tabs" role="tablist" aria-label="Sign in or create account">
+            <button class="auth-tab is-active"
+                    id="tab-login"
+                    role="tab"
+                    aria-selected="true"
+                    aria-controls="panel-login"
+                    onclick="switchTab('login')">
+              Sign In
+            </button>
+            <button class="auth-tab"
+                    id="tab-register"
+                    role="tab"
+                    aria-selected="false"
+                    aria-controls="panel-register"
+                    onclick="switchTab('register')">
+              Create Account
+            </button>
+          </div>
+
+          <!-- ── LOGIN PANEL ── -->
+          <div class="auth-panel is-active"
+               id="panel-login"
+               role="tabpanel"
+               aria-labelledby="tab-login">
+
+            <form id="form-login"
+                  novalidate
+                  onsubmit="handleLogin(event)">
+
+              <div class="auth-field">
+                <label class="auth-label" for="login-email">Email Address</label>
+                <input class="auth-input"
+                       type="email"
+                       id="login-email"
+                       name="email"
+                       autocomplete="email"
+                       placeholder="name@example.com"
+                       required />
+              </div>
+
+              <div class="auth-field">
+                <label class="auth-label" for="login-password">Password</label>
+                <input class="auth-input"
+                       type="password"
+                       id="login-password"
+                       name="password"
+                       autocomplete="current-password"
+                       placeholder="••••••••"
+                       required />
+              </div>
+
+              <div class="auth-forgot">
+                <a href="javascript:void(0)" onclick="alert('🔒 Password Recovery\n\nPlease enter your registered email address above and check your inbox for instructions to reset your password.')">Forgot password?</a>
+              </div>
+
+              <button class="auth-submit" type="submit" id="btn-login">
+                Sign In
+              </button>
+
+            </form>
+
+          </div><!-- /panel-login -->
+
+
+          <!-- ── REGISTER PANEL ── -->
+          <div class="auth-panel"
+               id="panel-register"
+               role="tabpanel"
+               aria-labelledby="tab-register"
+               hidden>
+
+            <form id="form-register"
+                  novalidate
+                  onsubmit="handleRegister(event)">
+
+              <div class="auth-field">
+                <label class="auth-label" for="reg-name">Full Name</label>
+                <input class="auth-input"
+                       type="text"
+                       id="reg-name"
+                       name="name"
+                       autocomplete="name"
+                       placeholder="Your full name"
+                       required />
+              </div>
+
+              <div class="auth-field">
+                <label class="auth-label" for="reg-email">Email Address</label>
+                <input class="auth-input"
+                       type="email"
+                       id="reg-email"
+                       name="email"
+                       autocomplete="email"
+                       placeholder="name@example.com"
+                       required />
+              </div>
+
+              <div class="auth-field">
+                <label class="auth-label" for="reg-password">Password</label>
+                <input class="auth-input"
+                       type="password"
+                       id="reg-password"
+                       name="password"
+                       autocomplete="new-password"
+                       placeholder="Min. 8 characters"
+                       required />
+              </div>
+
+              <div class="auth-field">
+                <label class="auth-label" for="reg-confirm">Confirm Password</label>
+                <input class="auth-input"
+                       type="password"
+                       id="reg-confirm"
+                       name="confirm"
+                       autocomplete="new-password"
+                       placeholder="Repeat password"
+                       required />
+              </div>
+
+              <button class="auth-submit" type="submit" id="btn-register">
+                Create Account
+              </button>
+
+              <p class="auth-terms">
+                By creating an account you agree to our
+                <a href="javascript:void(0)" onclick="alert('📜 NEST Terms of Service\n\nWelcome to NEST. All products are backed by a 2-year warranty and a 30-day money-back guarantee.')">Terms of Service</a> and <a href="javascript:void(0)" onclick="alert('🔒 NEST Privacy Policy\n\nYour privacy is sacred. We never sell personal information or track browsing habits outside NEST.')">Privacy Policy</a>.
+              </p>
+
+            </form>
+
+          </div><!-- /panel-register -->
+
+        </div><!-- /auth-card__inner -->
+
+        <footer class="auth-card__footer">
+          Secure login &nbsp;·&nbsp; Your data is private &nbsp;·&nbsp; © 2026 NEST
+        </footer>
+
+      </div><!-- /auth-card -->
+    </main>
+
+
+    <!-- ── Bottom Bar ── -->
+    <div class="auth-bottom" role="contentinfo">
+      NEST — Technology That Belongs.
+    </div>
+
+  </div><!-- /auth-page -->
+
+
+  <script>
+    /* ── Tab Switcher ── */
+    function switchTab (tab) {
+      var isLogin    = tab === 'login';
+      var tabLogin   = document.getElementById('tab-login');
+      var tabReg     = document.getElementById('tab-register');
+      var panelLogin = document.getElementById('panel-login');
+      var panelReg   = document.getElementById('panel-register');
+      var title      = document.getElementById('auth-title');
+      var subtitle   = document.getElementById('auth-subtitle');
+
+      if (isLogin) {
+        tabLogin.classList.add('is-active');
+        tabLogin.setAttribute('aria-selected', 'true');
+        tabReg.classList.remove('is-active');
+        tabReg.setAttribute('aria-selected', 'false');
+        panelLogin.classList.add('is-active');
+        panelLogin.removeAttribute('hidden');
+        panelReg.classList.remove('is-active');
+        panelReg.setAttribute('hidden', '');
+        title.textContent    = 'Welcome Back';
+        subtitle.textContent = 'Sign in to your account to continue.';
+      } else {
+        tabReg.classList.add('is-active');
+        tabReg.setAttribute('aria-selected', 'true');
+        tabLogin.classList.remove('is-active');
+        tabLogin.setAttribute('aria-selected', 'false');
+        panelReg.classList.add('is-active');
+        panelReg.removeAttribute('hidden');
+        panelLogin.classList.remove('is-active');
+        panelLogin.setAttribute('hidden', '');
+        title.textContent    = 'Create Account';
+        subtitle.textContent = 'Join NEST and discover smarter living.';
+      }
+    }
+
+    /* ── Login Handler ── */
+    function handleLogin (e) {
+      e.preventDefault();
+      var btn = document.getElementById('btn-login');
+      btn.textContent = 'Signing in…';
+      btn.disabled = true;
+      setTimeout(function () {
+        window.location.href = 'account.html';
+      }, 700);
+    }
+
+    /* ── Register Handler ── */
+    function handleRegister (e) {
+      e.preventDefault();
+      var pass    = document.getElementById('reg-password').value;
+      var confirm = document.getElementById('reg-confirm').value;
+      if (pass !== confirm) {
+        document.getElementById('reg-confirm').style.borderColor = '#e53e3e';
+        document.getElementById('reg-confirm').focus();
+        return;
+      }
+      var btn = document.getElementById('btn-register');
+      btn.textContent = 'Creating account…';
+      btn.disabled = true;
+      setTimeout(function () {
+        window.location.href = 'account.html';
+      }, 900);
+    }
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,1151 @@
+/* ============================================================
+   NEST — Phase 3
+   Homepage Sections + Footer
+   ============================================================
+
+   TABLE OF CONTENTS
+   ─────────────────────────────────────────────────────────────
+   01. Global Section Utilities
+   02. Reveal Animation System
+   03. Section 1 — Categories Grid
+   04. Section 2 — Featured Collections
+   05. Section 3 — Why NEST
+   06. Section 4 — Best Sellers
+   07. Section 5 — Testimonials
+   08. Section 6 — Newsletter
+   09. Footer
+   10. Responsive
+   11. Reduced Motion
+   ─────────────────────────────────────────────────────────────
+*/
+
+
+/* ============================================================
+   01. GLOBAL SECTION UTILITIES
+   Shared tokens for every section below the hero
+   ============================================================ */
+
+/* Screen-reader only */
+.sr-only {
+  position: absolute;
+  width:    1px;
+  height:   1px;
+  padding:  0;
+  margin:   -1px;
+  overflow: hidden;
+  clip:     rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border:   0;
+}
+
+/* Section max-width container */
+.s-container {
+  max-width: 1440px;
+  margin:    0 auto;
+  padding:   0 clamp(var(--space-6), 4vw, var(--space-16));
+}
+
+/* Shared section vertical rhythm */
+.s-categories,
+.s-featured,
+.s-why,
+.s-bestsellers,
+.s-testimonials {
+  padding-top:    var(--section-gap-lg);
+  padding-bottom: var(--section-gap-lg);
+}
+
+/* Section header block */
+.s-header {
+  margin-bottom: clamp(var(--space-12), 6vw, var(--space-20));
+  max-width:     680px;
+}
+
+.s-header--centered {
+  max-width: none;
+  text-align: center;
+  margin-left:  auto;
+  margin-right: auto;
+}
+
+/* Eyebrow label */
+.s-eyebrow {
+  font-family:    var(--font-family-primary);
+  font-size:      var(--text-caption);
+  font-weight:    var(--font-weight-medium);
+  letter-spacing: var(--tracking-widest);
+  text-transform: uppercase;
+  color:          var(--color-text-tertiary);
+  margin-bottom:  var(--space-4);
+  line-height:    1;
+}
+
+.s-eyebrow--light {
+  color: rgba(255, 255, 255, 0.55);
+}
+
+/* Section heading */
+.s-heading {
+  font-family:    var(--font-family-primary);
+  font-size:      var(--text-section-title);
+  font-weight:    var(--font-weight-light);
+  letter-spacing: var(--tracking-tight);
+  line-height:    var(--leading-snug);
+  color:          var(--color-text-primary);
+  margin-bottom:  var(--space-5);
+}
+
+/* Section subtext */
+.s-subtext {
+  font-family:    var(--font-family-primary);
+  font-size:      var(--text-body-lg);
+  font-weight:    var(--font-weight-regular);
+  letter-spacing: var(--tracking-normal);
+  line-height:    var(--leading-relaxed);
+  color:          var(--color-text-secondary);
+  max-width:      520px;
+}
+
+.s-header--centered .s-subtext {
+  margin-left:  auto;
+  margin-right: auto;
+}
+
+
+/* ============================================================
+   02. REVEAL ANIMATION SYSTEM
+   Sections fade up as they enter the viewport.
+   JS adds .is-visible via IntersectionObserver.
+   ============================================================ */
+
+.reveal-section {
+  opacity:   0;
+  transform: translateY(40px);
+  transition:
+    opacity   700ms var(--ease-out)      0ms,
+    transform 900ms var(--ease-expo-out) 0ms;
+}
+
+.reveal-section.is-visible {
+  opacity:   1;
+  transform: translateY(0);
+}
+
+/* Child stagger — elements inside sections animate in order */
+.reveal-item {
+  opacity:   0;
+  transform: translateY(28px);
+  transition:
+    opacity   600ms var(--ease-out),
+    transform 800ms var(--ease-expo-out);
+}
+
+.reveal-item.is-visible {
+  opacity:   1;
+  transform: translateY(0);
+}
+
+
+/* ============================================================
+   03. SECTION 1 — CATEGORIES GRID
+   7 cards in a responsive masonry-like grid
+   ============================================================ */
+
+.categories-grid {
+  display:               grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows:    auto auto;
+  gap:                   var(--space-4);
+}
+
+/* First 3 cards in top row */
+.cat-card:nth-child(1),
+.cat-card:nth-child(2),
+.cat-card:nth-child(3) {
+  grid-column: span 1;
+}
+
+/* Bottom row: 4 cards across */
+.cat-card:nth-child(4),
+.cat-card:nth-child(5),
+.cat-card:nth-child(6),
+.cat-card:nth-child(7) {
+  grid-column: span 1;
+}
+
+/* Override: 3 cards top row → span differently */
+/* Top row: 3 cards split 1/3 + 1/3 + 1/3 of 4cols = need 12 col grid */
+.categories-grid {
+  grid-template-columns: repeat(12, 1fr);
+}
+
+.cat-card:nth-child(1) { grid-column: span 4; }
+.cat-card:nth-child(2) { grid-column: span 4; }
+.cat-card:nth-child(3) { grid-column: span 4; }
+.cat-card:nth-child(4) { grid-column: span 3; }
+.cat-card:nth-child(5) { grid-column: span 3; }
+.cat-card:nth-child(6) { grid-column: span 3; }
+.cat-card:nth-child(7) { grid-column: span 3; }
+
+/* ── Category Card ── */
+.cat-card {
+  position:        relative;
+  background:      var(--color-bg-card);
+  border:          1px solid var(--color-border-subtle);
+  border-radius:   var(--radius-lg);
+  overflow:        hidden;
+  cursor:          pointer;
+  text-decoration: none;   /* reset when used as <a> */
+  color:           inherit; /* reset when used as <a> */
+  transition:
+    box-shadow var(--duration-normal) var(--ease-smooth),
+    transform  var(--duration-normal) var(--ease-expo-out),
+    border-color var(--duration-normal) var(--ease-smooth);
+}
+
+.cat-card:hover {
+  box-shadow:   var(--shadow-lg);
+  transform:    translateY(-3px);
+  border-color: var(--color-border-default);
+}
+
+.cat-card:focus-visible {
+  outline:        2px solid var(--color-border-focus);
+  outline-offset: 3px;
+}
+
+/* Image wrapper — fixed aspect ratio */
+.cat-card__img-wrap {
+  position:      relative;
+  aspect-ratio:  4 / 3;
+  overflow:      hidden;
+}
+
+.cat-card__img {
+  width:      100%;
+  height:     100%;
+  object-fit: cover;
+  display:    block;
+  transition: transform 600ms var(--ease-expo-out);
+}
+
+.cat-card:hover .cat-card__img {
+  transform: scale(1.04);
+}
+
+/* Card body */
+.cat-card__body {
+  padding:  var(--space-5) var(--space-5) var(--space-6);
+  display:  flex;
+  flex-direction: column;
+  gap:      var(--space-2);
+}
+
+.cat-card__name {
+  font-family:    var(--font-family-primary);
+  font-size:      var(--text-heading-sm);
+  font-weight:    var(--font-weight-regular);
+  letter-spacing: var(--tracking-snug);
+  color:          var(--color-text-primary);
+  line-height:    var(--leading-normal);
+}
+
+.cat-card__desc {
+  font-family:    var(--font-family-primary);
+  font-size:      var(--text-body-sm);
+  font-weight:    var(--font-weight-regular);
+  color:          var(--color-text-secondary);
+  line-height:    var(--leading-body);
+}
+
+.cat-card__arrow {
+  display:    flex;
+  margin-top: var(--space-2);
+  color:      var(--color-text-tertiary);
+  transition:
+    color     var(--duration-normal) var(--ease-smooth),
+    transform var(--duration-normal) var(--ease-expo-out);
+}
+
+.cat-card__arrow svg {
+  width:  16px;
+  height: 16px;
+}
+
+.cat-card:hover .cat-card__arrow {
+  color:     var(--color-text-primary);
+  transform: translateX(4px);
+}
+
+
+/* ============================================================
+   04. SECTION 2 — FEATURED COLLECTIONS
+   Cinematic full-bleed image cards with overlay text
+   ============================================================ */
+
+.s-featured {
+  background: var(--color-bg-subtle);
+}
+
+.featured-grid {
+  display:               grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows:    auto auto;
+  gap:                   var(--space-4);
+}
+
+/* Large card spans left column fully */
+.feat-card--large {
+  grid-row:    span 2;
+  grid-column: 1;
+}
+
+/* Right two stack vertically */
+.feat-card:nth-child(2),
+.feat-card:nth-child(3) {
+  grid-column: 2;
+}
+
+/* ── Featured Card ── */
+.feat-card {
+  position:        relative;
+  border-radius:   var(--radius-xl);
+  overflow:        hidden;
+  cursor:          pointer;
+  background:      var(--color-bg-inverse);
+  text-decoration: none;   /* reset when used as <a> */
+  color:           inherit; /* reset when used as <a> */
+}
+
+.feat-card__img-wrap {
+  position: absolute;
+  inset:    0;
+}
+
+.feat-card {
+  min-height: 280px;
+}
+
+.feat-card--large {
+  min-height: 580px;
+}
+
+.feat-card__img {
+  width:      100%;
+  height:     100%;
+  object-fit: cover;
+  display:    block;
+  transition: transform 700ms var(--ease-expo-out);
+}
+
+.feat-card:hover .feat-card__img {
+  transform: scale(1.04);
+}
+
+/* Dark gradient overlay */
+.feat-card::after {
+  content:  '';
+  position: absolute;
+  inset:    0;
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.72) 0%,
+    rgba(0, 0, 0, 0.08) 55%
+  );
+  transition: opacity var(--duration-normal) var(--ease-smooth);
+}
+
+/* Content overlay */
+.feat-card__overlay {
+  position:        absolute;
+  bottom:          0;
+  left:            0;
+  right:           0;
+  z-index:         1;
+  padding:         var(--space-8) var(--space-8) var(--space-8);
+  display:         flex;
+  flex-direction:  column;
+  gap:             var(--space-2);
+}
+
+.feat-card__eyebrow {
+  font-family:    var(--font-family-primary);
+  font-size:      var(--text-caption);
+  font-weight:    var(--font-weight-medium);
+  letter-spacing: var(--tracking-widest);
+  text-transform: uppercase;
+  color:          rgba(255, 255, 255, 0.60);
+  line-height:    1;
+}
+
+.feat-card__name {
+  font-family:    var(--font-family-primary);
+  font-size:      clamp(1.375rem, 2.5vw, 2rem);
+  font-weight:    var(--font-weight-extralight);
+  letter-spacing: var(--tracking-snug);
+  color:          #FFFFFF;
+  line-height:    var(--leading-tight);
+}
+
+.feat-card__cta {
+  display:         inline-flex;
+  align-items:     center;
+  gap:             var(--space-2);
+  font-family:     var(--font-family-primary);
+  font-size:       var(--text-body-sm);
+  font-weight:     var(--font-weight-medium);
+  letter-spacing:  var(--tracking-wide);
+  color:           rgba(255, 255, 255, 0.70);
+  margin-top:      var(--space-2);
+  transition:
+    color     var(--duration-normal) var(--ease-smooth),
+    transform var(--duration-normal) var(--ease-expo-out);
+}
+
+.feat-card__cta svg {
+  width:  14px;
+  height: 14px;
+  transition: transform var(--duration-normal) var(--ease-expo-out);
+}
+
+.feat-card:hover .feat-card__cta {
+  color:     #FFFFFF;
+  transform: translateX(2px);
+}
+
+.feat-card:hover .feat-card__cta svg {
+  transform: translateX(3px);
+}
+
+.feat-card:focus-visible {
+  outline:        2px solid rgba(255, 255, 255, 0.8);
+  outline-offset: 3px;
+}
+
+
+/* ============================================================
+   05. SECTION 3 — WHY NEST
+   Minimal philosophy cards — dark background
+   ============================================================ */
+
+.s-why {
+  background: var(--color-bg-dark);
+}
+
+.s-why .s-eyebrow {
+  color: rgba(255, 255, 255, 0.40);
+}
+
+.s-why .s-heading {
+  color: var(--color-text-inverse);
+}
+
+.why-grid {
+  display:               grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap:                   var(--space-4);
+  margin-top:            clamp(var(--space-12), 6vw, var(--space-20));
+}
+
+/* ── Why Card ── */
+.why-card {
+  padding:       var(--space-10) var(--space-8);
+  border:        1px solid var(--color-border-dark);
+  border-radius: var(--radius-lg);
+  display:       flex;
+  flex-direction: column;
+  gap:           var(--space-5);
+  transition:
+    border-color var(--duration-slow) var(--ease-smooth),
+    background   var(--duration-slow) var(--ease-smooth);
+}
+
+.why-card:hover {
+  border-color: rgba(255, 255, 255, 0.15);
+  background:   rgba(255, 255, 255, 0.03);
+}
+
+.why-card__number {
+  font-family:    var(--font-family-primary);
+  font-size:      var(--text-caption);
+  font-weight:    var(--font-weight-regular);
+  letter-spacing: var(--tracking-caps);
+  color:          rgba(255, 255, 255, 0.25);
+  line-height:    1;
+}
+
+.why-card__title {
+  font-family:    var(--font-family-primary);
+  font-size:      var(--text-heading-md);
+  font-weight:    var(--font-weight-light);
+  letter-spacing: var(--tracking-snug);
+  color:          var(--color-text-inverse);
+  line-height:    var(--leading-normal);
+}
+
+.why-card__text {
+  font-family:    var(--font-family-primary);
+  font-size:      var(--text-body);
+  font-weight:    var(--font-weight-regular);
+  letter-spacing: var(--tracking-normal);
+  color:          rgba(255, 255, 255, 0.55);
+  line-height:    var(--leading-relaxed);
+}
+
+
+/* ============================================================
+   06. SECTION 4 — BEST SELLERS
+   4 product cards — product-first layout
+   ============================================================ */
+
+.products-grid {
+  display:               grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap:                   var(--space-5);
+}
+
+/* ── Product Card ── */
+.prod-card {
+  position:       relative;
+  display:        flex;
+  flex-direction: column;
+  background:     var(--color-bg-card);
+  border:         1px solid var(--color-border-subtle);
+  border-radius:  var(--radius-lg);
+  overflow:       hidden;
+  cursor:         pointer;
+  transition:
+    box-shadow   var(--duration-normal) var(--ease-smooth),
+    transform    var(--duration-normal) var(--ease-expo-out),
+    border-color var(--duration-normal) var(--ease-smooth);
+}
+
+.prod-card:hover {
+  box-shadow:   var(--shadow-xl);
+  transform:    translateY(-4px);
+  border-color: var(--color-border-default);
+}
+
+.prod-card:focus-visible {
+  outline:        2px solid var(--color-border-focus);
+  outline-offset: 3px;
+}
+
+/* Image */
+.prod-card__img-wrap {
+  position:     relative;
+  aspect-ratio: 4 / 3;
+  overflow:     hidden;
+  background:   var(--color-bg-subtle);
+}
+
+.prod-card__img {
+  width:      100%;
+  height:     100%;
+  object-fit: cover;
+  display:    block;
+  transition: transform 600ms var(--ease-expo-out);
+}
+
+.prod-card:hover .prod-card__img {
+  transform: scale(1.05);
+}
+
+/* Badge */
+.prod-card__badge {
+  position:       absolute;
+  top:            var(--space-4);
+  left:           var(--space-4);
+  padding:        5px 10px;
+  border-radius:  var(--radius-full);
+  background:     var(--color-text-primary);
+  color:          var(--color-text-inverse);
+  font-family:    var(--font-family-primary);
+  font-size:      10px;
+  font-weight:    var(--font-weight-semibold);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  line-height:    1;
+}
+
+.prod-card__badge--new {
+  background: #2D7A5A;
+}
+
+/* Card body */
+.prod-card__body {
+  display:         flex;
+  flex-direction:  column;
+  flex:            1;
+  padding:         var(--space-6);
+  gap:             var(--space-5);
+  justify-content: space-between;
+}
+
+.prod-card__meta {
+  display:        flex;
+  flex-direction: column;
+  gap:            var(--space-2);
+}
+
+.prod-card__name {
+  font-family:    var(--font-family-primary);
+  font-size:      var(--text-heading-sm);
+  font-weight:    var(--font-weight-medium);
+  letter-spacing: var(--tracking-snug);
+  color:          var(--color-text-primary);
+  line-height:    var(--leading-normal);
+}
+
+.prod-card__desc {
+  font-family:    var(--font-family-primary);
+  font-size:      var(--text-body-sm);
+  font-weight:    var(--font-weight-regular);
+  color:          var(--color-text-secondary);
+  line-height:    var(--leading-body);
+}
+
+/* Footer: price + CTA */
+.prod-card__footer {
+  display:         flex;
+  align-items:     center;
+  justify-content: space-between;
+  gap:             var(--space-4);
+  padding-top:     var(--space-4);
+  border-top:      1px solid var(--color-border-subtle);
+}
+
+.prod-card__price {
+  font-family:    var(--font-family-primary);
+  font-size:      var(--text-body-lg);
+  font-weight:    var(--font-weight-semibold);
+  letter-spacing: var(--tracking-tight);
+  color:          var(--color-text-primary);
+  line-height:    1;
+}
+
+.prod-card__btn {
+  display:         inline-flex;
+  align-items:     center;
+  justify-content: center;
+  font-family:     var(--font-family-primary);
+  font-size:       var(--text-body-sm);
+  font-weight:     var(--font-weight-medium);
+  letter-spacing:  var(--tracking-normal);
+  color:           var(--color-text-primary);
+  background:      transparent;
+  border:          1px solid var(--color-border-strong);
+  border-radius:   var(--radius-full);
+  padding:         9px 18px;
+  cursor:          pointer;
+  white-space:     nowrap;
+  transition:
+    background   var(--duration-fast)   var(--ease-smooth),
+    color        var(--duration-fast)   var(--ease-smooth),
+    border-color var(--duration-fast)   var(--ease-smooth),
+    transform    var(--duration-normal) var(--ease-expo-out);
+}
+
+.prod-card__btn:hover {
+  background:   var(--color-text-primary);
+  color:        var(--color-text-inverse);
+  border-color: var(--color-text-primary);
+  transform:    translateY(-1px);
+}
+
+.prod-card__btn:focus-visible {
+  outline:        2px solid var(--color-border-focus);
+  outline-offset: 2px;
+}
+
+.prod-card__btn:active {
+  transform: scale(0.97);
+}
+
+
+/* ============================================================
+   07. SECTION 5 — TESTIMONIALS
+   Clean editorial quote cards
+   ============================================================ */
+
+.s-testimonials {
+  background: var(--color-bg-subtle);
+}
+
+.testimonials-grid {
+  display:               grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap:                   var(--space-5);
+}
+
+/* ── Testimonial Card ── */
+.testi-card {
+  margin:         0;
+  padding:        var(--space-8) var(--space-8);
+  background:     var(--color-bg-card);
+  border:         1px solid var(--color-border-subtle);
+  border-radius:  var(--radius-lg);
+  display:        flex;
+  flex-direction: column;
+  gap:            var(--space-8);
+  transition:
+    box-shadow   var(--duration-normal) var(--ease-smooth),
+    border-color var(--duration-normal) var(--ease-smooth);
+}
+
+.testi-card:hover {
+  box-shadow:   var(--shadow-md);
+  border-color: var(--color-border-default);
+}
+
+.testi-card__quote {
+  font-family:    var(--font-family-primary);
+  font-size:      var(--text-body-lg);
+  font-weight:    var(--font-weight-light);
+  letter-spacing: var(--tracking-snug);
+  color:          var(--color-text-primary);
+  line-height:    var(--leading-relaxed);
+  flex:           1;
+}
+
+.testi-card__author {
+  display:        flex;
+  flex-direction: column;
+  gap:            var(--space-1);
+  padding-top:    var(--space-5);
+  border-top:     1px solid var(--color-border-subtle);
+}
+
+.testi-card__name {
+  font-family:    var(--font-family-primary);
+  font-size:      var(--text-body-sm);
+  font-weight:    var(--font-weight-medium);
+  letter-spacing: var(--tracking-normal);
+  color:          var(--color-text-primary);
+  line-height:    1.2;
+}
+
+.testi-card__location {
+  font-family:    var(--font-family-primary);
+  font-size:      var(--text-caption);
+  font-weight:    var(--font-weight-regular);
+  letter-spacing: var(--tracking-normal);
+  color:          var(--color-text-tertiary);
+  line-height:    1;
+}
+
+
+/* ============================================================
+   08. SECTION 6 — NEWSLETTER
+   Full-width dark section — minimal, spacious
+   ============================================================ */
+
+.s-newsletter {
+  background:     var(--color-bg-dark);
+  padding-top:    var(--section-gap-xl);
+  padding-bottom: var(--section-gap-xl);
+}
+
+.newsletter-inner {
+  max-width:   640px;
+  margin:      0 auto;
+  padding:     0 clamp(var(--space-6), 4vw, var(--space-16));
+  text-align:  center;
+  display:     flex;
+  flex-direction: column;
+  align-items: center;
+  gap:         var(--space-5);
+}
+
+.newsletter-heading {
+  font-family:    var(--font-family-primary);
+  font-size:      var(--text-section-title);
+  font-weight:    var(--font-weight-light);
+  letter-spacing: var(--tracking-tight);
+  color:          var(--color-text-inverse);
+  line-height:    var(--leading-tight);
+}
+
+.newsletter-subtext {
+  font-family:    var(--font-family-primary);
+  font-size:      var(--text-body-lg);
+  font-weight:    var(--font-weight-regular);
+  color:          rgba(255, 255, 255, 0.55);
+  line-height:    var(--leading-relaxed);
+}
+
+.newsletter-form {
+  width:          100%;
+  margin-top:     var(--space-4);
+  display:        flex;
+  flex-direction: column;
+  align-items:    center;
+  gap:            var(--space-4);
+}
+
+.newsletter-input-wrap {
+  display:       flex;
+  align-items:   center;
+  width:         100%;
+  background:    rgba(255, 255, 255, 0.06);
+  border:        1px solid rgba(255, 255, 255, 0.12);
+  border-radius: var(--radius-full);
+  overflow:      hidden;
+  transition:
+    border-color var(--duration-normal) var(--ease-smooth),
+    background   var(--duration-normal) var(--ease-smooth);
+}
+
+.newsletter-input-wrap:focus-within {
+  border-color: rgba(255, 255, 255, 0.35);
+  background:   rgba(255, 255, 255, 0.09);
+}
+
+.newsletter-input {
+  flex:           1;
+  padding:        16px 24px;
+  background:     transparent;
+  border:         none;
+  outline:        none;
+  font-family:    var(--font-family-primary);
+  font-size:      var(--text-body);
+  color:          #FFFFFF;
+  letter-spacing: var(--tracking-normal);
+  line-height:    1;
+}
+
+.newsletter-input::placeholder {
+  color: rgba(255, 255, 255, 0.35);
+}
+
+.newsletter-btn {
+  flex-shrink:    0;
+  margin:         4px;
+  padding:        13px 24px;
+  background:     #FFFFFF;
+  border:         none;
+  border-radius:  var(--radius-full);
+  font-family:    var(--font-family-primary);
+  font-size:      var(--text-body-sm);
+  font-weight:    var(--font-weight-medium);
+  letter-spacing: var(--tracking-wide);
+  color:          var(--color-text-primary);
+  cursor:         pointer;
+  transition:
+    background var(--duration-fast)   var(--ease-smooth),
+    transform  var(--duration-normal) var(--ease-expo-out);
+}
+
+.newsletter-btn:hover {
+  background: rgba(255, 255, 255, 0.88);
+  transform:  translateY(-1px);
+}
+
+.newsletter-btn:focus-visible {
+  outline:        2px solid rgba(255, 255, 255, 0.8);
+  outline-offset: 3px;
+}
+
+.newsletter-note {
+  font-family:    var(--font-family-primary);
+  font-size:      var(--text-caption);
+  font-weight:    var(--font-weight-regular);
+  letter-spacing: var(--tracking-normal);
+  color:          rgba(255, 255, 255, 0.30);
+  line-height:    1;
+}
+
+
+/* ============================================================
+   09. FOOTER
+   Minimal, premium, four-column layout
+   ============================================================ */
+
+.site-footer {
+  background:    var(--color-bg-dark);
+  border-top:    1px solid var(--color-border-dark);
+}
+
+.footer-inner {
+  max-width:       1440px;
+  margin:          0 auto;
+  padding:         var(--space-16) clamp(var(--space-6), 4vw, var(--space-16));
+  display:         flex;
+  align-items:     flex-start;
+  justify-content: space-between;
+  gap:             var(--space-16);
+}
+
+/* Brand column */
+.footer-brand {
+  display:        flex;
+  flex-direction: column;
+  gap:            var(--space-3);
+  flex-shrink:    0;
+}
+
+.footer-wordmark {
+  font-family:    var(--font-family-primary);
+  font-size:      1.0625rem;
+  font-weight:    var(--font-weight-extralight);
+  letter-spacing: var(--tracking-widest);
+  color:          var(--color-text-inverse);
+  line-height:    1;
+}
+
+.footer-tagline {
+  font-family:    var(--font-family-primary);
+  font-size:      var(--text-body-sm);
+  font-weight:    var(--font-weight-regular);
+  color:          rgba(255, 255, 255, 0.35);
+  line-height:    1;
+  letter-spacing: var(--tracking-normal);
+}
+
+/* Nav columns */
+.footer-nav {
+  display: flex;
+  gap:     clamp(var(--space-12), 6vw, var(--space-20));
+}
+
+.footer-nav-col {
+  display:        flex;
+  flex-direction: column;
+  gap:            var(--space-5);
+}
+
+.footer-nav-label {
+  font-family:    var(--font-family-primary);
+  font-size:      var(--text-caption);
+  font-weight:    var(--font-weight-medium);
+  letter-spacing: var(--tracking-widest);
+  text-transform: uppercase;
+  color:          rgba(255, 255, 255, 0.35);
+  line-height:    1;
+}
+
+.footer-nav-col ul {
+  display:        flex;
+  flex-direction: column;
+  gap:            var(--space-4);
+  list-style:     none;
+}
+
+.footer-nav-link {
+  font-family:    var(--font-family-primary);
+  font-size:      var(--text-body-sm);
+  font-weight:    var(--font-weight-regular);
+  letter-spacing: var(--tracking-normal);
+  color:          rgba(255, 255, 255, 0.55);
+  text-decoration: none;
+  line-height:    1;
+  transition:     color var(--duration-fast) var(--ease-smooth);
+}
+
+.footer-nav-link:hover {
+  color: #FFFFFF;
+}
+
+.footer-nav-link:focus-visible {
+  outline:        2px solid rgba(255, 255, 255, 0.6);
+  outline-offset: 3px;
+  border-radius:  2px;
+}
+
+/* Bottom bar */
+.footer-bottom {
+  border-top:  1px solid var(--color-border-dark);
+  padding:     var(--space-6) clamp(var(--space-6), 4vw, var(--space-16));
+  max-width:   100%;
+}
+
+.footer-copy {
+  font-family:    var(--font-family-primary);
+  font-size:      var(--text-caption);
+  font-weight:    var(--font-weight-regular);
+  color:          rgba(255, 255, 255, 0.25);
+  letter-spacing: var(--tracking-normal);
+  line-height:    1;
+}
+
+
+/* ============================================================
+   10. RESPONSIVE
+   ============================================================ */
+
+/* ── Large tablet (below 1200px) ── */
+@media (max-width: 1199px) {
+
+  .products-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-5);
+  }
+
+  .categories-grid {
+    grid-template-columns: repeat(6, 1fr);
+  }
+
+  .cat-card:nth-child(1) { grid-column: span 2; }
+  .cat-card:nth-child(2) { grid-column: span 2; }
+  .cat-card:nth-child(3) { grid-column: span 2; }
+  .cat-card:nth-child(4) { grid-column: span 2; }
+  .cat-card:nth-child(5) { grid-column: span 2; }
+  .cat-card:nth-child(6) { grid-column: span 3; }
+  .cat-card:nth-child(7) { grid-column: span 3; }
+
+}
+
+/* ── Tablet (below 1024px) ── */
+@media (max-width: 1023px) {
+
+  .why-grid {
+    grid-template-columns: 1fr;
+    gap:                   var(--space-3);
+  }
+
+  .why-card {
+    flex-direction: row;
+    align-items:    flex-start;
+    gap:            var(--space-8);
+    padding:        var(--space-8);
+  }
+
+  .why-card__number {
+    flex-shrink: 0;
+    width:       32px;
+  }
+
+  .featured-grid {
+    grid-template-columns: 1fr;
+    grid-template-rows:    auto;
+  }
+
+  .feat-card--large {
+    grid-row:    auto;
+    grid-column: 1;
+    min-height:  420px;
+  }
+
+  .feat-card:nth-child(2),
+  .feat-card:nth-child(3) {
+    grid-column: 1;
+    min-height:  280px;
+  }
+
+  .footer-inner {
+    flex-direction: column;
+    gap:            var(--space-12);
+  }
+
+}
+
+/* ── Mobile (below 768px) ── */
+@media (max-width: 767px) {
+
+  .categories-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .cat-card:nth-child(n) {
+    grid-column: span 1;
+  }
+
+  .products-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .testimonials-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .newsletter-input-wrap {
+    flex-direction: column;
+    border-radius:  var(--radius-lg);
+    background:     transparent;
+    border:         none;
+    gap:            var(--space-3);
+  }
+
+  .newsletter-input {
+    width:         100%;
+    background:    rgba(255, 255, 255, 0.06);
+    border:        1px solid rgba(255, 255, 255, 0.12);
+    border-radius: var(--radius-full);
+  }
+
+  .newsletter-btn {
+    width:   100%;
+    margin:  0;
+    padding: 16px 24px;
+    background: #FFFFFF;
+  }
+
+  .footer-inner {
+    padding-top:    var(--space-12);
+    padding-bottom: var(--space-12);
+  }
+
+  .footer-nav {
+    gap:             var(--space-10);
+    flex-wrap:       wrap;
+  }
+
+}
+
+/* ── Small mobile (below 480px) ── */
+@media (max-width: 479px) {
+
+  .categories-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .cat-card:nth-child(n) {
+    grid-column: span 1;
+  }
+
+  .feat-card--large {
+    min-height: 320px;
+  }
+
+  .why-card {
+    flex-direction: column;
+    gap:            var(--space-4);
+  }
+
+}
+
+
+/* ============================================================
+   11. REDUCED MOTION
+   ============================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+
+  .reveal-section,
+  .reveal-item {
+    opacity:    1 !important;
+    transform:  none !important;
+    transition: none !important;
+  }
+
+  .cat-card,
+  .feat-card,
+  .prod-card,
+  .testi-card,
+  .why-card {
+    transition: none !important;
+  }
+
+  .cat-card__img,
+  .feat-card__img,
+  .prod-card__img {
+    transition: none !important;
+  }
+
+  .cat-card:hover .cat-card__img,
+  .feat-card:hover .feat-card__img,
+  .prod-card:hover .prod-card__img {
+    transform: none !important;
+  }
+
+}

@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Order Confirmed — Thank you for choosing NEST. Your smart home devices are on the way." />
+  <meta name="theme-color" content="#FAFAFA" />
+
+  <title>Order Confirmed — NEST</title>
+  <link rel="icon" href="../fav.png" type="image/png" />
+
+  <!-- Design System (Phase 0) -->
+  <link rel="stylesheet" href="../css/style.css" />
+
+  <!-- Phase 1: Intro Animation + Navbar -->
+  <link rel="stylesheet" href="../css/navbar.css" />
+
+  <!-- Phase 3 footer -->
+  <link rel="stylesheet" href="../css/sections.css" />
+
+  <!-- Phase 5 cart checkout summary styles reuse -->
+  <link rel="stylesheet" href="../css/cart-page.css" />
+
+  <!-- Phase 6: Success Page -->
+  <link rel="stylesheet" href="../css/success.css" />
+
+</head>
+<body>
+
+  <!-- ============================================================
+       OPENING ANIMATION (Phase 1)
+       ============================================================ -->
+
+  <div id="nest-intro" class="nest-intro" aria-hidden="true" role="presentation">
+    <div class="intro-brand" id="intro-brand">
+      <span class="intro-wordmark">NEST</span>
+      <span class="intro-tagline">Technology That Belongs.</span>
+    </div>
+  </div>
+
+
+  <!-- ============================================================
+       NAVBAR (Phase 1)
+       ============================================================ -->
+
+  <header id="nest-navbar" class="navbar" role="banner">
+    <nav class="navbar__inner" aria-label="Main navigation">
+
+      <a href="../index.html" class="navbar__logo" aria-label="NEST — Return to homepage">
+        <span class="navbar__wordmark">NEST</span>
+      </a>
+
+      <ul class="navbar__nav" role="list" id="navbar-nav">
+        <li class="navbar__nav-item">
+          <a href="./products.html" class="navbar__nav-link" id="nav-link-products">Products</a>
+        </li>
+        <li class="navbar__nav-item">
+          <a href="../index.html#categories" class="navbar__nav-link" id="nav-link-categories">Categories</a>
+        </li>
+        <li class="navbar__nav-item">
+          <a href="../index.html#about" class="navbar__nav-link" id="nav-link-about">About</a>
+        </li>
+      </ul>
+
+      <div class="navbar__actions" role="group" aria-label="Site utilities">
+
+        <button class="navbar__action-btn" id="btn-search" aria-label="Open search" type="button">
+          <svg class="navbar__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+               stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+            <circle cx="11" cy="11" r="7"/>
+            <line x1="16.5" y1="16.5" x2="22" y2="22"/>
+          </svg>
+        </button>
+
+        <a href="./cart.html" class="navbar__action-btn" aria-label="View cart">
+          <svg class="navbar__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+               stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+            <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
+            <line x1="3" y1="6" x2="21" y2="6"/>
+            <path d="M16 10a4 4 0 0 1-8 0"/>
+          </svg>
+          <span class="navbar__cart-badge" id="cart-count" aria-live="polite">0</span>
+        </a>
+
+        <button class="navbar__action-btn" id="btn-account" aria-label="My account" type="button">
+          <svg class="navbar__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+               stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+            <circle cx="12" cy="7" r="4"/>
+          </svg>
+        </button>
+
+        <button class="navbar__action-btn navbar__hamburger"
+                id="btn-hamburger" aria-label="Open navigation menu"
+                aria-expanded="false" aria-controls="mobile-menu" type="button">
+          <span class="hamburger-bar"></span>
+          <span class="hamburger-bar"></span>
+          <span class="hamburger-bar"></span>
+        </button>
+
+      </div>
+
+    </nav>
+  </header>
+
+
+  <!-- ============================================================
+       MOBILE MENU (Phase 1)
+       ============================================================ -->
+
+  <div id="mobile-menu" class="mobile-menu" role="dialog" aria-modal="true"
+       aria-label="Navigation menu" hidden>
+    <div class="mobile-menu__backdrop" id="mobile-backdrop" aria-hidden="true"></div>
+    <div class="mobile-menu__drawer" id="mobile-drawer" tabindex="-1">
+      <div class="mobile-menu__header">
+        <span class="mobile-menu__wordmark" aria-hidden="true">NEST</span>
+        <button class="mobile-menu__close" id="btn-menu-close"
+                aria-label="Close navigation menu" type="button">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+               stroke-width="1.5" stroke-linecap="round" aria-hidden="true">
+            <line x1="18" y1="6" x2="6" y2="18"/>
+            <line x1="6" y1="6" x2="18" y2="18"/>
+          </svg>
+        </button>
+      </div>
+      <nav aria-label="Mobile navigation">
+        <ul class="mobile-menu__nav" role="list">
+          <li><a href="./products.html"         class="mobile-menu__link">Products</a></li>
+          <li><a href="../index.html#categories" class="mobile-menu__link">Categories</a></li>
+          <li><a href="../index.html#about"      class="mobile-menu__link">About</a></li>
+          <li><a href="./account.html"                     class="mobile-menu__link">Account</a></li>
+        </ul>
+      </nav>
+      <footer class="mobile-menu__footer">
+        <p class="mobile-menu__tagline">Technology That Belongs.</p>
+      </footer>
+    </div>
+  </div>
+
+
+  <!-- ============================================================
+       MAIN CONTENT
+       ============================================================ -->
+
+  <main id="main-content" class="site-main success-page" tabindex="-1">
+
+    <!-- Hero Success Icon -->
+    <div class="success-icon-wrap success-animate">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="20 6 9 17 4 12"/>
+      </svg>
+    </div>
+
+    <!-- Typography Header -->
+    <div class="success-animate delay-1">
+      <p class="success-eyebrow">Order Authorised</p>
+      <h1 class="success-title">Thank You.<br>Your Nest Is Growing.</h1>
+      <p class="success-subtitle">Your order has been placed successfully. We are preparing your devices with meticulous care.</p>
+      
+      <div class="order-id-pill" id="succ-order-id">Order #NST-000000</div>
+    </div>
+
+    <!-- Order Summary Card -->
+    <div class="order-card success-animate delay-2">
+      <div class="order-card__header">
+        <span class="order-card__title">Order Summary</span>
+        <span class="order-card__date" id="succ-order-date">Placed today</span>
+      </div>
+
+      <!-- Delivery Banner -->
+      <div class="delivery-banner">
+        <div class="delivery-banner__icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="20" height="20"><rect x="1" y="3" width="15" height="13" rx="2"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+        </div>
+        <div>
+          <div class="delivery-banner__title" id="succ-delivery-date">Estimated Delivery by 3–5 Business Days</div>
+          <div class="delivery-banner__desc" id="succ-delivery-addr">Shipping via NEST Express Logistics</div>
+        </div>
+      </div>
+
+      <!-- Items List -->
+      <div id="succ-items-list" class="success-items-list">
+        <!-- Populated by JS -->
+      </div>
+
+      <!-- Financial Totals -->
+      <div class="summary-line">
+        <span class="summary-label">Subtotal</span>
+        <span class="summary-value" id="succ-subtotal">₹0</span>
+      </div>
+
+      <div class="summary-line">
+        <span class="summary-label">GST (18%)</span>
+        <span class="summary-value" id="succ-tax">₹0</span>
+      </div>
+
+      <div class="summary-line">
+        <span class="summary-label">Shipping</span>
+        <span class="summary-value summary-value--green" id="succ-shipping">Free</span>
+      </div>
+
+      <div class="summary-line summary-line--total">
+        <span class="summary-label">Total Paid</span>
+        <span class="summary-value" id="succ-total">₹0</span>
+      </div>
+    </div>
+
+    <!-- Actions -->
+    <div class="success-actions success-animate delay-3">
+      <a href="./products.html" class="btn-primary-success">
+        Continue Shopping
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" width="18" height="18" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </a>
+      <button type="button" class="btn-secondary-success" id="btn-track-order">
+        Track Order
+      </button>
+    </div>
+
+  </main>
+
+
+  <!-- ============================================================
+       FOOTER (Phase 3 reuse)
+       ============================================================ -->
+  <footer class="site-footer" role="contentinfo">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <span class="footer-wordmark">NEST</span>
+        <p class="footer-tagline">Technology That Belongs.</p>
+      </div>
+      <nav class="footer-nav" aria-label="Footer navigation">
+        <div class="footer-nav-col">
+          <p class="footer-nav-label">Explore</p>
+          <ul role="list">
+            <li><a href="./products.html" class="footer-nav-link">Products</a></li>
+            <li><a href="../index.html#categories" class="footer-nav-link">Categories</a></li>
+            <li><a href="../index.html#about" class="footer-nav-link">About</a></li>
+          </ul>
+        </div>
+        <div class="footer-nav-col">
+          <p class="footer-nav-label">Account</p>
+          <ul role="list">
+            <li><a href="./account.html" class="footer-nav-link">My Account</a></li>
+            <li><a href="./orders.html" class="footer-nav-link">Order History</a></li>
+            <li><a href="./wishlist.html" class="footer-nav-link">Wishlist</a></li>
+          </ul>
+        </div>
+      </nav>
+    </div>
+    <div class="footer-bottom">
+      <p class="footer-copy">&copy; 2026 NEST. All rights reserved.</p>
+    </div>
+  </footer>
+
+
+  <!-- Scripts -->
+  <script src="../js/navbar.js"></script>
+  <script src="../js/data.js"></script>
+  <script src="../js/cart.js"></script>
+  <script src="../js/success.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Orders — NEST</title>
+  <link rel="icon" href="../fav.png" type="image/png" />
+  <link rel="stylesheet" href="../css/style.css" />
+  <link rel="stylesheet" href="../css/navbar.css" />
+  <link rel="stylesheet" href="../css/orders-wishlist.css" />
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <header id="nest-navbar" class="navbar" role="banner">
+    <nav class="navbar__inner" aria-label="Main navigation">
+      <a href="../index.html" class="navbar__logo" aria-label="NEST — Return to homepage">
+        <span class="navbar__wordmark">NEST</span>
+      </a>
+      <ul class="navbar__nav" role="list">
+        <li class="navbar__nav-item"><a href="./products.html" class="navbar__nav-link">Products</a></li>
+        <li class="navbar__nav-item"><a href="../index.html#categories" class="navbar__nav-link">Categories</a></li>
+        <li class="navbar__nav-item"><a href="../index.html#about" class="navbar__nav-link">About</a></li>
+      </ul>
+      <div class="navbar__actions" role="group" aria-label="Site utilities">
+        <button class="navbar__action-btn" id="btn-search" aria-label="Open search" type="button">
+          <svg class="navbar__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="22" y2="22"/></svg>
+        </button>
+        <a href="./cart.html" class="navbar__action-btn" aria-label="View cart">
+          <svg class="navbar__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+          <span class="navbar__cart-badge" id="cart-count" aria-live="polite">0</span>
+        </a>
+        <a href="./account.html" class="navbar__action-btn" aria-label="My account">
+          <svg class="navbar__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        </a>
+        <button class="navbar__action-btn navbar__hamburger" id="btn-hamburger" aria-label="Open navigation menu" aria-expanded="false" aria-controls="mobile-menu" type="button">
+          <span class="hamburger-bar"></span><span class="hamburger-bar"></span><span class="hamburger-bar"></span>
+        </button>
+      </div>
+    </nav>
+  </header>
+
+  <!-- MAIN CONTENT -->
+  <main class="dash-page">
+
+    <!-- Top Section -->
+    <header class="dash-header">
+      <div class="dash-header__left">
+        <div class="dash-header__eyebrow">YOUR ACCOUNT</div>
+        <div class="dash-header__title-row">
+          <h1 class="dash-header__title">Order History</h1>
+          <span class="dash-header__count" id="order-count-badge">4 orders</span>
+        </div>
+        <p class="dash-header__subtext">
+          Review your past purchases, track active shipments in real-time, and download order summaries.
+        </p>
+      </div>
+      <div class="dash-header__actions">
+        <button class="btn-dash-secondary" id="toggle-empty-btn" type="button">
+          Toggle Empty State
+        </button>
+      </div>
+    </header>
+
+    <!-- Populated Orders List -->
+    <div class="orders-list" id="orders-populated">
+
+      <!-- Order Card 1 -->
+      <article class="order-card">
+        <div class="order-card__header">
+          <div class="order-card__meta-group">
+            <span class="order-card__id">Order #NS-2406</span>
+            <span class="order-card__date">Placed on Jun 28, 2026</span>
+          </div>
+          <span class="order-status order-status--delivered">Delivered</span>
+        </div>
+        <div class="order-card__body">
+          <div class="order-card__product">
+            <div class="order-card__img-wrap">
+              <img src="https://images.unsplash.com/photo-1545454675-3531b543be5d?q=80&w=200&auto=format&fit=crop" alt="Nest Sound Studio" class="order-card__img" />
+            </div>
+            <div class="order-card__info">
+              <div class="order-card__name">Nest Sound Studio</div>
+              <div class="order-card__spec">Space Gray · Active Noise Cancellation · Qty: 1</div>
+            </div>
+          </div>
+          <div class="order-card__price">₹24,999</div>
+          <div class="order-card__actions">
+            <button class="btn-dash-secondary track-btn" type="button" data-order="NS-2406">Track Order</button>
+            <a href="./product-detail.html?id=103" class="btn-dash-primary">View Details</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Order Card 2 -->
+      <article class="order-card">
+        <div class="order-card__header">
+          <div class="order-card__meta-group">
+            <span class="order-card__id">Order #NS-2397</span>
+            <span class="order-card__date">Placed on Jun 15, 2026</span>
+          </div>
+          <span class="order-status order-status--shipped">Shipped</span>
+        </div>
+        <div class="order-card__body">
+          <div class="order-card__product">
+            <div class="order-card__img-wrap">
+              <img src="https://images.unsplash.com/photo-1557324232-b8917d3c3dcb?q=80&w=200&auto=format&fit=crop" alt="Nest Vision Pro" class="order-card__img" />
+            </div>
+            <div class="order-card__info">
+              <div class="order-card__name">Nest Vision Pro</div>
+              <div class="order-card__spec">Matte Silver · 4K Spatial Audio Headset · Qty: 1</div>
+            </div>
+          </div>
+          <div class="order-card__price">₹18,499</div>
+          <div class="order-card__actions">
+            <button class="btn-dash-secondary track-btn" type="button" data-order="NS-2397">Track Order</button>
+            <a href="./product-detail.html?id=101" class="btn-dash-primary">View Details</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Order Card 3 -->
+      <article class="order-card">
+        <div class="order-card__header">
+          <div class="order-card__meta-group">
+            <span class="order-card__id">Order #NS-2381</span>
+            <span class="order-card__date">Placed on May 30, 2026</span>
+          </div>
+          <span class="order-status order-status--processing">Processing</span>
+        </div>
+        <div class="order-card__body">
+          <div class="order-card__product">
+            <div class="order-card__img-wrap">
+              <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?q=80&w=200&auto=format&fit=crop" alt="Nest Climate Pro" class="order-card__img" />
+            </div>
+            <div class="order-card__info">
+              <div class="order-card__name">Nest Climate Pro</div>
+              <div class="order-card__spec">Polar White · AI Smart Thermostat · Qty: 1</div>
+            </div>
+          </div>
+          <div class="order-card__price">₹14,999</div>
+          <div class="order-card__actions">
+            <button class="btn-dash-secondary track-btn" type="button" data-order="NS-2381">Track Order</button>
+            <a href="./product-detail.html?id=102" class="btn-dash-primary">View Details</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Order Card 4 -->
+      <article class="order-card">
+        <div class="order-card__header">
+          <div class="order-card__meta-group">
+            <span class="order-card__id">Order #NS-2360</span>
+            <span class="order-card__date">Placed on May 8, 2026</span>
+          </div>
+          <span class="order-status order-status--delivered">Delivered</span>
+        </div>
+        <div class="order-card__body">
+          <div class="order-card__product">
+            <div class="order-card__img-wrap">
+              <img src="https://images.unsplash.com/photo-1507668077129-56e32842fceb?q=80&w=200&auto=format&fit=crop" alt="Nest Glow Ambient" class="order-card__img" />
+            </div>
+            <div class="order-card__info">
+              <div class="order-card__name">Nest Glow Ambient</div>
+              <div class="order-card__spec">Warm Brass · Adaptive RGB Lighting Bar · Qty: 2</div>
+            </div>
+          </div>
+          <div class="order-card__price">₹24,998</div>
+          <div class="order-card__actions">
+            <button class="btn-dash-secondary track-btn" type="button" data-order="NS-2360">Track Order</button>
+            <a href="./product-detail.html?id=105" class="btn-dash-primary">View Details</a>
+          </div>
+        </div>
+      </article>
+
+    </div>
+
+    <!-- Premium Empty State (Hidden by default) -->
+    <div class="dash-empty" id="orders-empty" hidden>
+      <div class="dash-empty__inner">
+        <div class="dash-empty__icon-wrap">
+          <svg class="dash-empty__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/>
+          </svg>
+        </div>
+        <h2 class="dash-empty__title">No orders placed yet</h2>
+        <p class="dash-empty__text">
+          You currently have no active deliveries or past purchases. Once you complete your first order, full shipment tracking and invoice details will appear here.
+        </p>
+        <a href="./products.html" class="btn-dash-primary">Explore Products</a>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="site-footer" role="contentinfo">
+    <div class="footer-inner">
+      <div class="footer-brand"><span class="footer-wordmark">NEST</span><p class="footer-tagline">Technology That Belongs.</p></div>
+      <nav class="footer-nav" aria-label="Footer navigation">
+        <div class="footer-nav-col">
+          <p class="footer-nav-label">Explore</p>
+          <ul role="list">
+            <li><a href="./products.html" class="footer-nav-link">Products</a></li>
+            <li><a href="../index.html#categories" class="footer-nav-link">Categories</a></li>
+            <li><a href="../index.html#about" class="footer-nav-link">About</a></li>
+          </ul>
+        </div>
+        <div class="footer-nav-col">
+          <p class="footer-nav-label">Account</p>
+          <ul role="list">
+            <li><a href="./account.html" class="footer-nav-link">My Account</a></li>
+            <li><a href="./orders.html" class="footer-nav-link">Order History</a></li>
+            <li><a href="./wishlist.html" class="footer-nav-link">Wishlist</a></li>
+          </ul>
+        </div>
+      </nav>
+    </div>
+    <div class="footer-bottom"><p class="footer-copy">&copy; 2026 NEST. All rights reserved.</p></div>
+  </footer>
+
+  <script src="../js/navbar.js"></script>
+  <script src="../js/data.js"></script>
+  <script src="../js/cart.js"></script>
+  <script>
+    /* Page specific interactive scripting */
+    (function() {
+      var toggleBtn = document.getElementById('toggle-empty-btn');
+      var populated = document.getElementById('orders-populated');
+      var empty = document.getElementById('orders-empty');
+      var badge = document.getElementById('order-count-badge');
+
+      if (toggleBtn && populated && empty) {
+        toggleBtn.addEventListener('click', function() {
+          var isPopulated = !populated.hidden;
+          if (isPopulated) {
+            populated.hidden = true;
+            empty.hidden = false;
+            if (badge) badge.textContent = '0 orders';
+            toggleBtn.textContent = 'Show Orders';
+          } else {
+            populated.hidden = false;
+            empty.hidden = true;
+            if (badge) badge.textContent = '4 orders';
+            toggleBtn.textContent = 'Toggle Empty State';
+          }
+        });
+      }
+
+      /* Track order button interaction */
+      var trackBtns = document.querySelectorAll('.track-btn');
+      trackBtns.forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          var orderId = btn.getAttribute('data-order');
+          alert('Tracking Status for Order #' + orderId + ':\n\nPackage is currently on schedule. Carrier: BlueDart Express.\nEstimated Delivery: 2 days.');
+        });
+      });
+    })();
+  </script>
+</body>
+</html>

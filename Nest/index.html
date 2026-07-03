@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="NEST — Technology That Belongs. Premium smart home devices engineered for the way you live." />
+  <meta name="theme-color" content="#FAFAFA" />
+
+  <title>NEST — Technology That Belongs</title>
+  <link rel="icon" href="./fav.png" type="image/png" />
+
+  <!-- Design System (Phase 0) -->
+  <link rel="stylesheet" href="./css/style.css" />
+
+  <!-- Phase 1: Intro Animation + Navbar -->
+  <link rel="stylesheet" href="./css/navbar.css" />
+
+  <!-- Phase 2: Hero Section -->
+  <link rel="stylesheet" href="./css/hero.css" />
+
+  <!-- Phase 3: Homepage Sections -->
+  <link rel="stylesheet" href="./css/sections.css" />
+
+</head>
+<body>
+
+  <!-- ============================================================
+       OPENING ANIMATION
+       Two soft organic panels slide apart — cinematic curtain re
+       ============================================================ -->
+
+  <div id="nest-intro" class="nest-intro" aria-hidden="true" role="presentation">
+
+    <!-- Brand lockup — revealed as panels part -->
+    <div class="intro-brand" id="intro-brand">
+      <span class="intro-wordmark">NEST</span>
+      <span class="intro-tagline">Technology That Belongs.</span>
+    </div>
+
+  </div>
+
+
+  <!-- ============================================================
+       NAVBAR
+       Sticky, Apple-grade. Always visible: Search, Cart, Account.
+       ============================================================ -->
+
+  <header id="nest-navbar" class="navbar" role="banner">
+    <nav class="navbar__inner" aria-label="Main navigation">
+
+      <!-- ── Left: Wordmark Logo ── -->
+      <a href="./index.html" class="navbar__logo" aria-label="NEST — Return to homepage">
+        <span class="navbar__wordmark">NEST</span>
+      </a>
+
+      <!-- ── Center: Primary Nav Links ── -->
+      <ul class="navbar__nav" role="list" id="navbar-nav">
+        <li class="navbar__nav-item">
+          <a href="./pages/products.html" class="navbar__nav-link" id="nav-link-products">
+            Products
+          </a>
+        </li>
+        <li class="navbar__nav-item">
+          <a href="#categories" class="navbar__nav-link" id="nav-link-categories">
+            Categories
+          </a>
+        </li>
+        <li class="navbar__nav-item">
+          <a href="#about" class="navbar__nav-link" id="nav-link-about">
+            About
+          </a>
+        </li>
+      </ul>
+
+      <!-- ── Right: Utility Actions — The Big Three + Hamburger ── -->
+      <div class="navbar__actions" role="group" aria-label="Site utilities">
+
+        <!-- Search -->
+        <button class="navbar__action-btn" id="btn-search" aria-label="Open search" type="button">
+          <svg class="navbar__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+               stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
+               aria-hidden="true" focusable="false">
+            <circle cx="11" cy="11" r="7"/>
+            <line x1="16.5" y1="16.5" x2="22" y2="22"/>
+          </svg>
+        </button>
+
+        <!-- Cart -->
+        <button class="navbar__action-btn" id="btn-cart" aria-label="Open cart, 0 items" type="button">
+          <svg class="navbar__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+               stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
+               aria-hidden="true" focusable="false">
+            <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
+            <line x1="3" y1="6" x2="21" y2="6"/>
+            <path d="M16 10a4 4 0 0 1-8 0"/>
+          </svg>
+          <span class="navbar__cart-badge" id="cart-count" aria-live="polite">0</span>
+        </button>
+
+        <!-- Account -->
+        <button class="navbar__action-btn" id="btn-account" aria-label="My account" type="button">
+          <svg class="navbar__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+               stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
+               aria-hidden="true" focusable="false">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+            <circle cx="12" cy="7" r="4"/>
+          </svg>
+        </button>
+
+        <!-- Hamburger (mobile only — hidden on desktop) -->
+        <button class="navbar__action-btn navbar__hamburger"
+                id="btn-hamburger"
+                aria-label="Open navigation menu"
+                aria-expanded="false"
+                aria-controls="mobile-menu"
+                type="button">
+          <span class="hamburger-bar"></span>
+          <span class="hamburger-bar"></span>
+          <span class="hamburger-bar"></span>
+        </button>
+
+      </div>
+
+    </nav>
+  </header>
+
+
+  <!-- ============================================================
+       MOBILE SLIDE-OUT MENU
+       ============================================================ -->
+
+  <div
+    id="mobile-menu"
+    class="mobile-menu"
+    role="dialog"
+    aria-modal="true"
+    aria-label="Navigation menu"
+    hidden
+  >
+
+    <!-- Backdrop overlay -->
+    <div class="mobile-menu__backdrop" id="mobile-backdrop" aria-hidden="true"></div>
+
+    <!-- Slide-in drawer -->
+    <div class="mobile-menu__drawer" id="mobile-drawer" tabindex="-1">
+
+      <!-- Drawer header -->
+      <div class="mobile-menu__header">
+        <span class="mobile-menu__wordmark" aria-hidden="true">NEST</span>
+        <button class="mobile-menu__close"
+                id="btn-menu-close"
+                aria-label="Close navigation menu"
+                type="button">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+               stroke-width="1.5" stroke-linecap="round"
+               aria-hidden="true" focusable="false">
+            <line x1="18" y1="6" x2="6" y2="18"/>
+            <line x1="6" y1="6" x2="18" y2="18"/>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Drawer navigation -->
+      <nav aria-label="Mobile navigation">
+        <ul class="mobile-menu__nav" role="list">
+          <li><a href="./pages/products.html"  class="mobile-menu__link" id="mob-nav-products">Products</a></li>
+          <li><a href="#categories" class="mobile-menu__link" id="mob-nav-categories">Categories</a></li>
+          <li><a href="#about"      class="mobile-menu__link" id="mob-nav-about">About</a></li>
+          <li><a href="./pages/account.html"    class="mobile-menu__link" id="mob-nav-account">Account</a></li>
+        </ul>
+      </nav>
+
+      <!-- Drawer footer -->
+      <footer class="mobile-menu__footer" aria-label="Brand tagline">
+        <p class="mobile-menu__tagline">Technology That Belongs.</p>
+      </footer>
+
+    </div>
+
+  </div>
+
+
+  <!-- ============================================================
+       MAIN CONTENT
+       (Hero, Products etc. — Phase 2 onwards)
+       ============================================================ -->
+
+  <main id="main-content" class="site-main" tabindex="-1">
+
+    <!-- ============================================================
+         HERO SECTION — Phase 2
+         Full-viewport cinematic hero with flagship product
+         ============================================================ -->
+
+    <section
+      id="hero"
+      class="hero"
+      aria-label="NEST — Technology That Belongs"
+    >
+
+      <!-- Cinematic Background -->
+      <div class="hero__bg" id="hero-bg" aria-hidden="true"></div>
+
+      <!-- Scroll-parallax layer (subtle depth on scroll) -->
+      <div class="hero__parallax" id="hero-parallax" aria-hidden="true"></div>
+
+      <!-- Content Container -->
+      <div class="hero__container">
+
+        <!-- Left: Text content -->
+        <div class="hero__content" id="hero-content">
+
+          <!-- Eyebrow label -->
+          <p class="hero__eyebrow" id="hero-eyebrow" aria-label="New arrival">New Arrival</p>
+
+          <!-- Primary Headline -->
+          <h1 class="hero__headline" id="hero-headline">
+            Designed For
+            <span class="hero__headline-accent">Smarter Living.</span>
+          </h1>
+
+          <!-- Subtext -->
+          <p class="hero__subtext" id="hero-subtext">
+            Designed to make every home more connected,<br class="hero__br"> intuitive, and comfortable.
+          </p>
+
+          <!-- CTA Buttons -->
+          <div class="hero__cta" id="hero-cta" role="group" aria-label="Call to action">
+            <a href="#products"
+               class="hero__btn hero__btn--primary"
+               id="hero-btn-primary"
+               aria-label="Shop the NEST collection">
+              Shop Collection
+            </a>
+            <a href="#categories"
+               class="hero__btn hero__btn--secondary"
+               id="hero-btn-secondary"
+               aria-label="Explore NEST product categories">
+              Explore Products
+              <svg class="hero__btn-arrow" viewBox="0 0 16 16" fill="none"
+                   stroke="currentColor" stroke-width="1.5"
+                   aria-hidden="true" focusable="false">
+                <path d="M3 8h10M9 4l4 4-4 4"/>
+              </svg>
+            </a>
+          </div>
+
+          <!-- Scroll indicator -->
+          <div class="hero__scroll-hint" id="hero-scroll-hint" aria-hidden="true">
+            <span class="hero__scroll-line"></span>
+            <span class="hero__scroll-label">Scroll</span>
+          </div>
+
+        </div>
+
+        <!-- Right: Product stat callout (minimal, editorial) -->
+        <aside class="hero__meta" id="hero-meta" aria-label="Product highlights">
+          <dl class="hero__stats">
+            <div class="hero__stat">
+              <dt class="hero__stat-label">Collection</dt>
+              <dd class="hero__stat-value">2025 Series</dd>
+            </div>
+            <div class="hero__stat">
+              <dt class="hero__stat-label">Connectivity</dt>
+              <dd class="hero__stat-value">Matter + Thread</dd>
+            </div>
+            <div class="hero__stat">
+              <dt class="hero__stat-label">Compatibility</dt>
+              <dd class="hero__stat-value">Universal</dd>
+            </div>
+          </dl>
+        </aside>
+
+      </div>
+
+    </section>
+
+    <!-- ============================================================
+         SECTION 1 — PRODUCT CATEGORIES
+         ============================================================ -->
+    <section id="categories" class="s-categories reveal-section" aria-labelledby="categories-heading">
+      <div class="s-container">
+
+        <header class="s-header">
+          <p class="s-eyebrow">Browse</p>
+          <h2 class="s-heading" id="categories-heading">For Every Corner<br>Of Your Home</h2>
+          <p class="s-subtext">Thoughtfully designed products built to simplify modern living.</p>
+        </header>
+
+        <div class="categories-grid">
+
+          <a class="cat-card" href="./pages/products.html?category=smart-speakers-audio" aria-label="Browse Smart Speakers &amp; Audio">
+            <div class="cat-card__img-wrap">
+              <img src="https://images.unsplash.com/photo-1545454675-3531b543be5d?q=80&w=1000&auto=format&fit=crop"
+                   alt="Smart speaker on a table" loading="lazy" class="cat-card__img" />
+            </div>
+            <div class="cat-card__body">
+              <h3 class="cat-card__name">Smart Speakers &amp; Audio</h3>
+              <p class="cat-card__desc">Fill every room with immersive, intelligent sound.</p>
+              <span class="cat-card__arrow" aria-hidden="true">
+                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+              </span>
+            </div>
+          </a>
+
+          <a class="cat-card" href="./pages/products.html?category=smart-lighting" aria-label="Browse Smart Lighting">
+            <div class="cat-card__img-wrap">
+              <img src="https://images.unsplash.com/photo-1550989460-0adf9ea622e2?q=80&w=1000&auto=format&fit=crop"
+                   alt="Smart lighting in a modern home" loading="lazy" class="cat-card__img" />
+            </div>
+            <div class="cat-card__body">
+              <h3 class="cat-card__name">Smart Lighting</h3>
+              <p class="cat-card__desc">Adapt the ambience of any space, instantly.</p>
+              <span class="cat-card__arrow" aria-hidden="true">
+                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+              </span>
+            </div>
+          </a>
+
+          <a class="cat-card" href="./pages/products.html?category=security-devices" aria-label="Browse Security Devices">
+            <div class="cat-card__img-wrap">
+              <img src="https://images.unsplash.com/photo-1557324232-b8917d3c3dcb?q=80&w=1000&auto=format&fit=crop"
+                   alt="Smart home security camera" loading="lazy" class="cat-card__img" />
+            </div>
+            <div class="cat-card__body">
+              <h3 class="cat-card__name">Security Devices</h3>
+              <p class="cat-card__desc">Protect what matters with silent, intelligent watch.</p>
+              <span class="cat-card__arrow" aria-hidden="true">
+                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+              </span>
+            </div>
+          </a>
+
+          <a class="cat-card" href="./pages/products.html?category=climate-appliances" aria-label="Browse Climate &amp; Appliances">
+            <div class="cat-card__img-wrap">
+              <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?q=80&w=1000&auto=format&fit=crop"
+                   alt="Smart thermostat climate control" loading="lazy" class="cat-card__img" />
+            </div>
+            <div class="cat-card__body">
+              <h3 class="cat-card__name">Climate &amp; Appliances</h3>
+              <p class="cat-card__desc">A home that breathes at exactly the right temperature.</p>
+              <span class="cat-card__arrow" aria-hidden="true">
+                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+              </span>
+            </div>
+          </a>
+
+          <a class="cat-card" href="./pages/products.html?category=connectivity-power" aria-label="Browse Connectivity &amp; Power">
+            <div class="cat-card__img-wrap">
+              <img src="https://images.unsplash.com/photo-1544197150-b99a580bb7a8?q=80&w=1000&auto=format&fit=crop"
+                   alt="Network and power connectivity devices" loading="lazy" class="cat-card__img" />
+            </div>
+            <div class="cat-card__body">
+              <h3 class="cat-card__name">Connectivity &amp; Power</h3>
+              <p class="cat-card__desc">Stay seamlessly connected from every corner.</p>
+              <span class="cat-card__arrow" aria-hidden="true">
+                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+              </span>
+            </div>
+          </a>
+
+          <a class="cat-card" href="./pages/products.html?category=kitchen-essentials" aria-label="Browse Kitchen Essentials">
+            <div class="cat-card__img-wrap">
+              <img src="https://images.unsplash.com/photo-1556910103-1c02745aae4d?q=80&w=1000&auto=format&fit=crop"
+                   alt="Smart kitchen appliance" loading="lazy" class="cat-card__img" />
+            </div>
+            <div class="cat-card__body">
+              <h3 class="cat-card__name">Kitchen Essentials</h3>
+              <p class="cat-card__desc">Elevate the most important room in your home.</p>
+              <span class="cat-card__arrow" aria-hidden="true">
+                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+              </span>
+            </div>
+          </a>
+
+          <a class="cat-card" href="./pages/products.html?category=cleaning-devices" aria-label="Browse Cleaning Devices">
+            <div class="cat-card__img-wrap">
+              <img src="https://images.unsplash.com/photo-1589939705384-5185137a7f0f?q=80&w=1000&auto=format&fit=crop"
+                   alt="Smart robotic vacuum cleaner" loading="lazy" class="cat-card__img" />
+            </div>
+            <div class="cat-card__body">
+              <h3 class="cat-card__name">Cleaning Devices</h3>
+              <p class="cat-card__desc">A cleaner home without lifting a finger.</p>
+              <span class="cat-card__arrow" aria-hidden="true">
+                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+              </span>
+            </div>
+          </a>
+
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ============================================================
+         SECTION 2 — FEATURED COLLECTION
+         ============================================================ -->
+    <section id="featured" class="s-featured reveal-section" aria-labelledby="featured-heading">
+      <div class="s-container">
+
+        <header class="s-header">
+          <p class="s-eyebrow">Collections</p>
+          <h2 class="s-heading" id="featured-heading">Curated For Modern Living</h2>
+          <p class="s-subtext">Discover premium solutions designed for smarter living.</p>
+        </header>
+
+        <div class="featured-grid">
+
+          <a class="feat-card feat-card--large" href="./pages/products.html?category=smart-speakers-audio" aria-label="Browse Audio Collection">
+            <div class="feat-card__img-wrap">
+              <img src="https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?q=80&w=1600&auto=format&fit=crop"
+                   alt="Premium audio collection" loading="lazy" class="feat-card__img" />
+            </div>
+            <div class="feat-card__overlay">
+              <p class="feat-card__eyebrow">Collection</p>
+              <h3 class="feat-card__name">Audio Collection</h3>
+              <span class="feat-card__cta">Explore
+                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+              </span>
+            </div>
+          </a>
+
+          <a class="feat-card" href="./pages/products.html?category=smart-lighting" aria-label="Browse Lighting Collection">
+            <div class="feat-card__img-wrap">
+              <img src="https://images.unsplash.com/photo-1565814329452-e1efa11c5b89?q=80&w=1600&auto=format&fit=crop"
+                   alt="Ambient lighting collection" loading="lazy" class="feat-card__img" />
+            </div>
+            <div class="feat-card__overlay">
+              <p class="feat-card__eyebrow">Collection</p>
+              <h3 class="feat-card__name">Lighting Collection</h3>
+              <span class="feat-card__cta">Explore
+                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+              </span>
+            </div>
+          </a>
+
+          <a class="feat-card" href="./pages/products.html?category=security-devices" aria-label="Browse Security Collection">
+            <div class="feat-card__img-wrap">
+              <img src="https://images.unsplash.com/photo-1558002038-1055907df827?q=80&w=1600&auto=format&fit=crop"
+                   alt="Security collection" loading="lazy" class="feat-card__img" />
+            </div>
+            <div class="feat-card__overlay">
+              <p class="feat-card__eyebrow">Collection</p>
+              <h3 class="feat-card__name">Security Collection</h3>
+              <span class="feat-card__cta">Explore
+                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+              </span>
+            </div>
+          </a>
+
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ============================================================
+         SECTION 3 — WHY NEST
+         ============================================================ -->
+    <section id="about" class="s-why reveal-section" aria-labelledby="why-heading">
+      <div class="s-container">
+
+        <header class="s-header s-header--centered">
+          <p class="s-eyebrow">Philosophy</p>
+          <h2 class="s-heading" id="why-heading">Why NEST</h2>
+        </header>
+
+        <div class="why-grid">
+
+          <div class="why-card">
+            <div class="why-card__number" aria-hidden="true">01</div>
+            <h3 class="why-card__title">Designed To Belong</h3>
+            <p class="why-card__text">Technology should feel natural, not complicated. NEST products integrate into your home — not the other way around.</p>
+          </div>
+
+          <div class="why-card">
+            <div class="why-card__number" aria-hidden="true">02</div>
+            <h3 class="why-card__title">Built For Everyday Living</h3>
+            <p class="why-card__text">Products that adapt to your routines, your schedule, your habits — without demanding your attention.</p>
+          </div>
+
+          <div class="why-card">
+            <div class="why-card__number" aria-hidden="true">03</div>
+            <h3 class="why-card__title">Connected By Design</h3>
+            <p class="why-card__text">Every device works together seamlessly. One ecosystem. One experience. Zero friction.</p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ============================================================
+         SECTION 4 — BEST SELLERS
+         ============================================================ -->
+    <section id="products" class="s-bestsellers reveal-section" aria-labelledby="bestsellers-heading">
+      <div class="s-container">
+
+        <header class="s-header">
+          <p class="s-eyebrow">Best Sellers</p>
+          <h2 class="s-heading" id="bestsellers-heading">Most Loved</h2>
+          <p class="s-subtext">The products our customers love most.</p>
+        </header>
+
+        <div class="products-grid">
+
+          <article class="prod-card" tabindex="0" aria-label="Nest Sound Studio" data-id="nest-sound-studio">
+            <div class="prod-card__img-wrap">
+              <img src="https://images.unsplash.com/photo-1545454675-3531b543be5d?q=80&w=800&auto=format&fit=crop"
+                   alt="Nest Sound Studio smart speaker" loading="lazy" class="prod-card__img" />
+              <div class="prod-card__badge">Best Seller</div>
+            </div>
+            <div class="prod-card__body">
+              <div class="prod-card__meta">
+                <h3 class="prod-card__name">Nest Sound Studio</h3>
+                <p class="prod-card__desc">Room-filling audio with adaptive intelligence and pristine clarity.</p>
+              </div>
+              <div class="prod-card__footer">
+                <span class="prod-card__price">$299</span>
+                <button class="prod-card__btn" type="button" data-id="nest-sound-studio" aria-label="Add Nest Sound Studio to cart">Add to Cart</button>
+              </div>
+            </div>
+          </article>
+
+          <article class="prod-card" tabindex="0" aria-label="Nest Vision Pro" data-id="nest-vision-pro">
+            <div class="prod-card__img-wrap">
+              <img src="https://images.unsplash.com/photo-1557324232-b8917d3c3dcb?q=80&w=800&auto=format&fit=crop"
+                   alt="Nest Vision Pro security camera" loading="lazy" class="prod-card__img" />
+            </div>
+            <div class="prod-card__body">
+              <div class="prod-card__meta">
+                <h3 class="prod-card__name">Nest Vision Pro</h3>
+                <p class="prod-card__desc">4K clarity, night vision, and intelligent motion detection.</p>
+              </div>
+              <div class="prod-card__footer">
+                <span class="prod-card__price">$249</span>
+                <button class="prod-card__btn" type="button" data-id="nest-vision-pro" aria-label="Add Nest Vision Pro to cart">Add to Cart</button>
+              </div>
+            </div>
+          </article>
+
+          <article class="prod-card" tabindex="0" aria-label="Nest Climate Pro" data-id="nest-climate-pro">
+            <div class="prod-card__img-wrap">
+              <img src="https://images.unsplash.com/photo-1581092580497-e0d23cbdf1dc?q=80&w=800&auto=format&fit=crop"
+                   alt="Nest Climate Pro thermostat" loading="lazy" class="prod-card__img" />
+            </div>
+            <div class="prod-card__body">
+              <div class="prod-card__meta">
+                <h3 class="prod-card__name">Nest Climate Pro</h3>
+                <p class="prod-card__desc">Precision climate control that learns and adapts automatically.</p>
+              </div>
+              <div class="prod-card__footer">
+                <span class="prod-card__price">$199</span>
+                <button class="prod-card__btn" type="button" data-id="nest-climate-pro" aria-label="Add Nest Climate Pro to cart">Add to Cart</button>
+              </div>
+            </div>
+          </article>
+
+          <article class="prod-card" tabindex="0" aria-label="Nest Glow Ambient" data-id="nest-glow-ambient">
+            <div class="prod-card__img-wrap">
+              <img src="https://images.unsplash.com/photo-1507668077129-56e32842fceb?q=80&w=800&auto=format&fit=crop"
+                   alt="Nest Glow Ambient smart light" loading="lazy" class="prod-card__img" />
+              <div class="prod-card__badge prod-card__badge--new">New</div>
+            </div>
+            <div class="prod-card__body">
+              <div class="prod-card__meta">
+                <h3 class="prod-card__name">Nest Glow Ambient</h3>
+                <p class="prod-card__desc">Architectural light that responds to your mood and time of day.</p>
+              </div>
+              <div class="prod-card__footer">
+                <span class="prod-card__price">$179</span>
+                <button class="prod-card__btn" type="button" data-id="nest-glow-ambient" aria-label="Add Nest Glow Ambient to cart">Add to Cart</button>
+              </div>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ============================================================
+         SECTION 5 — TESTIMONIALS
+         ============================================================ -->
+    <section class="s-testimonials reveal-section" aria-labelledby="testimonials-heading">
+      <div class="s-container">
+
+        <header class="s-header s-header--centered">
+          <p class="s-eyebrow">Reviews</p>
+          <h2 class="s-heading" id="testimonials-heading">Loved By Modern Homes</h2>
+        </header>
+
+        <div class="testimonials-grid">
+
+          <blockquote class="testi-card">
+            <p class="testi-card__quote">&ldquo;Simple to set up. Even easier to live with. Our home has never felt more intelligent.&rdquo;</p>
+            <footer class="testi-card__author">
+              <span class="testi-card__name">Sarah M.</span>
+              <span class="testi-card__location">London, UK</span>
+            </footer>
+          </blockquote>
+
+          <blockquote class="testi-card">
+            <p class="testi-card__quote">&ldquo;The audio quality is unlike anything I&rsquo;ve owned. It fills the room without feeling intrusive.&rdquo;</p>
+            <footer class="testi-card__author">
+              <span class="testi-card__name">James R.</span>
+              <span class="testi-card__location">New York, US</span>
+            </footer>
+          </blockquote>
+
+          <blockquote class="testi-card">
+            <p class="testi-card__quote">&ldquo;I didn&rsquo;t realise how much I needed a smarter home until NEST made it effortless.&rdquo;</p>
+            <footer class="testi-card__author">
+              <span class="testi-card__name">Priya K.</span>
+              <span class="testi-card__location">Singapore</span>
+            </footer>
+          </blockquote>
+
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ============================================================
+         SECTION 6 — NEWSLETTER
+         ============================================================ -->
+    <section class="s-newsletter reveal-section" aria-labelledby="newsletter-heading">
+      <div class="newsletter-inner">
+        <p class="s-eyebrow s-eyebrow--light">Newsletter</p>
+        <h2 class="newsletter-heading" id="newsletter-heading">Stay Connected.</h2>
+        <p class="newsletter-subtext">Get updates on new products, releases, and collections.</p>
+        <form class="newsletter-form" action="#" method="post" aria-label="Newsletter signup">
+          <div class="newsletter-input-wrap">
+            <label for="newsletter-email" class="sr-only">Email address</label>
+            <input
+              type="email"
+              id="newsletter-email"
+              name="email"
+              class="newsletter-input"
+              placeholder="Your email address"
+              autocomplete="email"
+              required
+              aria-required="true"
+            />
+            <button type="submit" class="newsletter-btn" aria-label="Subscribe to NEST newsletter">
+              Subscribe
+            </button>
+          </div>
+          <p class="newsletter-note">No spam, ever. Unsubscribe at any time.</p>
+        </form>
+      </div>
+    </section>
+
+  </main>
+
+
+  <!-- ============================================================
+       FOOTER
+       ============================================================ -->
+  <footer class="site-footer" role="contentinfo" aria-label="Site footer">
+    <div class="footer-inner">
+
+      <div class="footer-brand">
+        <span class="footer-wordmark">NEST</span>
+        <p class="footer-tagline">Technology That Belongs.</p>
+      </div>
+
+      <nav class="footer-nav" aria-label="Footer navigation">
+        <div class="footer-nav-col">
+          <p class="footer-nav-label">Explore</p>
+          <ul role="list">
+            <li><a href="./pages/products.html" class="footer-nav-link">Products</a></li>
+            <li><a href="./index.html#categories" class="footer-nav-link">Categories</a></li>
+            <li><a href="./index.html#about" class="footer-nav-link">About</a></li>
+          </ul>
+        </div>
+        <div class="footer-nav-col">
+          <p class="footer-nav-label">Account</p>
+          <ul role="list">
+            <li><a href="./pages/account.html" class="footer-nav-link">My Account</a></li>
+            <li><a href="./pages/orders.html" class="footer-nav-link">Order History</a></li>
+            <li><a href="./pages/wishlist.html" class="footer-nav-link">Wishlist</a></li>
+          </ul>
+        </div>
+      </nav>
+
+    </div>
+
+    <div class="footer-bottom">
+      <p class="footer-copy">&copy; 2026 NEST. All rights reserved.</p>
+    </div>
+  </footer>
+
+
+  <!-- Phase 1 Interactions -->
+  <script src="./js/navbar.js"></script>
+
+  <!-- Phase 2: Hero Interactions -->
+  <script src="./js/hero.js"></script>
+
+  <!-- Phase 3: Section Animations -->
+  <script src="./js/sections.js"></script>
+
+  <!-- Shared Data & Cart Logic -->
+  <script src="./js/data.js"></script>
+  <script src="./js/cart.js"></script>
+
+</body>
+</html>
